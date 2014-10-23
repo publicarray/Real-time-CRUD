@@ -21,11 +21,11 @@
         <tbody id="data"></tbody>
         <tbody>
           <tr>
-            <form role="form" method="post" action="">
+            <form id="create" role="form" method="post">
             <td></td>
-            <td><input type="text" class="form-control" id="name" placeholder="Enter Event" name="create_name"></td>
-            <td><input type="number" class="form-control" id="ring" placeholder="Enter Ring" name="create_ring"></td>
-            <!-- <td><label><input type="checkbox" name="create_done"> Done</label></td> -->
+            <td><input type="text" class="form-control" id="name" placeholder="Enter Event"></td>
+            <td><input type="number" class="form-control" id="ring" placeholder="Enter Ring"></td>
+            <!-- <td><label><input type="checkbox" id="done"> Done</label></td> -->
             <td><button type="submit" class="btn btn-default">Add</button></td>
             </form>
           </tr>
@@ -34,7 +34,7 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="/client.js"></script>
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+    <script src="/client-admin.js"></script>
   </body>
 </html>

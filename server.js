@@ -1,13 +1,11 @@
-var express = require('express')
+var express = require('express');
 var app = express();
-var server = app.listen(8080)
-var bodyParser = require('body-parser');
+var server = app.listen(8080);
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
 var io = require('socket.io').listen(server);
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
 
 db.serialize(function () {
   // db.run("DROP TABLE Events");
@@ -36,24 +34,11 @@ app.get('/data', function (req, res) {
   });
 });
 
-app.post('/update', function (req, res) {
-  db.run("UPDATE Events SET name = ?, ring = ?, done = ? WHERE id = ?", [escapeHtml(req.body['update_name']), parseInt(req.body['update_ring']), escapeHtml(req.body['update_done']), parseInt(req.body['update_id'])], function (err, row) {
-    if (err) {
-      console.err(err);
-      res.status(500);
-    }
-    else {
-      res.status(202);
-    }
-    res.end();
-  });
-});
-
 io.on('connection', function (socket) {
   socket.on('add', function (name, ring, done) {
-    name = escapeHtml(name);
-    ring = parseInt(ring);
-    done = escapeHtml(done);
+    var name = escapeHtml(name);
+    var ring = parseInt(ring);
+    var done = escapeHtml(done);
     db.run("INSERT INTO Events VALUES (null, ?, ?, ?)", [name, ring, done], function (err, row) {
       if (err === null) {
         var data = [{'id':this.lastID ,'name':name, 'ring':ring, 'done':done}];
@@ -61,12 +46,25 @@ io.on('connection', function (socket) {
       }
     });
   });
+  socket.on('update', function (id, name, ring, done) {
+    var id = parseInt(id);
+    var name = escapeHtml(name);
+    var ring = parseInt(ring);
+    var done = escapeHtml(done);
+    db.run("UPDATE Events SET name = ?, ring = ?, done = ? WHERE id = ?", [name, ring, done, id], function (err, row) {
+      if (err === null) {
+        var data = [{'id':id ,'name':name, 'ring':ring, 'done':done}];
+        io.emit('update', data);
+      }
+    });
+  });
 });
 
 function escapeHtml(text) {
+  text = text.toString();
   if (text === undefined) {
     return 0;
-  } else if (text === 'on') {
+  } else if (text === 'On') {
     return 1;
   } else {
     var map = {
