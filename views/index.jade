@@ -1,0 +1,28 @@
+extends layout
+block title
+  title CMA
+block content
+  div(class="container")
+    h1 CMA
+    table(class="table")
+      thead
+        tr
+          th
+          th Event
+          th Ring
+          th Done
+      tbody(id="data")
+      each val in events
+        tr(id=val.id class=val.done === 0 ? '' : 'danger')
+          td= val.id
+          td= val.name
+          td= val.ring
+          if val.done===0
+            td No
+          else
+            td Yes
+      tbody
+  script(src="/socket.io/socket.io.js")
+  script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+  <!-- script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js)" -->
+  script(src="/client.js")

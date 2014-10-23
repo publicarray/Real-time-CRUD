@@ -1,11 +1,14 @@
 var express = require('express');
 var app = express();
 var server = app.listen(8080);
+var io = require('socket.io')(server);
+var jade = require('jade');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
-var io = require('socket.io').listen(server);
 
 app.use(express.static('public'));
+app.set('views', __dirname+'/views');
+app.set('view engine', 'jade');
 
 db.serialize(function () {
   // db.run("DROP TABLE Events");
@@ -15,21 +18,24 @@ db.serialize(function () {
 });
 
 app.get('/', function (req, res) {
-  // db.all("SELECT * FROM Events", function (err, row) {
-  //   console.log(row);
-  // });
-  res.sendFile('public/index.html', {root: __dirname});
+  db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+    res.render('index', {events:row});
+  });
+  // res.sendFile('public/index.html', {root: __dirname});
 });
 
 app.get('/admin', function (req, res) {
+  db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+    res.render('admin', {events:row});
+  });
   // db.all("SELECT * FROM Events", function (err, row) {
   //   console.log(row);
   // });
-  res.sendFile('public/admin.html', {root: __dirname});
+  // res.sendFile('public/admin.html', {root: __dirname});
 });
 
 app.get('/data', function (req, res) {
-  db.all("SELECT * FROM Events ORDER BY ring", function (err, row) {
+  db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
     res.json(row);
   });
 });

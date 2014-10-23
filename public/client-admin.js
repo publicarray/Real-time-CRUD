@@ -1,34 +1,4 @@
 var socket = io();
-function display (data) {
-  var htmlStr = '';
-  for (var i = 0; i < data.length; i++) {
-    var done = data[i].done;
-    var style = '';
-    if (done === 0) {
-      done = '<input type="checkbox">';
-    } else {
-      done = '<input type="checkbox" checked>';
-      style = 'class="danger"';
-    }
-    htmlStr += '<tr '+style+' id="'+data[i].id+'"><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].ring + '</td><td>' + done + '</td></tr>';
-  }
-  $('#data').append(htmlStr);
-  $(":checkbox").change(function(){
-      console.log('checkbox changed');
-      var checkbox = $(this);
-      var line = $(this).parent().parent();
-      var done = 0;
-      if (checkbox.prop('checked')) {
-        done = 1;
-      }
-      // line.toggleClass('danger');
-      // potentialy dangerous
-      var id = line.find('td:nth-child(1)').text();
-      var name = line.find('td:nth-child(2)').text();
-      var ring = line.find('td:nth-child(3)').text();
-      socket.emit('update', id, name, ring, done);
-    });
-}
 
 function update (data) {
   var done = parseInt(data[0].done);
@@ -59,8 +29,20 @@ function update (data) {
 }
 
 $(document).ready(function() {
-  $.get('/data', function(data) {
-    display(data);
+  $(":checkbox").change(function(){
+    console.log('checkbox changed');
+    var checkbox = $(this);
+    var line = $(this).parent().parent();
+    var done = 0;
+    if (checkbox.prop('checked')) {
+      done = 1;
+    }
+    // line.toggleClass('danger');
+    // potentialy dangerous
+    var id = line.find('td:nth-child(1)').text();
+    var name = line.find('td:nth-child(2)').text();
+    var ring = line.find('td:nth-child(3)').text();
+    socket.emit('update', id, name, ring, done);
   });
 
   $('#create').submit(function() {
@@ -74,5 +56,8 @@ $(document).ready(function() {
   });
   socket.on('update', function (data) {
     update(data);
+  });
+  socket.on('delete', function (data) {
+    del(data);
   });
 });

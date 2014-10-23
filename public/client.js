@@ -1,19 +1,3 @@
-function display (data) {
-  var htmlStr = '';
-  for (var i = 0; i < data.length; i++) {
-    var done = data[i].done;
-    var style = '';
-    if (done === 0) {
-      done = 'No';
-    } else {
-      done = 'Yes';
-      style = 'class="danger"';
-    }
-    htmlStr += '<tr '+style+' id="'+data[i].id+'"><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].ring + '</td><td>' + done + '</td></tr>';
-  }
-  $('#data').append(htmlStr);
-}
-
 function update (data) {
   var done = parseInt(data[0].done);
   var style = '';
@@ -29,9 +13,6 @@ function update (data) {
 
 $(document).ready(function() {
   var socket = io();
-  $.get('/data', function(data) {
-    display(data);
-  });
 
   $('#create').submit(function() {
     socket.emit('add', $('#name').val(), $('#ring').val());
