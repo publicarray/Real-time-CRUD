@@ -29,7 +29,7 @@ app.get('/admin', function (req, res) {
 });
 
 app.get('/data', function (req, res) {
-  db.all("SELECT * FROM Events", function (err, row) {
+  db.all("SELECT * FROM Events ORDER BY ring", function (err, row) {
     res.json(row);
   });
 });
@@ -61,9 +61,7 @@ io.on('connection', function (socket) {
 });
 
 function escapeHtml(text) {
-  if (text === undefined) {
-    return 0;
-  } else {
+  if (text) {
     text = text.toString();
     var map = {
       '&': '&amp;',
@@ -73,5 +71,7 @@ function escapeHtml(text) {
       "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+  } else {
+    return 0;
   }
 }
