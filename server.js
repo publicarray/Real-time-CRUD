@@ -61,12 +61,10 @@ io.on('connection', function (socket) {
 });
 
 function escapeHtml(text) {
-  text = text.toString();
   if (text === undefined) {
     return 0;
-  } else if (text === 'On') {
-    return 1;
   } else {
+    text = text.toString();
     var map = {
       '&': '&amp;',
       '<': '&lt;',
