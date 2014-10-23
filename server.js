@@ -21,17 +21,12 @@ app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
     res.render('index', {events:row});
   });
-  // res.sendFile('public/index.html', {root: __dirname});
 });
 
 app.get('/admin', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
     res.render('admin', {events:row});
   });
-  // db.all("SELECT * FROM Events", function (err, row) {
-  //   console.log(row);
-  // });
-  // res.sendFile('public/admin.html', {root: __dirname});
 });
 
 app.get('/data', function (req, res) {

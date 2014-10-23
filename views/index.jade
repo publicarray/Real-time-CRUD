@@ -7,14 +7,12 @@ block content
     table(class="table")
       thead
         tr
-          th
           th Event
           th Ring
           th Done
       tbody(id="data")
       each val in events
         tr(id=val.id class=val.done === 0 ? '' : 'danger')
-          td= val.id
           td= val.name
           td= val.ring
           if val.done===0

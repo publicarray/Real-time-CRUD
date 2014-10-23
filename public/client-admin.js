@@ -9,39 +9,48 @@ function update (data) {
     done = '<input type="checkbox" checked>';
     style = 'class="danger"';
   }
-  var htmlStr = '<tr '+style+' id="'+data[0].id+'"><td>' + data[0].id + '</td><td>' + data[0].name + '</td><td>' + data[0].ring + '</td><td>' + done + '</td></tr>';
+  var htmlStr = '<tr '+style+' id="'+data[0].id+'"><td>' + data[0].id + '</td><td>' + data[0].name + '</td><td>' + data[0].ring + '</td><td>' + done + '</td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   $('#'+data[0].id).replaceWith(htmlStr);
-  $(":checkbox").change(function(){
-      console.log('checkbox changed');
+  $(':checkbox', $('#'+data[0].id)).change(function(){
       var checkbox = $(this);
       var line = $(this).parent().parent();
       var done = 0;
       if (checkbox.prop('checked')) {
         done = 1;
       }
-      // line.toggleClass('danger');
       // potentialy dangerous
       var id = line.find('td:nth-child(1)').text();
       var name = line.find('td:nth-child(2)').text();
       var ring = line.find('td:nth-child(3)').text();
+      console.log(id + ' Updated');
       socket.emit('update', id, name, ring, done);
     });
 }
 
+function del (data) {
+  $('.btn-danger').on('click', function(){
+      var btn = $(this);
+      var line = $(this).parent().parent();
+      // potentialy dangerous
+      var id = line.find('td:nth-child(1)').text();
+      console.log(id + 'Deleted');
+      socket.emit('del', id);
+    });
+}
+
 $(document).ready(function() {
-  $(":checkbox").change(function(){
-    console.log('checkbox changed');
+  $(':checkbox', $('#data')).change(function(){
     var checkbox = $(this);
     var line = $(this).parent().parent();
     var done = 0;
     if (checkbox.prop('checked')) {
       done = 1;
     }
-    // line.toggleClass('danger');
     // potentialy dangerous
     var id = line.find('td:nth-child(1)').text();
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
+    console.log(id + ' Updated');
     socket.emit('update', id, name, ring, done);
   });
 

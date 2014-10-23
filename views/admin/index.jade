@@ -7,10 +7,11 @@ block content
     table(class="table")
       thead
         tr
-          th
+          th #
           th Event
           th Ring
           th Done
+          th
       tbody(id="data")
         each val in events
           tr(id=val.id class=val.done === 0 ? '' : 'danger')
@@ -23,6 +24,8 @@ block content
             else
               td
                 input(type="checkbox" checked)
+            td
+              button(type="button" class="btn btn-danger") Delete
       tbody
         tr
           form(id="create" role="form" method="post")
@@ -31,10 +34,10 @@ block content
             input(type="text" class="form-control" id="name" placeholder="Enter Event")
           td
             input(type="number" class="form-control" id="ring" placeholder="Enter Ring")
-          //- td
-          //-   input(type="checkbox" id="done")
           td
-            button(type="submit" class="btn btn-default") Add
+            input(type="checkbox" id="done")
+          td
+            button(type="submit" class="btn btn-default") Create
   script(src="/socket.io/socket.io.js")
   script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
   <!-- script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js)" -->
