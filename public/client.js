@@ -1,3 +1,4 @@
+// Copyright Sebastian Schmidt
 function display (data) {
   var done = parseInt(data.done);
   var style = '';
@@ -22,5 +23,8 @@ $(document).ready(function() {
   });
   socket.on('delete', function (data) {
     $('#'+data).remove();
+  });
+  socket.on('disconnect',function() {
+    console.log('The client has disconnected!');
   });
 });

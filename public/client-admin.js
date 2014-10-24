@@ -1,3 +1,4 @@
+// Copyright Sebastian Schmidt
 var socket = io();
 
 function checkbox (data) {
@@ -80,5 +81,8 @@ $(document).ready(function() {
   });
   socket.on('delete', function (data) {
     $('#'+data).remove('#'+data);
+  });
+  socket.on('disconnect',function() {
+    console.log('The client has disconnected!');
   });
 });
