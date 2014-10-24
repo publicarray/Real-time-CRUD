@@ -37,25 +37,40 @@ app.get('/data', function (req, res) {
 
 io.on('connection', function (socket) {
   socket.on('add', function (name, ring, done) {
-    var name = escapeHtml(name);
-    var ring = parseInt(ring);
-    var done = escapeHtml(done);
+    name = escapeHtml(name);
+    ring = escapeHtml(ring);
+    done = escapeHtml(done);
     db.run("INSERT INTO Events VALUES (null, ?, ?, ?)", [name, ring, done], function (err, row) {
       if (err === null) {
-        var data = [{'id':this.lastID ,'name':name, 'ring':ring, 'done':done}];
+        var data = {'id':this.lastID ,'name':name, 'ring':ring, 'done':done};
         io.emit('add', data);
+        console.log(name +' '+ ring + ' Created');
+      } else {
+        console.err(err);
       }
     });
   });
   socket.on('update', function (id, name, ring, done) {
-    var id = parseInt(id);
-    var name = escapeHtml(name);
-    var ring = parseInt(ring);
-    var done = escapeHtml(done);
+    id = escapeHtml(id);
+    name = escapeHtml(name);
+    ring = escapeHtml(ring);
+    done = escapeHtml(done);
     db.run("UPDATE Events SET name = ?, ring = ?, done = ? WHERE id = ?", [name, ring, done, id], function (err, row) {
       if (err === null) {
-        var data = [{'id':id ,'name':name, 'ring':ring, 'done':done}];
+        var data = {'id':id ,'name':name, 'ring':ring, 'done':done};
         io.emit('update', data);
+        console.log(id + ' Updated');
+      }
+    });
+  });
+  socket.on('delete', function (id) {
+    id = parseInt(id);
+    db.run("DELETE FROM Events WHERE id = ?", [id], function (err, row) {
+      if (err === null) {
+        io.emit('delete', id);
+        console.log(id + ' Deleted');
+      } else {
+        console.err(err);
       }
     });
   });
@@ -71,7 +86,11 @@ function escapeHtml(text) {
       '"': '&quot;',
       "'": '&#039;'
     };
-    return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+    text = text.replace(/[&<>"']/g, function (m) { return map[m]; });
+    if (!isNaN(text)){
+      text = parseInt(text);
+    }
+    return text
   } else {
     return 0;
   }

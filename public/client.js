@@ -1,5 +1,5 @@
-function update (data) {
-  var done = parseInt(data[0].done);
+function display (data) {
+  var done = parseInt(data.done);
   var style = '';
   if (done === 0) {
     done = 'No';
@@ -7,23 +7,20 @@ function update (data) {
     done = 'Yes';
     style = 'class="danger"';
   }
-  var htmlStr = '<tr '+style+' id="'+data[0].id+'"><td>' + data[0].id + '</td><td>' + data[0].name + '</td><td>' + data[0].ring + '</td><td>' + done + '</td></tr>';
-  $('#'+data[0].id).replaceWith(htmlStr);
+  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + done + '</td></tr>';
+  return htmlStr;
 }
 
 $(document).ready(function() {
   var socket = io();
 
-  $('#create').submit(function() {
-    socket.emit('add', $('#name').val(), $('#ring').val());
-      $('#name').val('');
-      $('#ring').val('');
-      return false;
-  });
   socket.on('add', function (data) {
-    display(data);
+    $('#data').append(display(data));
   });
   socket.on('update', function (data) {
-    update(data);
+    $('#'+data.id).replaceWith(display(data));
+  });
+  socket.on('delete', function (data) {
+    $('#'+data).remove();
   });
 });
