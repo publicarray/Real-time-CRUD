@@ -31,7 +31,7 @@ function display (data) {
     done = '<input type="checkbox">';
   } else {
     done = '<input type="checkbox" checked>';
-    style = 'class="warning"';
+    style = 'class="info"';
   }
   var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '</td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   return htmlStr;

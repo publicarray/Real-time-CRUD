@@ -6,7 +6,7 @@ function display (data) {
     done = 'No';
   } else {
     done = 'Yes';
-    style = 'class="warning"';
+    style = 'class="info"';
   }
   var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '</td></tr>';
   return htmlStr;
