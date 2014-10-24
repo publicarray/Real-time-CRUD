@@ -8,7 +8,7 @@ function display (data) {
     done = 'Yes';
     style = 'class="danger"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + done + '</td></tr>';
+  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '</td></tr>';
   return htmlStr;
 }
 

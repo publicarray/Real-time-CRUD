@@ -9,12 +9,14 @@ block content
         tr
           th Event
           th Ring
+          th # of Competitors
           th Done
       tbody(id="data")
       each val in events
         tr(id=val.id class=val.done === 0 ? '' : 'danger')
           td= val.name
           td= val.ring
+          td= val.competitors
           if val.done===0
             td No
           else

@@ -13,7 +13,8 @@ function checkbox (data) {
     var id = line.find('td:nth-child(1)').text();
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
-    socket.emit('update', id, name, ring, done);
+    var comp = line.find('td:nth-child(4)').text();
+    socket.emit('update', id, name, ring, comp, done);
   });
 }
 
@@ -32,7 +33,7 @@ function display (data) {
     done = '<input type="checkbox" checked>';
     style = 'class="danger"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + done + '</td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '</td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   return htmlStr;
 }
 
@@ -48,7 +49,8 @@ $(document).ready(function() {
     var id = line.find('td:nth-child(1)').text();
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
-    socket.emit('update', id, name, ring, done);
+    var comp = line.find('td:nth-child(4)').text();
+    socket.emit('update', id, name, ring, comp, done);
   });
 
   $('.btn-danger').on('click', function() {
@@ -63,9 +65,10 @@ $(document).ready(function() {
     if (document.getElementById('done').checked) {
       done = 1
     }
-    socket.emit('add', $('#name').val(), $('#ring').val(), done);
+    socket.emit('add', $('#name').val(), $('#ring').val(), $('#comp').val(), done);
       $('#name').val('');
       $('#ring').val('');
+      $('#comp').val('');
       return false;
   });
 
