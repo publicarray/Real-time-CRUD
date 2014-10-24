@@ -18,9 +18,8 @@ db.serialize(function () {
   db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
 });
 //TO DO
-//add no of competitors
 //split table to rings
-//display disconnected
+//add reset btn
 app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
     res.render('index', {events:row});

@@ -2,47 +2,44 @@ extends ../layout
 block title
   title CMA
 block content
-  div(class="container")
-    h1 CMA
-    table(class="table")
-      thead
-        tr
-          th #
-          th Event
-          th Ring
-          th # of Competitors
-          th Done
-          th
-      tbody(id="data")
-        each val in events
-          tr(id=val.id class=val.done === 0 ? '' : 'danger')
-            td= val.id
-            td= val.name
-            td= val.ring
-            td= val.competitors
-            if val.done===0
-              td
-                input(type="checkbox")
-            else
-              td
-                input(type="checkbox" checked)
+  h1 CMA
+  table(class="table table-hover")
+    thead
+      tr
+        th #
+        th Event
+        th Ring
+        th # of Competitors
+        th Done
+        th
+    tbody(id="data")
+      each val in events
+        tr(id=val.id class=val.done === 0 ? '' : 'warning')
+          td= val.id
+          td= val.name
+          td= val.ring
+          td= val.competitors
+          if val.done===0
             td
-              button(type="button" class="btn btn-danger") Delete
-      tbody
-        tr
-          form(id="create" role="form")
+              input(type="checkbox")
+          else
             td
-            td
-              input(type="text" class="form-control" id="name" placeholder="Enter Event")
-            td
-              input(type="number" class="form-control" id="ring" placeholder="Enter Ring")
-            td
-              input(type="number" class="form-control" id="comp" placeholder="Enter # of Competitors")
-            td
-              input(type="checkbox" id="done")
-            td
-              button(type="submit" class="btn btn-default") Create
-  script(src="/socket.io/socket.io.js")
-  script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
-  <!-- script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js)" -->
+              input(type="checkbox" checked)
+          td
+            button(type="button" class="btn btn-danger") Delete
+    tbody
+      tr
+        form(id="create" role="form")
+          td
+          td
+            input(type="text" class="form-control" id="name" placeholder="Enter Event")
+          td
+            input(type="number" class="form-control" id="ring" placeholder="Enter Ring")
+          td
+            input(type="number" class="form-control" id="comp" placeholder="Enter # of Competitors")
+          td
+            input(type="checkbox" id="done")
+          td
+            button(type="submit" class="btn btn-default") Create
+block script
   script(src="/client-admin.js")

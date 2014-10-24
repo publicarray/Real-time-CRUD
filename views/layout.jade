@@ -6,7 +6,15 @@ html(lang="en")
     link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css")
   head
   body
-    block content
+    div(class="bg-danger text-danger" id="alert" style="display:none; text-align:center; padding:15px; position:fixed; width:100%; background:rgba(250,220,220, 0.8)")
+      strong Oh No! You are disconnected!
+      span  We lost connection to our server. Please check your Internet connection, Try again or Refresh the page.
+    div(class="container")
+      block content
+    script(src="/socket.io/socket.io.js")
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+    script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
+    block script
   body
     fooder
       div(class="container")

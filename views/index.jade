@@ -2,27 +2,24 @@ extends layout
 block title
   title CMA
 block content
-  div(class="container")
-    h1 CMA
-    table(class="table")
-      thead
-        tr
-          th Event
-          th Ring
-          th # of Competitors
-          th Done
-      tbody(id="data")
-      each val in events
-        tr(id=val.id class=val.done === 0 ? '' : 'danger')
-          td= val.name
-          td= val.ring
-          td= val.competitors
-          if val.done===0
-            td No
-          else
-            td Yes
-      tbody
-  script(src="/socket.io/socket.io.js")
-  script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
-  <!-- script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js)" -->
+  h1 CMA
+  table(class="table table-hover")
+    thead
+      tr
+        th Event
+        th Ring
+        th # of Competitors
+        th Done
+    tbody(id="data")
+    each val in events
+      tr(id=val.id class=val.done === 0 ? '' : 'warning')
+        td= val.name
+        td= val.ring
+        td= val.competitors
+        if val.done===0
+          td No
+        else
+          td Yes
+    tbody
+block script
   script(src="/client.js")

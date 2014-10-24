@@ -31,7 +31,7 @@ function display (data) {
     done = '<input type="checkbox">';
   } else {
     done = '<input type="checkbox" checked>';
-    style = 'class="danger"';
+    style = 'class="warning"';
   }
   var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '</td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   return htmlStr;
@@ -86,6 +86,11 @@ $(document).ready(function() {
     $('#'+data).remove('#'+data);
   });
   socket.on('disconnect',function() {
+    $('#alert').fadeIn(1000);
     console.log('The client has disconnected!');
+  });
+  socket.on('connect',function() {
+    $('#alert').fadeOut(1000);
+    console.log('The client has reconnected!');
   });
 });
