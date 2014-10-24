@@ -17,7 +17,6 @@ function checkbox (data) {
 }
 
 function delBtn (id) {
-  console.log('delete '+id);
   $('.btn-danger', $('#'+id)).on('click', function(){
     socket.emit('delete', id);
   });
@@ -60,9 +59,9 @@ $(document).ready(function() {
 
   $('#create').submit(function() {
     var done = 0;
-    // if ($('#done').prop('checked')) {
-    //   done = 1;
-    // }
+    if (document.getElementById('done').checked) {
+      done = 1
+    }
     socket.emit('add', $('#name').val(), $('#ring').val(), done);
       $('#name').val('');
       $('#ring').val('');
@@ -80,6 +79,6 @@ $(document).ready(function() {
     delBtn(data.id);
   });
   socket.on('delete', function (data) {
-    $('#'+data).remove();
+    $('#'+data).remove('#'+data);
   });
 });

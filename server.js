@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
       if (err === null) {
         var data = {'id':this.lastID ,'name':name, 'ring':ring, 'done':done};
         io.emit('add', data);
-        console.log(name +' '+ ring + ' Created');
+        console.log(this.lastID +' '+ name + ' '+ ring + ' Created');
       } else {
         console.err(err);
       }
@@ -59,7 +59,7 @@ io.on('connection', function (socket) {
       if (err === null) {
         var data = {'id':id ,'name':name, 'ring':ring, 'done':done};
         io.emit('update', data);
-        console.log(id + ' Updated');
+        console.log(id +' '+ name + ' '+ ring + ' Updated');
       }
     });
   });
