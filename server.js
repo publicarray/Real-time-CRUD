@@ -1,5 +1,5 @@
 // Copyright Sebastian Schmidt
-
+require('newrelic');
 var express = require('express');
 var app = express();
 var server = app.listen(8080);
