@@ -1,9 +1,10 @@
 // Copyright Sebastian Schmidt
 require('newrelic');
+var port = Number(process.env.PORT || 5000);
 var express = require('express');
 var app = express();
-var server = app.listen(8080);
-console.log("Listening on port: " + 8080);
+var server = app.listen(port);
+console.log("Listening on port: " + port);
 var io = require('socket.io')(server);
 var jade = require('jade');
 var sqlite3 = require("sqlite3").verbose();
