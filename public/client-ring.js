@@ -1,6 +1,6 @@
 // Copyright Sebastian Schmidt
 var url = window.location.href;
-var ring = url.substr(url.lastIndexOf('/')+1);
+var ring = parseInt(url.substr(url.lastIndexOf('/')+1));
 
 function display (data) {
   var done = parseInt(data.done);
@@ -19,12 +19,14 @@ $(document).ready(function() {
   var socket = io();
 
   socket.on('add', function (data) {
-    if (data.ring == ring) {
+    if (data.ring === ring) {
+      console.log(ring)
+      console.log(data.ring)
       $('#data').append(display(data));
     }
   });
   socket.on('update', function (data) {
-    if (data.ring == ring) {
+    if (data.ring === ring) {
       $('#'+data.id).replaceWith(display(data));
     }
   });

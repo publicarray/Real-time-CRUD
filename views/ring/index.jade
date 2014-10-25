@@ -2,7 +2,9 @@ extends ../layout
 block title
   title CMA
 block content
-  h1 CMA
+  h1 Ring&nbsp;
+    if events[0]
+      =events[0].ring
   table(class="table table-hover table-striped")
     thead
       tr
@@ -11,15 +13,14 @@ block content
         th # of Competitors
         th Done
     tbody(id="data")
-    each val in events
-      tr(id=val.id class=val.done === 0 ? '' : 'info')
-        td= val.name
-        td= val.ring
-        td= val.competitors
-        if val.done===0
-          td No
-        else
-          td Yes
-    tbody
+      each val in events
+        tr(id=val.id class=val.done === 0 ? '' : 'info')
+          td= val.name
+          td= val.ring
+          td= val.competitors
+          if val.done===0
+            td No
+          else
+            td Yes
 block script
   script(src="/client-ring.js")
