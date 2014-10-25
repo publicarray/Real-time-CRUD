@@ -29,4 +29,4 @@ The default port is 8080.
 
 ## License
 Copyright (C) 2014 Sebastian Schmidt
-Distributed under the MIT License
+Distributed under the GNU GPL v3.0 License
