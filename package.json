@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Real-time RESTfull Database app with sockets.io",
   "author": "Sebastian Schmidt",
+  "repository": "https://github.com/publicarray/CMA",
   "url": "http://publicarray.com/",
   "dependencies": {
     "express": "^4.9.8",
