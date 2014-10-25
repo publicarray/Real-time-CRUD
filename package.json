@@ -2,11 +2,12 @@
   "name": "CMA",
   "version": "0.0.1",
   "description": "Real-time RESTfull Database app with sockets.io",
-  "name" : "Sebastian Schmidt",
-  "url" : "http://publicarray.com/",
+  "author": "Sebastian Schmidt",
+  "url": "http://publicarray.com/",
   "dependencies": {
     "express": "^4.9.8",
     "jade": "^1.7.0",
+    "sanitizer": "^0.1.2",
     "socket.io": "^1.1.0",
     "sqlite3": "^3.0.2"
   }

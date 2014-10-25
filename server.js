@@ -8,6 +8,7 @@ var io = require('socket.io')(server);
 var jade = require('jade');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
+var sanitizer = require('sanitizer');
 
 app.use(express.static('public'));
 app.set('views', __dirname+'/views');
@@ -84,14 +85,7 @@ io.on('connection', function (socket) {
 function escapeHtml(text) {
   if (text) {
     text = text.toString();
-    var map = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;'
-    };
-    text = text.replace(/[&<>"']/g, function (m) { return map[m]; });
+    text = sanitizer.sanitize(text);
     if (!isNaN(text)){
       text = parseInt(text);
       if (text<0) {
