@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
   });
 });
 
-app.get('/(\\d+)/', function (req, res) {
+app.get('/:id(\\d+)/', function (req, res) {
   var ring = escapeHtml(req.param('id'));
   db.all("SELECT * FROM Events WHERE ring = ? ORDER BY ring ASC, done DESC", [ring], function (err, row) {
     res.render('ring', {events:row});
