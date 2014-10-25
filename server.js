@@ -1,6 +1,6 @@
 // Copyright Sebastian Schmidt
 require('newrelic');
-var port = Number(process.env.PORT || 5000);
+var port = Number(process.env.PORT || 8080);
 var express = require('express');
 var app = express();
 var server = app.listen(port);
@@ -10,7 +10,7 @@ var jade = require('jade');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
 var sanitizer = require('sanitizer');
-
+var auth = require('basic-auth');
 app.use(express.static('public'));
 app.set('views', __dirname+'/views');
 app.set('view engine', 'jade');
@@ -36,9 +36,17 @@ app.get('/:id(\\d+)/', function (req, res) {
 });
 
 app.get('/admin', function (req, res) {
-  db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
-    res.render('admin', {events:row});
-  });
+  var credentials = auth(req)
+  if (!credentials || credentials.name !== 'admin' || credentials.pass !== 'password') {
+    res.writeHead(401, {
+      'WWW-Authenticate': 'Basic'
+    });
+    res.end()
+  } else {
+    db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+      res.render('admin', {events:row});
+    });
+  }
 });
 
 app.get('/data', function (req, res) {
