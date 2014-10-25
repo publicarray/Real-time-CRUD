@@ -87,10 +87,8 @@ $(document).ready(function() {
   });
   socket.on('disconnect',function() {
     $('#alert').fadeIn(1000);
-    console.log('The client has disconnected!');
   });
   socket.on('connect',function() {
     $('#alert').fadeOut(1000);
-    console.log('The client has reconnected!');
   });
 });

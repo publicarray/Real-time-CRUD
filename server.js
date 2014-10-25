@@ -27,6 +27,13 @@ app.get('/', function (req, res) {
   });
 });
 
+app.get('/:id?', function (req, res) {
+  var ring = escapeHtml(req.param('id'));
+  db.all("SELECT * FROM Events WHERE ring = ? ORDER BY ring ASC, done DESC", [ring], function (err, row) {
+    res.render('ring', {events:row});
+  });
+});
+
 app.get('/admin', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
     res.render('admin', {events:row});

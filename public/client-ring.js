@@ -1,4 +1,7 @@
 // Copyright Sebastian Schmidt
+var url = window.location.href;
+var ring = url.substr(url.lastIndexOf('/')+1);
+
 function display (data) {
   var done = parseInt(data.done);
   var style = '';
@@ -16,10 +19,14 @@ $(document).ready(function() {
   var socket = io();
 
   socket.on('add', function (data) {
-    $('#data').append(display(data));
+    if (data.ring == ring) {
+      $('#data').append(display(data));
+    }
   });
   socket.on('update', function (data) {
-    $('#'+data.id).replaceWith(display(data));
+    if (data.ring == ring) {
+      $('#'+data.id).replaceWith(display(data));
+    }
   });
   socket.on('delete', function (data) {
     $('#'+data).remove();
