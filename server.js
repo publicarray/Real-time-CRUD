@@ -20,7 +20,6 @@ db.serialize(function () {
   db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
 });
 //TO DO
-//split table to rings
 //add reset btn
 app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
@@ -36,16 +35,23 @@ app.get('/:id(\\d+)/', function (req, res) {
 });
 
 app.get('/admin', function (req, res) {
-  var credentials = auth(req)
-  if (!credentials || credentials.name !== 'admin' || credentials.pass !== 'password') {
-    res.writeHead(401, {
-      'WWW-Authenticate': 'Basic'
-    });
-    res.end()
+  if (req.query.hash) {
+    var now = new Date();
+    var min = Math.round((now.getTime() + (now.getTimezoneOffset() * 60000)) / 60000);
+    var user = JSON.parse(new Buffer(req.query.hash, 'base64').toString('utf8'));
+    console.log(user.time);
+    console.log(min);
+    if (!user || user.name !== 'admin' || user.pass !== 'password') {
+      res.render('login', {message: 'The user name or password you entered is incorrect.'});
+    } else if (user.time != min) {
+      res.render('login', {message: 'The session has timed out.'});
+    } else {
+      db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+        res.render('admin', {events: row});
+      });
+    }
   } else {
-    db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
-      res.render('admin', {events:row});
-    });
+    res.render('login');
   }
 });
 
