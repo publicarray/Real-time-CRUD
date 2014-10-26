@@ -24,14 +24,22 @@ console.log("all modules loaded");
 //add reset btn
 app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
-    res.render('index', {events:row});
+    if (err) {
+      console.err(err);
+    } else {
+      res.render('index', {events:row});
+    }
   });
 });
 
 app.get('/:id(\\d+)/', function (req, res) {
   var ring = escapeHtml(req.param('id'));
   db.all("SELECT * FROM Events WHERE ring = ? ORDER BY ring ASC, done DESC", [ring], function (err, row) {
-    res.render('ring', {events:row});
+    if (err) {
+      console.err(err);
+    } else {
+      res.render('ring', {events:row});
+    }
   });
 });
 
@@ -46,7 +54,11 @@ app.get('/admin', function (req, res) {
       res.render('login', {message: 'The session has timed out.'});
     } else {
       db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
-        res.render('admin', {events: row});
+        if (err) {
+          console.err(err);
+        } else {
+          res.render('admin', {events: row});
+        }
       });
     }
   } else {
@@ -56,7 +68,11 @@ app.get('/admin', function (req, res) {
 
 app.get('/data', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
-    res.json(row);
+    if (err) {
+      console.err(err);
+    } else {
+      res.json(row);
+    }
   });
 });
 
@@ -67,12 +83,12 @@ io.on('connection', function (socket) {
     comp = escapeHtml(comp);
     done = escapeHtml(done);
     db.run("INSERT INTO Events VALUES (null, ?, ?, ?, ?)", [name, ring, comp, done], function (err, row) {
-      if (err === null) {
+      if (err) {
+        console.err(err);
+      } else {
         var data = {'id':this.lastID ,'name':name, 'ring':ring, 'comp':comp, 'done':done};
         io.emit('add', data);
-        console.log(this.lastID +' '+ name + ' '+ ring + ' '+ comp + ' Created');
-      } else {
-        console.err(err);
+        console.log('Created', data);
       }
     });
   });
@@ -82,23 +98,25 @@ io.on('connection', function (socket) {
     ring = escapeHtml(ring);
     comp = escapeHtml(comp);
     done = escapeHtml(done);
+    var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'done':done};
     db.run("UPDATE Events SET name = ?, ring = ?, competitors=?, done = ? WHERE id = ?", [name, ring, comp, done, id], function (err, row) {
-      if (err === null) {
-        var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'done':done};
-        io.emit('update', data);
-        console.log(id +' '+ name + ' '+ ring + ' '+ comp + ' Updated');
+      if (err) {
+        console.err(err);
+      } else {
+        console.log('Updated', data);
       }
     });
+    io.emit('update', data);
   });
   socket.on('delete', function (id) {
-    id = parseInt(id);
+    id = escapeHtml(id);
     db.run("DELETE FROM Events WHERE id = ?", [id], function (err, row) {
-      if (err === null) {
-        io.emit('delete', id);
-        console.log(id + ' Deleted');
-      } else {
+      if (err) {
         console.err(err);
+      } else {
+        console.log('Deleted', id);
       }
+    io.emit('delete', id);
     });
   });
 });
@@ -106,7 +124,7 @@ io.on('connection', function (socket) {
 function escapeHtml(text) {
   if (text) {
     text = text.toString();
-    text = sanitizer.sanitize(text);
+    text = sanitizer.sanitize(text); //escape or sanitize
     if (!isNaN(text)){
       text = parseInt(text);
       if (text<0) {
