@@ -1,11 +1,13 @@
 // Copyright Sebastian Schmidt
+console.log("starting up...");
 require('newrelic');
 var port = Number(process.env.PORT || 8080);
+console.log("Listening on port: " + port);
 var express = require('express');
 var app = express();
 var server = app.listen(port);
-console.log("Listening on port: " + port);
 var io = require('socket.io')(server);
+console.log("server running");
 var jade = require('jade');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
@@ -14,11 +16,10 @@ var auth = require('basic-auth');
 app.use(express.static('public'));
 app.set('views', __dirname+'/views');
 app.set('view engine', 'jade');
+// db.run("DROP TABLE Events");
+db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
+console.log("all modules loaded");
 
-db.serialize(function () {
-  // db.run("DROP TABLE Events");
-  db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
-});
 //TO DO
 //add reset btn
 app.get('/', function (req, res) {
