@@ -36,11 +36,8 @@ app.get('/:id(\\d+)/', function (req, res) {
 
 app.get('/admin', function (req, res) {
   if (req.query.hash) {
-    var now = new Date();
-    var min = Math.round((now.getTime() + (now.getTimezoneOffset() * 60000)) / 60000);
+    var min = Math.round(new Date().getTime() / 10000);
     var user = JSON.parse(new Buffer(req.query.hash, 'base64').toString('utf8'));
-    console.log(user.time);
-    console.log(min);
     if (!user || user.name !== 'admin' || user.pass !== 'password') {
       res.render('login', {message: 'The user name or password you entered is incorrect.'});
     } else if (user.time != min) {
