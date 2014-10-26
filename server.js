@@ -36,11 +36,12 @@ app.get('/:id(\\d+)/', function (req, res) {
 
 app.get('/admin', function (req, res) {
   if (req.query.hash) {
-    var min = Math.round(new Date().getTime() / 10000);
-    var user = JSON.parse(new Buffer(req.query.hash, 'base64').toString('utf8'));
+    var now = Math.round(new Date().getTime() / 1000);
+    var user = new Buffer(req.query.hash, 'base64').toString('utf8');
+    user = JSON.parse(escapeHtml(user));
     if (!user || user.name !== 'admin' || user.pass !== 'password') {
       res.render('login', {message: 'The user name or password you entered is incorrect.'});
-    } else if (user.time != min) {
+    } else if (parseInt(user.time)+60 < now || parseInt(user.time) > now) {
       res.render('login', {message: 'The session has timed out.'});
     } else {
       db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
