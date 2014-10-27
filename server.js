@@ -1,6 +1,6 @@
 // Copyright Sebastian Schmidt
 console.log("starting up...");
-require('newrelic');
+// require('newrelic');
 var port = Number(process.env.PORT || 8080);
 console.log("Listening on port: " + port);
 var express = require('express');
