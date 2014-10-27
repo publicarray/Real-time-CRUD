@@ -1,6 +1,5 @@
 // Copyright Sebastian Schmidt
 console.log("starting up...");
-// require('newrelic');
 var port = Number(process.env.PORT || 8080);
 console.log("Listening on port: " + port);
 var express = require('express');
@@ -20,8 +19,6 @@ app.set('view engine', 'jade');
 db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
 console.log("all modules loaded");
 
-//TO DO
-//add reset btn
 app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
     if (err) {

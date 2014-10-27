@@ -3,13 +3,12 @@
   "version": "0.0.1",
   "description": "Real-time RESTfull Database app with sockets.io",
   "author": "Sebastian Schmidt",
-  "repository": "https://github.com/publicarray/CMA",
+  "repository": "https://github.com/publicarray/iska",
   "url": "http://publicarray.com/",
   "dependencies": {
     "basic-auth": "^1.0.0",
     "express": "^4.9.8",
     "jade": "^1.7.0",
-    "newrelic": "^1.12.2",
     "sanitizer": "^0.1.2",
     "socket.io": "^1.1.0",
     "sqlite3": "^3.0.2"
