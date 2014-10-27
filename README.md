@@ -1,8 +1,8 @@
-CMA
+Real-Time RESTfull Database Web Application
 ===
-[![Dependencies](https://david-dm.org/publicarray/CMA.png)] (https://david-dm.org/publicarray/CMA)
+[![Dependencies](https://david-dm.org/publicarray/CMA.png)](https://david-dm.org/publicarray/CMA)
 
-A real-time RESTfull database web app build on node.js and sockets.io
+A real-time database web application build on node.js, express, sockets.io and SQLite
 
 ##Installation
 Install dependencies:
@@ -26,6 +26,12 @@ The default port is 8080.
 `/admin` allows adding, removing and updating data
 
 `/{number}` is a list of the events for that {number} ring
+
+### Login Details
+
+username is `admin`
+
+password is `password`
 
 ## License
 Copyright (C) 2014 Sebastian Schmidt
