@@ -5,12 +5,16 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     block title
     link(rel="stylesheet" href="/lib/flatly/bootstrap.min.css")
-    style @media(min-width: 460px){.navbar-brand div {display:inline;}}
+    style
+      |.navbar-brand div {display:block; text-align:center;}
+      |.navbar-brand img {display:block; padding:0 0 0 59px; margin:0 auto;}
+      |@media(min-width: 560px){.navbar-brand div {display:inline; text-align:left;}
+      |.navbar-brand img {display:inline; margin:0; padding:0}}
   head
   body
-    div(class="bg-danger text-danger" id="alert" style="display:none; text-align:center; padding:15px; position:fixed; width:100%; background:rgba(250,220,220, 0.8)")
+    div(class="text-danger text-center" id="alert" style="display:none; padding:15px; position:fixed; width:100%; background:rgba(250,250,250, 0.9); z-index:9999")
       strong Oh No! You are disconnected!
-      span  We lost connection to our server. Please check your Internet connection, Try again or Refresh the page.
+      span  You lost connection to our server. Please check your Internet connection, Try again or Refresh the page.
     nav(class="navbar navbar-default navbar-static-top" role="navigation")
       div.container
         div.navbar-header
@@ -28,7 +32,7 @@ html(lang="en")
               a(href="/admin") Login
     div(class="container")
       block content
-    footer(style="text-align:center; display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0")
+    footer.text-center(style="display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0")
       div.container
         p
           |Website Developed by&nbsp;

@@ -45,9 +45,11 @@ app.get('/admin', function (req, res) {
     var now = Math.round(new Date().getTime() / 1000);
     var user = new Buffer(req.query.hash, 'base64').toString('utf8');
     user = JSON.parse(escapeHtml(user));
+    var userTime = (parseInt(user.time));
     if (!user || user.name !== 'admin' || user.pass !== 'password') {
       res.render('login', {message: 'The user name or password you entered is incorrect.'});
-    } else if (parseInt(user.time)+60 < now || parseInt(user.time) > now) {
+      //time allowed to stay loged is 120s / time out(response time)
+    } else if ((userTime+120) < now || userTime > (now+120)) {
       res.render('login', {message: 'The session has timed out.'});
     } else {
       db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
