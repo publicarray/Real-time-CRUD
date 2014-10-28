@@ -16,7 +16,7 @@ block content
         th Done
     tbody(id="data")
       each val in events
-        tr(id=val.id class=val.done === 0 ? '' : 'info')
+        tr(id=val.id class=val.done === 0 ? '' : 'success')
           td= val.name
           td= val.ring
           td= val.competitors
