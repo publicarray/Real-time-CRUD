@@ -1,7 +1,17 @@
 extends layout
 block title
   title ISKA Queensland State Titles
+  style
+    |@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900|Oswald);
+    |.status {font-family: 'Source Sans Pro', sans-serif;}
+    |.status .panel-title {font-family: 'Oswald', sans-serif; font-size: 72px; font-weight: bold; color: #fff;}
 block content
+  div.row
+    a(href="/TF.html")
+      div.col-xs-6.col-md-3
+        div.panel.status.panel-danger
+          div.panel-heading
+            h1.panel-title.text-center TF
   table(class="table table-hover table-striped")
     thead
       tr

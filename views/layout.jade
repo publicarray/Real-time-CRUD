@@ -4,15 +4,28 @@ html(lang="en")
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     block title
-    link(rel="stylesheet" href="/lib/bootstrap.min.css")
+    link(rel="stylesheet" href="/lib/flatly/bootstrap.min.css")
   head
   body
     div(class="bg-danger text-danger" id="alert" style="display:none; text-align:center; padding:15px; position:fixed; width:100%; background:rgba(250,220,220, 0.8)")
       strong Oh No! You are disconnected!
       span  We lost connection to our server. Please check your Internet connection, Try again or Refresh the page.
+    nav(class="navbar navbar-default navbar-static-top" role="navigation")
+      div.container
+        div.navbar-header
+          button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href="/" style="float: none;")
+            img(alt="ISKA" src="/img/ISKA-Logo.png" style="max-height: 80px;")
+            | Queensland State Titles
+        div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href="/admin") Login
     div(class="container")
-      h1
-        a(href="/") ISKA Queensland State Titles
       block content
     script(src="/socket.io/socket.io.js")
     script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
@@ -24,6 +37,5 @@ html(lang="en")
     footer(style="text-align:center; display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0")
       div.container
         p Website developed by&nbsp;
-          a(href="http://publicarray.com") Sebastian Schmidt
-          a.pull-right(href="/admin") Admin area
+          a(href="http://publicarray.com") Sebastian Schmidt | Design by Nathan Naumann
 html
