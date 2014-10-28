@@ -28,6 +28,12 @@ html(lang="en")
               a(href="/admin") Login
     div(class="container")
       block content
+    footer(style="text-align:center; display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0")
+      div.container
+        p
+          |Website Developed by&nbsp;
+          a(href="http://publicarray.com") Sebastian Schmidt&nbsp;
+          || Design by Nathan Naumann
     script(src="/socket.io/socket.io.js")
     script(src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
     script window.jQuery || document.write('<script src="lib/jquery-2.1.1.min.js"><\/script>')
@@ -35,10 +41,4 @@ html(lang="en")
     script if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/lib/bootstrap.min.js"><\/script>')}
     block script
   body
-    footer(style="text-align:center; display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0")
-      div.container
-        p
-          |Website developed by&nbsp;
-          a(href="http://publicarray.com") Sebastian Schmidt&nbsp;
-          || Design by Nathan Naumann
 html
