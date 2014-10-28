@@ -1,6 +1,8 @@
 extends ../layout
 block title
-  title CMA
+  title Ring
+    if events[0]
+      =events[0].ring
 block content
   h2 Ring&nbsp;
     if events[0]
