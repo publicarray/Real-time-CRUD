@@ -1,0 +1,12 @@
+extends layout
+block title
+  title 404
+block content
+  div.row
+    div.col-12
+      h1.text-center Oh No
+      h2.text-center The page you are looking for cannot be found.
+      h3.text-center
+        |(
+        = url
+        |)
