@@ -41,7 +41,7 @@ body {
     color: #222;
     font-weight: 500;
 }
-.box > .icon > .info > p {
+.box > .icon > .info > div {
     font-family: "Roboto", sans-serif !important;
     font-size: 13px;
     color: #666;

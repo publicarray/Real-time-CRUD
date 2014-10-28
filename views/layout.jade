@@ -5,6 +5,7 @@ html(lang="en")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     block title
     link(rel="stylesheet" href="/lib/flatly/bootstrap.min.css")
+    style @media(min-width: 460px){.navbar-brand div {display:inline;}}
   head
   body
     div(class="bg-danger text-danger" id="alert" style="display:none; text-align:center; padding:15px; position:fixed; width:100%; background:rgba(250,220,220, 0.8)")
@@ -20,7 +21,7 @@ html(lang="en")
             span.icon-bar
           a.navbar-brand(href="/" style="float: none;")
             img(alt="ISKA" src="img/ISKA-Logo.png" style="max-height: 80px;")
-            | Queensland State Titles
+            div Queensland State Titles
         div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
           ul.nav.navbar-nav.navbar-right
             li
@@ -36,6 +37,8 @@ html(lang="en")
   body
     footer(style="text-align:center; display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0")
       div.container
-        p Website developed by&nbsp;
-          a(href="http://publicarray.com") Sebastian Schmidt | Design by Nathan Naumann
+        p
+          |Website developed by&nbsp;
+          a(href="http://publicarray.com") Sebastian Schmidt&nbsp;
+          || Design by Nathan Naumann
 html
