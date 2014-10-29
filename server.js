@@ -1,12 +1,9 @@
 // Copyright Sebastian Schmidt
-console.log("starting up...");
 var port = Number(process.env.PORT || 8080);
-console.log("Listening on port: " + port);
 var express = require('express');
 var app = express();
 var server = app.listen(port);
 var io = require('socket.io')(server);
-console.log("server running");
 var jade = require('jade');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
@@ -17,7 +14,6 @@ app.set('views', __dirname+'/views');
 app.set('view engine', 'jade');
 // db.run("DROP TABLE Events");
 db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
-console.log("all modules loaded");
 
 app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
@@ -144,3 +140,4 @@ app.use(function(req, res, next){
     return;
   }
 });
+console.log("Listening on port: " + port);
