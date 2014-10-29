@@ -64,6 +64,9 @@
     font-size: 20px;
     text-align: center;
 }
+.container{
+    padding: 0;
+}
 @media(min-width: 460px) {
     .navbar-brand div {
         display: inline;
