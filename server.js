@@ -16,9 +16,13 @@ if (cluster.isMaster) {
   var db = new sqlite3.Database('db.sqlite');
   var sanitizer = require('sanitizer');
   var auth = require('basic-auth');
+  var http = require('http');
+  var https = require('https');
   app.use(express.static('public'));
   app.set('views', __dirname+'/views');
   app.set('view engine', 'jade');
+  http.globalAgent.maxSockets = 1000;
+  https.globalAgent.maxSockets = 1000;
   // db.run("DROP TABLE Events");
   db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
 
