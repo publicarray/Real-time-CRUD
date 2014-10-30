@@ -7,9 +7,8 @@
   "url": "http://iska.publicarray.com/",
   "dependencies": {
     "basic-auth": "^1.0.0",
+    "dot-emc": "^0.1.2",
     "express": "^4.9.8",
-    "jade": "^1.7.0",
-    "jade-cache": "0.0.5",
     "sanitizer": "^0.1.2",
     "socket.io": "^1.1.0",
     "sqlite3": "^3.0.2"

@@ -1,0 +1,26 @@
+{{#def.include('../layout')}}
+{{##def.title:Ring {{? it.events[0]}}{{=it.events[0].ring}}{{?}}#}}
+{{##def.content:
+<h2>Ring {{? it.events[0]}}{{=it.events[0].ring}}{{?}}</h2>
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Ring</th>
+      <th># of Competitors</th>
+      <th>Event Finished</th>
+    </tr>
+  </thead>
+  <tbody id="data">
+  {{~it.events :val:index}}
+    <tr id="{{=val.id}}" {{? val.done === 1 }}class="success"{{?}}>
+      <td>{{=val.name}}</td>
+      <td>{{=val.ring}}</td>
+      <td>{{=val.competitors}}</td>
+      <td>{{? val.done === 0 }}No{{??}}Yes{{?}}</td>
+    </tr>
+  {{~}}
+  </tbody>
+</table>
+#}}
+{{##def.script:<script src="/js/client-ring.js"></script>#}}

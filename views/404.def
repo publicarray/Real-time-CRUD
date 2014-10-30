@@ -1,0 +1,11 @@
+{{#def.include('layout')}}
+{{##def.title:404#}}
+{{##def.content:
+<div class="row">
+  <div class="col-12">
+    <h1 class="text-center">Oh No</h1>
+    <h2 class="text-center">The page you are looking for cannot be found.</h2>
+    <h3 class="text-center">({{=it.url}})</h3>
+  </div>
+</div>
+#}}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>{{#def.title || "ISKA Queensland State Titles"}}</title>
+  <link href="/lib/flatly/bootstrap.min.css" rel="stylesheet">
+  <style>
+  .navbar-brand div {display:block; text-align:center;}
+  .navbar-brand img {display:block; padding:0 0 0 59px; margin:0 auto;}
+  .glyphicon { margin-right:5px;}
+  .rating .glyphicon {font-size: 22px;}
+  .rating {margin: 0}
+  @media(min-width: 570px){.navbar-brand div {display:inline; text-align:left;}
+  .rating {margin: 0 0 0 140px;}
+  .navbar-brand img {display:inline; margin:0; padding:0}}
+  {{#def.style || ""}}
+  </style>
+</head>
+
+<body>
+  <div class="text-danger text-center" id="alert" style="display:none; padding:15px; position:fixed; width:100%; background:rgba(250,250,250, 0.9); z-index:9999">
+  <strong>Oh No! You are disconnected!</strong>
+  <span>You lost connection to our server. Please check your Internet connection, Try again or Refresh the page.</span>
+  </div>
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/" style="float: none;">
+          <img alt="ISKA" src="img/ISKA-Logo.png" style="max-height: 80px;">
+          <div>Queensland State Titles&nbsp;</div>
+          <div>Gold Coast&nbsp;</div>
+          <br>
+          <div class="rating">
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+            <span class="glyphicon glyphicon-star-empty"></span>
+          </div>
+          <div>
+            <span class="glyphicon glyphicon-user">1,050,008</span>
+          </div>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/admin">Login</a>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    {{#def.content || ""}}
+  </div>
+
+  <footer class="text-center" style="display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0">
+  <div class="container">
+    <p>Website Developed by&nbsp;<a href="http://publicarray.com">Sebastian Schmidt&nbsp;</a>| Design by Nathan Naumann and Sebastian Schmidt</p>
+  </div>
+  </footer>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="lib/jquery-2.1.1.min.js"><\/script>')</script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script>if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/lib/bootstrap.min.js"><\/script>')}</script>
+  {{#def.script || ""}}
+</body>
+</html>

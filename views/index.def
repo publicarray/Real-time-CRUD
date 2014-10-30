@@ -1,0 +1,126 @@
+{{#def.include('layout')}}
+{{##def.style:.status .panel-title {font-family: 'Oswald', sans-serif; font-size: 72px; font-weight: bold; color: #fff;}#}}
+{{##def.content:
+<div class="row">
+  <a href="/TF.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-danger">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">TF</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/PS.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-warning">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">PS</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/SC.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-success">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">SC</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/SU.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-info">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">SU</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/CS.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-primary">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">CS</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/TW.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-danger">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">TW</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/TR.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-warning">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">TR</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/EF.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-success">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">EF</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/EW.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-info">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">EW</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/SS.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-primary">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">SS</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+  <a href="/SD.html">
+    <div class="col-xs-6 col-md-3">
+      <div class="panel status panel-danger">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">SD</h1>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Ring</th>
+      <th># of Competitors</th>
+      <th>Event Finished</th>
+    </tr>
+  </thead>
+  <tbody id="data">
+  {{~it.events :val:index}}
+    <tr id="{{=val.id}}" {{? val.done === 1 }}class="success"{{?}}>
+      <td>{{=val.name}}</td>
+      <td><a href="/{{=val.ring}}">{{=val.ring}}</a></td>
+      <td>{{=val.competitors}}</td>
+      <td>{{? val.done === 0 }}No{{??}}Yes{{?}}</td>
+    </tr>
+  {{~}}
+  </tbody>
+</table>
+#}}
+{{##def.script:<script src="/js/client.js"></script>#}}

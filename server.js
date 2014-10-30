@@ -3,8 +3,6 @@ var express = require('express');
 var app = express();
 var server = app.listen(port);
 var io = require('socket.io')(server);
-var jade = require('jade');
-var jcc = require('jade-cache');
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
 var sanitizer = require('sanitizer');
@@ -13,15 +11,12 @@ var http = require('http');
 var https = require('https');
 app.use(express.static('public'));
 app.set('views', __dirname+'/views');
-app.set('view engine', 'jade');
+app.engine("def", require("dot-emc").init({app: app}).__express);
+app.set("view engine", "def");
 http.globalAgent.maxSockets = 1000;
 https.globalAgent.maxSockets = 1000;
 // db.run("DROP TABLE Events");
 db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
-
-jcc.init(null, app, function() {
-  // all jade are compiled and cached
-});
 
 app.get('/', function (req, res) {
   db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
@@ -29,7 +24,6 @@ app.get('/', function (req, res) {
       console.err(err);
     } else {
       res.render('index', {events:row});
-      req.app.get('jade-compiled-templates')['/index']({events:row});
     }
   });
 });
@@ -41,7 +35,6 @@ app.get('/:id(\\d+)/', function (req, res) {
       console.err(err);
     } else {
       res.render('ring', {events:row});
-      req.app.get('jade-compiled-templates')['/ring/index']({events:row});
     }
   });
 });
@@ -58,14 +51,12 @@ app.get('/admin', function (req, res) {
       //time allowed to stay loged is 120s / time out(response time)
     } else if ((userTime+120) < now || userTime > (now+120)) {
       res.render('login', {message: 'The session has timed out.'});
-      req.app.get('jade-compiled-templates')['/login/index']({message: 'The session has timed out.'});
     } else {
       db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
         if (err) {
           console.err(err);
         } else {
           res.render('admin', {events: row});
-          req.app.get('jade-compiled-templates')['/admin/index']({events:row});
         }
       });
     }
