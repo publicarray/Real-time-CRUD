@@ -6,12 +6,11 @@ var io = require('socket.io')(server);
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('db.sqlite');
 var sanitizer = require('sanitizer');
-var auth = require('basic-auth');
 var http = require('http');
 var https = require('https');
 app.use(express.static('public'));
 app.set('views', __dirname+'/views');
-app.engine("def", require("dot-emc").init({app: app}).__express);
+app.engine("def", require("dot-emc").init({app: app}).renderFile);
 app.set("view engine", "def");
 http.globalAgent.maxSockets = 1000;
 https.globalAgent.maxSockets = 1000;
@@ -63,6 +62,11 @@ app.get('/admin', function (req, res) {
   } else {
     res.render('login');
   }
+});
+
+app.get('/events/:id', function (req, res) {
+  var id = escapeHtml(req.param('id'));
+  res.render('events/'+id);
 });
 
 app.get('/data', function (req, res) {
@@ -144,5 +148,4 @@ app.use(function(req, res, next){
     return;
   }
 });
-console.log('Listening on port: ' + port);
-
+console.log('Listening on port: ' + port + '\nCTRL + C to shutdown');

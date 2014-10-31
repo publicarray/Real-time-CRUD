@@ -1,0 +1,25 @@
+{{#def.include('../layout')}}
+{{##def.title:Showmanship#}}
+{{##def.head:<link href="/style.css" rel="stylesheet">#}}
+{{##def.content:
+<div class="text-center">
+    <h1>Showmanship</h1>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="box">
+                <div class="icon">
+                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80px"></div>
+                    <div class="info">
+                        <div id="para">
+                            <p>This event is designed to allow the competitor/s to show off there talents within the prescribed time limit (4 minutes), you are not limited to how many people you wish to use but remember the ring area. The use of weapons, props, music etc. is allowed. The event can be of a serious or comical nature; entertainment and skill level are taken into account when scoring this event.</p>
+                            <p>Note: Minimum time of 1Minute and Maximum time 4 Minutes in elimination rounds</p>
+                            <p>Please note this is a team event, and will be judge as a combine team effort</p>
+                            <p>He/she may use other students/competitors, which may be older or younger within their category E.g. under 12 competitor must be 12 years or younger, but any assistance students/competitors can be of any age.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#}}

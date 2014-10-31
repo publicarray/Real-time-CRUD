@@ -2,7 +2,7 @@
 {{##def.style:.status .panel-title {font-family: 'Oswald', sans-serif; font-size: 72px; font-weight: bold; color: #fff;}#}}
 {{##def.content:
 <div class="row">
-  <a href="/TF.html">
+  <a href="events/TF">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-danger">
         <div class="panel-heading">
@@ -11,7 +11,7 @@
       </div>
     </div>
   </a>
-  <a href="/PS.html">
+  <a href="events/PS">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-warning">
         <div class="panel-heading">
@@ -20,7 +20,7 @@
       </div>
     </div>
   </a>
-  <a href="/SC.html">
+  <a href="events/SC">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-success">
         <div class="panel-heading">
@@ -29,7 +29,7 @@
       </div>
     </div>
   </a>
-  <a href="/SU.html">
+  <a href="events/SU">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-info">
         <div class="panel-heading">
@@ -38,7 +38,7 @@
       </div>
     </div>
   </a>
-  <a href="/CS.html">
+  <a href="events/CS">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-primary">
         <div class="panel-heading">
@@ -47,7 +47,7 @@
       </div>
     </div>
   </a>
-  <a href="/TW.html">
+  <a href="events/TW">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-danger">
         <div class="panel-heading">
@@ -56,7 +56,7 @@
       </div>
     </div>
   </a>
-  <a href="/TR.html">
+  <a href="events/TR">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-warning">
         <div class="panel-heading">
@@ -65,7 +65,7 @@
       </div>
     </div>
   </a>
-  <a href="/EF.html">
+  <a href="events/EF">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-success">
         <div class="panel-heading">
@@ -74,7 +74,7 @@
       </div>
     </div>
   </a>
-  <a href="/EW.html">
+  <a href="events/EW">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-info">
         <div class="panel-heading">
@@ -83,7 +83,7 @@
       </div>
     </div>
   </a>
-  <a href="/SS.html">
+  <a href="events/SS">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-primary">
         <div class="panel-heading">
@@ -92,7 +92,7 @@
       </div>
     </div>
   </a>
-  <a href="/SD.html">
+  <a href="events/SD">
     <div class="col-xs-6 col-md-3">
       <div class="panel status panel-danger">
         <div class="panel-heading">

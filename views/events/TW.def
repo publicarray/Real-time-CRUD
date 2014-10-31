@@ -1,0 +1,26 @@
+{{#def.include('../layout')}}
+{{##def.title:Traditional Weapons#}}
+{{##def.head:<link href="/style.css" rel="stylesheet">#}}
+{{##def.content:
+<div class="text-center">
+    <h1>Traditional Weapons</h1>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="box">
+                <div class="icon">
+                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80px"></div>
+                    <div class="info">
+                        <div id="para">
+                        <p>For safety, a competitor who unintentionally drops his/her weapon will be automatically disqualified. If a competitor recklessly or carelessly misuses his/her weapon, he/she may be penalized or disqualified.</p>
+                        <ul>
+                         <li>The referee should check all weapons for safety.</li>
+                         <li>Weapons are subject to referee’s approval (no sharp weapons allowed in youth divisions).</li>
+                         <li>The referee should make sure all spectators and competitors are at a safe distance from the performing competitor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#}}

@@ -1,0 +1,26 @@
+{{#def.include('../layout')}}
+{{##def.title:Extreme Musical Weapons#}}
+{{##def.head:<link href="/style.css" rel="stylesheet">#}}
+{{##def.content:
+<div class="text-center">
+    <h1>Extreme Musical Weapons</h1>
+    <div class="container">
+        <div class="col-sm-12">
+            <div class="box">
+                <div class="icon">
+                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80px"></div>
+                    <div class="info">
+                        <div id="para">
+                            <p>Note this event permits “Music” but is an option for those wishing not to use any type of music.</p>
+
+                            <p>The Extreme Division allow the competitor to perform any movements whether they originate from traditional or contemporary martial arts system or otherwise. However, (1) at least half of the form must originate from martial arts techniques, and (2) the competitor must execute at least one technique that involves an inverted move or greater than 360 degree spin. Emphasis is placed on the quality of the execution of techniques and movements, martial arts skills, balance, speed, power, degree of difficulty, and showmanship. In addition, only those movements that portray a definite offensive or defensive martial arts purpose, or are included to illustrate extreme flexibility or agility, are allowed. Inclusion of other movements, or the performance of a form or weapons form meeting the criteria above for a
+                            Traditional or Creative form, will result in a downgrade by the judges, or upon a unanimous vote of the judges, a “no score” as a form inappropriate for the division.</p>
+                            <p>(Commentary: As martial arts evolves from Traditional to Creative to Extreme, this category allows for the integration of techniques and movements from all martial art styles, gymnastics, acrobatics, dance and athletic disciplines. If a competitor wishes to participate in a division with moves not permitted in the Traditional and Creative Divisions but meeting the guidelines described here, the competitor should compete in the Extreme Division)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+#}}

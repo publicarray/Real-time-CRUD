@@ -6,7 +6,6 @@
   "repository": "https://github.com/publicarray/RESTfull-sockets",
   "url": "http://iska.publicarray.com/",
   "dependencies": {
-    "basic-auth": "^1.0.0",
     "dot-emc": "^0.1.2",
     "express": "^4.9.8",
     "sanitizer": "^0.1.2",

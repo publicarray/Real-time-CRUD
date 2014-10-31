@@ -16,6 +16,7 @@
   .navbar-brand img {display:inline; margin:0; padding:0}}
   {{#def.style || ""}}
   </style>
+  {{#def.head || ""}}
 </head>
 
 <body>
@@ -33,7 +34,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/" style="float: none;">
-          <img alt="ISKA" src="img/ISKA-Logo.png" style="max-height: 80px;">
+          <img alt="ISKA" src="/img/ISKA-Logo.png" style="max-height: 80px;">
           <div>Queensland State Titles&nbsp;</div>
           <div>Gold Coast&nbsp;</div>
           <br>
