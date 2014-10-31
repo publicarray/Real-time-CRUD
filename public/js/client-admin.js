@@ -14,8 +14,8 @@ function checkbox (id) {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
-    var order = line.find('td:nth-child(5)').text();
-    socket.emit('update', id, name, ring, comp, done, order);
+    var orderNo = line.find('td:nth-child(5)').text();
+    socket.emit('update', id, name, ring, comp, orderNo, done);
   });
 }
 
@@ -33,7 +33,7 @@ function editBtn(id) {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
-    var order = line.find('td:nth-child(5)').text();
+    var orderNo = line.find('td:nth-child(5)').text();
     var done = 0;
     if (checkbox.prop('checked')) {
       done = 1;
@@ -43,7 +43,7 @@ function editBtn(id) {
     $('#nameModel').val(name);
     $('#ringModel').val(ring);
     $('#compModel').val(comp);
-    $('#orderModel').val(order);
+    $('#orderModel').val(orderNo);
     $('#doneModel').text(done);
   });
 }
@@ -57,7 +57,7 @@ function display (data) {
     done = '<input type="checkbox" checked>';
     style = 'class="success"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' +data.order+ '</td><td>' + done + '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + data.orderNo + '</td><td>' + done + '</td><td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   return htmlStr;
 }
 
@@ -74,8 +74,8 @@ $(document).ready(function() {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
-    var order = line.find('td:nth-child(5)').text();
-    socket.emit('update', id, name, ring, comp, order, done);
+    var orderNo = line.find('td:nth-child(5)').text();
+    socket.emit('update', id, name, ring, comp, orderNo, done);
   });
 
   $('.btn-danger').on('click', function() {
@@ -93,7 +93,7 @@ $(document).ready(function() {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
-    var order = line.find('td:nth-child(5)').text();
+    var orderNo = line.find('td:nth-child(5)').text();
     var done = 0;
     if (checkbox.prop('checked')) {
       done = 1;
@@ -102,7 +102,7 @@ $(document).ready(function() {
     $('#nameModel').val(name);
     $('#ringModel').val(ring);
     $('#compModel').val(comp);
-    $('#orderModel').val(order);
+    $('#orderModel').val(orderNo);
     $('#doneModel').text(done);
   });
 
@@ -156,9 +156,9 @@ function edit() {
   var name = $('#nameModel').val();
   var ring = $('#ringModel').val();
   var comp = $('#compModel').val();
-  var order = $('#orderModel').val();
+  var orderNo = $('#orderModel').val();
   var done = $('#doneModel').text();
-  socket.emit('update', id, name, ring, comp, order, done);
+  socket.emit('update', id, name, ring, comp, orderNo, done);
   reset();
 }
 

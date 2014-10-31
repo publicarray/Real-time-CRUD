@@ -79,31 +79,31 @@ app.get('/data', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.on('add', function (name, ring, comp, order, done) {
+  socket.on('add', function (name, ring, comp, orderNo, done) {
     name = escapeHtml(name);
     ring = escapeHtml(ring);
     comp = escapeHtml(comp);
-    order = escapeHtml(order);
+    orderNo = escapeHtml(orderNo);
     done = escapeHtml(done);
-    db.run("INSERT INTO Events VALUES (null, ?, ?, ?, ?, ?)", [name, ring, comp, order, done], function (err, row) {
+    db.run("INSERT INTO Events VALUES (null, ?, ?, ?, ?, ?)", [name, ring, comp, orderNo, done], function (err, row) {
       if (err) {
         console.err(err);
       } else {
-        var data = {'id':this.lastID, 'name':name, 'ring':ring, 'comp':comp, 'order':order, 'done':done};
+        var data = {'id':this.lastID, 'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
         io.emit('add', data);
         console.log('Created', data);
       }
     });
   });
-  socket.on('update', function (id, name, ring, comp, order, done) {
+  socket.on('update', function (id, name, ring, comp, orderNo, done) {
     id = escapeHtml(id);
     name = escapeHtml(name);
     ring = escapeHtml(ring);
     comp = escapeHtml(comp);
-    order = escapeHtml(order);
+    orderNo = escapeHtml(orderNo);
     done = escapeHtml(done);
-    var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'order':order, 'done':done};
-    db.run("UPDATE Events SET name = ?, ring = ?, competitors = ?, orderNo = ?, done = ? WHERE id = ?", [name, ring, comp, order, done, id], function (err, row) {
+    var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
+    db.run("UPDATE Events SET name = ?, ring = ?, competitors = ?, orderNo = ?, done = ? WHERE id = ?", [name, ring, comp, orderNo, done, id], function (err, row) {
       if (err) {
         console.err(err);
       } else {

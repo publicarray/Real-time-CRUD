@@ -27,7 +27,7 @@
             <td><input type="number" id="ringModel" placeholder="Enter Ring" class="form-control"></td>
             <td><input type="number" id="compModel" placeholder="Enter # of Competitors" class="form-control"></td>
             <td><input type="number" id="orderModel" placeholder="Enter Order Priority" class="form-control"></td>
-            <span id="doneModel" style="display:none;"></span>
+            <td style="display:none;"><span id="doneModel"></span></td>
           </div>
          </tbody>
        </table>
