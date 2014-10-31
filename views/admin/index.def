@@ -77,5 +77,9 @@
     </tr>
   </tbody>
 </table>
+<div class="form-inline">
+  <input type="number" id="users" placeholder="Enter no of Competitors" class="form-control">
+  <button class="btn btn-primary" type="button" onclick="updateUsers()">Update</button>
+</div>
 #}}
 {{##def.script:<script src="/js/client-admin.js"></script>#}}

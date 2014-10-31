@@ -8,6 +8,7 @@ var db = new sqlite3.Database('db.sqlite');
 var sanitizer = require('sanitizer');
 var http = require('http');
 var https = require('https');
+var numUsers = 0;
 app.use(express.static('public'));
 app.set('views', __dirname+'/views');
 app.engine("def", require("dot-emc").init({app: app}).renderFile);
@@ -22,7 +23,7 @@ app.get('/', function (req, res) {
     if (err) {
       console.err(err);
     } else {
-      res.render('index', {events:row});
+      res.render('index', {events:row, users:numUsers});
     }
   });
 });
@@ -33,7 +34,7 @@ app.get('/:id(\\d+)/', function (req, res) {
     if (err) {
       console.err(err);
     } else {
-      res.render('ring', {events:row});
+      res.render('ring', {events:row, users:numUsers});
     }
   });
 });
@@ -45,28 +46,27 @@ app.get('/admin', function (req, res) {
     user = JSON.parse(escapeHtml(user));
     var userTime = (parseInt(user.time));
     if (!user || user.name !== 'admin' || user.pass !== 'password') {
-      res.render('login', {message: 'The user name or password you entered is incorrect.'});
-      req.app.get('jade-compiled-templates')['/login/index']({message: 'The user name or password you entered is incorrect.'});
+      res.render('login', {message: 'The user name or password you entered is incorrect.', users:numUsers});
       //time allowed to stay loged is 120s / time out(response time)
     } else if ((userTime+120) < now || userTime > (now+120)) {
-      res.render('login', {message: 'The session has timed out.'});
+      res.render('login', {message: 'The session has timed out.', users:numUsers});
     } else {
       db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
         if (err) {
           console.err(err);
         } else {
-          res.render('admin', {events: row});
+          res.render('admin', {events: row, users:numUsers});
         }
       });
     }
   } else {
-    res.render('login');
+    res.render('login', {users:numUsers});
   }
 });
 
 app.get('/events/:id', function (req, res) {
   var id = escapeHtml(req.param('id'));
-  res.render('events/'+id);
+  res.render('events/'+id, {users:numUsers});
 });
 
 app.get('/data', function (req, res) {
@@ -121,6 +121,9 @@ io.on('connection', function (socket) {
       }
     io.emit('delete', id);
     });
+  });
+  socket.on('updateUsers', function (num) {
+    numUsers = parseInt(num);
   });
 });
 

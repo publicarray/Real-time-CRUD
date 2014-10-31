@@ -45,9 +45,11 @@
             <span class="glyphicon glyphicon-star-empty"></span>
             <span class="glyphicon glyphicon-star-empty"></span>
           </div>
+          {{? it.users}}
           <div>
-            <span class="glyphicon glyphicon-user">1,050,008</span>
+            <span class="glyphicon glyphicon-user">{{=it.users}}</span>
           </div>
+          {{?}}
         </a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

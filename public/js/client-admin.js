@@ -152,3 +152,9 @@ function edit() {
   socket.emit('update', id, name, ring, comp, done);
   reset();
 }
+
+function updateUsers() {
+  var num = $('#users').val();
+  console.log(num);
+  socket.emit('updateUsers', parseInt(num));
+}
