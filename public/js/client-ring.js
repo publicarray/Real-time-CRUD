@@ -20,8 +20,6 @@ $(document).ready(function() {
 
   socket.on('add', function (data) {
     if (data.ring === ring) {
-      console.log(ring)
-      console.log(data.ring)
       $('#data').append(display(data));
     }
   });
