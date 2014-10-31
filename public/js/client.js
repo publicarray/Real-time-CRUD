@@ -1,4 +1,7 @@
 // Copyright Sebastian Schmidt
+var table = document.getElementById('table');
+var sort = new Tablesort(table);
+
 function display (data) {
   var done = parseInt(data.done);
   var style = '';
@@ -17,9 +20,11 @@ $(document).ready(function() {
 
   socket.on('add', function (data) {
     $('#data').append(display(data));
+    sort.refresh();
   });
   socket.on('update', function (data) {
     $('#'+data.id).replaceWith(display(data));
+    sort.refresh();
   });
   socket.on('delete', function (data) {
     $('#'+data).remove();

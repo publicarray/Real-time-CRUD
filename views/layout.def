@@ -46,6 +46,7 @@
             <span class="glyphicon glyphicon-star-empty"></span>
           </div>
           {{? it.users}}
+          &nbsp;
           <div>
             <span class="glyphicon glyphicon-user">{{=it.users}}</span>
           </div>

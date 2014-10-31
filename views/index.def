@@ -1,5 +1,6 @@
 {{#def.include('layout')}}
 {{##def.style:.status .panel-title {font-family: 'Oswald', sans-serif; font-size: 72px; font-weight: bold; color: #fff;}#}}
+{{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
 <div class="row">
   <a href="events/TF">
@@ -102,7 +103,7 @@
     </div>
   </a>
 </div>
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped" id="table">
   <thead>
     <tr>
       <th>Event</th>
@@ -123,4 +124,7 @@
   </tbody>
 </table>
 #}}
-{{##def.script:<script src="/js/client.js"></script>#}}
+{{##def.script:
+<script src='/lib/tablesort.min.js'></script>
+<script src="/js/client.js"></script>
+#}}

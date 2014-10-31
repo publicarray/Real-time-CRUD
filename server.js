@@ -15,11 +15,10 @@ app.engine("def", require("dot-emc").init({app: app}).renderFile);
 app.set("view engine", "def");
 http.globalAgent.maxSockets = 1000;
 https.globalAgent.maxSockets = 1000;
-// db.run("DROP TABLE Events");
-db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN);");
+db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN, orderNo INTEGER);");
 
 app.get('/', function (req, res) {
-  db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+  db.all("SELECT * FROM Events ORDER BY orderNo DESC, ring ASC, done DESC", function (err, row) {
     if (err) {
       console.err(err);
     } else {
@@ -30,7 +29,7 @@ app.get('/', function (req, res) {
 
 app.get('/:id(\\d+)/', function (req, res) {
   var ring = escapeHtml(req.param('id'));
-  db.all("SELECT * FROM Events WHERE ring = ? ORDER BY ring ASC, done DESC", [ring], function (err, row) {
+  db.all("SELECT * FROM Events WHERE ring = ? ORDER BY orderNo DESC, ring ASC, done DESC", [ring], function (err, row) {
     if (err) {
       console.err(err);
     } else {
@@ -51,11 +50,11 @@ app.get('/admin', function (req, res) {
     } else if ((userTime+120) < now || userTime > (now+120)) {
       res.render('login', {message: 'The session has timed out.', users:numUsers});
     } else {
-      db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+      db.all("SELECT * FROM Events ORDER BY orderNo DESC, ring ASC, done DESC", function (err, row) {
         if (err) {
           console.err(err);
         } else {
-          res.render('admin', {events: row, users:numUsers});
+          res.render('admin', {events:row, users:numUsers});
         }
       });
     }
@@ -70,7 +69,7 @@ app.get('/events/:id(CS|EF|EW|PS|SC|SD|SS|SU|TF|TR|TW)', function (req, res) {
 });
 
 app.get('/data', function (req, res) {
-  db.all("SELECT * FROM Events ORDER BY ring ASC, done DESC", function (err, row) {
+  db.all("SELECT * FROM Events ORDER BY orderNo DESC, ring ASC, done DESC", function (err, row) {
     if (err) {
       console.err(err);
     } else {
@@ -80,29 +79,31 @@ app.get('/data', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-  socket.on('add', function (name, ring, comp, done) {
+  socket.on('add', function (name, ring, comp, order, done) {
     name = escapeHtml(name);
     ring = escapeHtml(ring);
     comp = escapeHtml(comp);
+    order = escapeHtml(order);
     done = escapeHtml(done);
-    db.run("INSERT INTO Events VALUES (null, ?, ?, ?, ?)", [name, ring, comp, done], function (err, row) {
+    db.run("INSERT INTO Events VALUES (null, ?, ?, ?, ?, ?)", [name, ring, comp, order, done], function (err, row) {
       if (err) {
         console.err(err);
       } else {
-        var data = {'id':this.lastID ,'name':name, 'ring':ring, 'comp':comp, 'done':done};
+        var data = {'id':this.lastID, 'name':name, 'ring':ring, 'comp':comp, 'order':order, 'done':done};
         io.emit('add', data);
         console.log('Created', data);
       }
     });
   });
-  socket.on('update', function (id, name, ring, comp, done) {
+  socket.on('update', function (id, name, ring, comp, order, done) {
     id = escapeHtml(id);
     name = escapeHtml(name);
     ring = escapeHtml(ring);
     comp = escapeHtml(comp);
+    order = escapeHtml(order);
     done = escapeHtml(done);
-    var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'done':done};
-    db.run("UPDATE Events SET name = ?, ring = ?, competitors=?, done = ? WHERE id = ?", [name, ring, comp, done, id], function (err, row) {
+    var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'order':order, 'done':done};
+    db.run("UPDATE Events SET name = ?, ring = ?, competitors = ?, orderNo = ?, done = ? WHERE id = ?", [name, ring, comp, order, done, id], function (err, row) {
       if (err) {
         console.err(err);
       } else {

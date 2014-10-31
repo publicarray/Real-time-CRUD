@@ -14,7 +14,8 @@ function checkbox (id) {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
-    socket.emit('update', id, name, ring, comp, done);
+    var order = line.find('td:nth-child(5)').text();
+    socket.emit('update', id, name, ring, comp, done, order);
   });
 }
 
@@ -32,6 +33,7 @@ function editBtn(id) {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
+    var order = line.find('td:nth-child(5)').text();
     var done = 0;
     if (checkbox.prop('checked')) {
       done = 1;
@@ -41,6 +43,7 @@ function editBtn(id) {
     $('#nameModel').val(name);
     $('#ringModel').val(ring);
     $('#compModel').val(comp);
+    $('#orderModel').val(order);
     $('#doneModel').text(done);
   });
 }
@@ -54,7 +57,7 @@ function display (data) {
     done = '<input type="checkbox" checked>';
     style = 'class="success"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' +data.order+ '</td><td>' + done + '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   return htmlStr;
 }
 
@@ -71,7 +74,8 @@ $(document).ready(function() {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
-    socket.emit('update', id, name, ring, comp, done);
+    var order = line.find('td:nth-child(5)').text();
+    socket.emit('update', id, name, ring, comp, order, done);
   });
 
   $('.btn-danger').on('click', function() {
@@ -89,6 +93,7 @@ $(document).ready(function() {
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
     var comp = line.find('td:nth-child(4)').text();
+    var order = line.find('td:nth-child(5)').text();
     var done = 0;
     if (checkbox.prop('checked')) {
       done = 1;
@@ -97,6 +102,7 @@ $(document).ready(function() {
     $('#nameModel').val(name);
     $('#ringModel').val(ring);
     $('#compModel').val(comp);
+    $('#orderModel').val(order);
     $('#doneModel').text(done);
   });
 
@@ -105,10 +111,11 @@ $(document).ready(function() {
     if (document.getElementById('done').checked) {
       done = 1
     }
-    socket.emit('add', $('#name').val(), $('#ring').val(), $('#comp').val(), done);
+    socket.emit('add', $('#name').val(), $('#ring').val(), $('#comp').val(), $('#order').val(), done);
       $('#name').val('');
       $('#ring').val('');
       $('#comp').val('');
+      $('#order').val('');
       return false;
   });
 
@@ -140,6 +147,7 @@ function reset() {
   $('#nameModel').val('');
   $('#ringModel').val('');
   $('#compModel').val('');
+  $('#orderModel').val('');
   $('#doneModel').text('');
 }
 
@@ -148,13 +156,13 @@ function edit() {
   var name = $('#nameModel').val();
   var ring = $('#ringModel').val();
   var comp = $('#compModel').val();
+  var order = $('#orderModel').val();
   var done = $('#doneModel').text();
-  socket.emit('update', id, name, ring, comp, done);
+  socket.emit('update', id, name, ring, comp, order, done);
   reset();
 }
 
 function updateUsers() {
   var num = $('#users').val();
-  console.log(num);
   socket.emit('updateUsers', parseInt(num));
 }

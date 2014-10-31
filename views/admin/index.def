@@ -17,6 +17,7 @@
               <th>Event</th>
               <th>Ring</th>
               <th># of Competitors</th>
+              <th>Order Priority</th>
             </tr>
           </thead>
          <tbody>
@@ -25,6 +26,7 @@
             <td><input type="text" id="nameModel" placeholder="Enter Event" class="form-control"></td>
             <td><input type="number" id="ringModel" placeholder="Enter Ring" class="form-control"></td>
             <td><input type="number" id="compModel" placeholder="Enter # of Competitors" class="form-control"></td>
+            <td><input type="number" id="orderModel" placeholder="Enter Order Priority" class="form-control"></td>
             <span id="doneModel" style="display:none;"></span>
           </div>
          </tbody>
@@ -45,6 +47,7 @@
       <th>Event</th>
       <th>Ring</th>
       <th># of Competitors</th>
+      <th>Order Priority</th>
       <th>Event Finished</th>
       <th></th>
       <th></th>
@@ -57,6 +60,7 @@
       <td>{{=val.name}}</td>
       <td>{{=val.ring}}</td>
       <td>{{=val.competitors}}</td>
+      <td>{{=val.orderNo}}</td>
       <td><input type="checkbox"{{? val.done === 1 }} checked{{?}}></td>
       <td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td>
       <td><button class="btn btn-danger" type="button">Delete</button></td>
@@ -70,6 +74,7 @@
         <td><input type="text" id="name" placeholder="Enter Event" class="form-control"></td>
         <td><input type="number" id="ring" placeholder="Enter Ring" class="form-control"></td>
         <td><input type="number" id="comp" placeholder="Enter # of Competitors" class="form-control"></td>
+        <td><input type="number" id="order" placeholder="Enter Order Priority" class="form-control"></td>
         <td><input type="checkbox" id="done"></td>
         <td><button type="submit" class="btn btn-primary">Create</button></td>
         <td></td>
