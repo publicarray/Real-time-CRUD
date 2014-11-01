@@ -4,40 +4,36 @@
 {{##def.content:
 <div class="text-center">
     <h1>Sword Combat</h1>
-    <div class="container">
-        <div class="col-sm-12">
-            <div class="box">
-                <div class="icon">
-                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
-                    <div class="info">
-                        <div id="para">
-                            <h2>Sword Combat Rules</h2>
-                            <p>(The rules to sword combat are very similar to point sparring rules)</p>
-                            <ol>
-                                <li>All bouts are 1 minute for all ages</li>
-                                <li>First to 5 points or who ever is ahead when time permits, will be declare the winner.</li>
-                                <li>Bouts can only commence when the Centre Referee calls start.</li>
-                                <li>Bouts can only finish when the Centre Referee calls stop.</li>
-                                <li>The Centre referee is the only one who can start or stop bouts and issue warnings</li>
-                            </ol>
-                            <h2>Scoring points</h2>
-                            <ul>
-                                <li>Hit to the head scores two points</li>
-                                <li>All other parts of the body score one point, except you cannot score to the fingers and up to the wrist area. (Note: From above the wrist area is classified as body part)</li>
-                            </ul>
-                            <h2>Legal Scoring Techniques</h2>
-                            <p>You must keep the sword lower than your eye level when swinging or attacking your opponent. Stabbing type swings can only be done to the stomach area only.</p>
-                            <h2>Illegal Techniques</h2>
-                            <p>You cannot swing the sword back past eye level, as this would be classed as a baseball swing.
-                            In the event of two warnings this will lead to point over.
-                            No talking back to the Referee or disputing his/her final call.
-                            Control of the weapon at all times must be applied (no exception).</p>
-                            <h2>Equipment Required</h2>
-                            <p>Headgear, Mouth guard and Full Martial Arts Uniform must be worn (No Exceptions).</p>
-                            <h2>Note</h2>
-                            <p>Competitors must supply their own equipment for this event. Some promoters will supply equipment</p>
-                        </div>
-                    </div>
+    <div class="box">
+        <div class="icon">
+            <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
+            <div class="info">
+                <div id="para">
+                    <h2>Sword Combat Rules</h2>
+                    <p>(The rules to sword combat are very similar to point sparring rules)</p>
+                    <ol>
+                        <li>All bouts are 1 minute for all ages</li>
+                        <li>First to 5 points or who ever is ahead when time permits, will be declare the winner.</li>
+                        <li>Bouts can only commence when the Centre Referee calls start.</li>
+                        <li>Bouts can only finish when the Centre Referee calls stop.</li>
+                        <li>The Centre referee is the only one who can start or stop bouts and issue warnings</li>
+                    </ol>
+                    <h2>Scoring points</h2>
+                    <ul>
+                        <li>Hit to the head scores two points</li>
+                        <li>All other parts of the body score one point, except you cannot score to the fingers and up to the wrist area. (Note: From above the wrist area is classified as body part)</li>
+                    </ul>
+                    <h2>Legal Scoring Techniques</h2>
+                    <p>You must keep the sword lower than your eye level when swinging or attacking your opponent. Stabbing type swings can only be done to the stomach area only.</p>
+                    <h2>Illegal Techniques</h2>
+                    <p>You cannot swing the sword back past eye level, as this would be classed as a baseball swing.
+                    In the event of two warnings this will lead to point over.
+                    No talking back to the Referee or disputing his/her final call.
+                    Control of the weapon at all times must be applied (no exception).</p>
+                    <h2>Equipment Required</h2>
+                    <p>Headgear, Mouth guard and Full Martial Arts Uniform must be worn (No Exceptions).</p>
+                    <h2>Note</h2>
+                    <p>Competitors must supply their own equipment for this event. Some promoters will supply equipment</p>
                 </div>
             </div>
         </div>

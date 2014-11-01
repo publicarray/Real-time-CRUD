@@ -4,42 +4,38 @@
 {{##def.content:
 <div class="text-center">
     <h1>Sumo</h1>
-    <div class="container">
-        <div class="col-sm-12">
-            <div class="box">
-                <div class="icon">
-                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
-                    <div class="info">
-                        <div id="para">
-                            <h2>Sumo Rules</h2>
-                            <ol>
-                                <li>Bouts for competitor six years and under will be 1 minute long Note: A bout is equal to 1 point.)</li>
-                                <li>Bouts for competitors above six years will be 1 and half minutes long (Note: A bout is equal to 1 point.)</li>
-                                <li>Competitor/s who is ahead after best of three (3) scoring bouts or who ever is ahead when time permits, will be declared the winner</li>
-                                <li>Where weight categories are required, ensure your correct weight is recorded within the closet kilo rounded up on your entry form.<br>
-                                E.g. If you are 45.6kg recorded your weight on your form as 46kg not 45.6kg, as 46kg will be to the closet kilo.</li>
-                                <li>You may also on the day of the tournament be requiring to be weighed by the officials, before you can compete.</li>
-                                <li>Karate Kung fu or Taekwondo Gi with long sleeves must me worn for this event no short sleeves, T shirts or similar are not allowed.</li>
-                            </ol>
-                            <h2>Starting Position</h2>
-                            <p>Both competitors must start by doing the Sumo stomp and walking up to each other. They must face each other, and place both arms on their opponents opposite shoulders.
-                            Bouts can only commence when the Centre Referee calls start.
-                            Bouts can only finish when the Centre Referee calls stop.
-                            The Centre referee is the only one who can start or stop bouts and issue warnings.</p>
-                            <h2>Legal Scoring Techniques</h2>
-                            <p>You can push your opponent out of the ring; both feet of your opponent must be out to score a point.
-                            You can pull your opponent down by the shoulders or arms; a point will be scored, where any part of their body touch the mat, except their feet.</p>
-                            <h2>Illegal Techniques</h2>
-                            <p>No throws of any type allowed.
-                            No Pinching of opponent’s body allowed.
-                            No talking back to the Referee or disputing his/her final call.
-                            No charging at your opponent at any time.
-                            No Lifting of the leg of any type to an opponent.
-                            No Sweeping of the legs allowed.</p>
-                            <h2>Equipment Required</h2>
-                            <p>Headgear, Mouth guard and Full Martial Arts Uniform must be worn Karate Kung fu or Taekwondo Gi with long sleeves (No Exceptions).</p>
-                        </div>
-                    </div>
+    <div class="box">
+        <div class="icon">
+            <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
+            <div class="info">
+                <div id="para">
+                    <h2>Sumo Rules</h2>
+                    <ol>
+                        <li>Bouts for competitor six years and under will be 1 minute long Note: A bout is equal to 1 point.)</li>
+                        <li>Bouts for competitors above six years will be 1 and half minutes long (Note: A bout is equal to 1 point.)</li>
+                        <li>Competitor/s who is ahead after best of three (3) scoring bouts or who ever is ahead when time permits, will be declared the winner</li>
+                        <li>Where weight categories are required, ensure your correct weight is recorded within the closet kilo rounded up on your entry form.<br>
+                        E.g. If you are 45.6kg recorded your weight on your form as 46kg not 45.6kg, as 46kg will be to the closet kilo.</li>
+                        <li>You may also on the day of the tournament be requiring to be weighed by the officials, before you can compete.</li>
+                        <li>Karate Kung fu or Taekwondo Gi with long sleeves must me worn for this event no short sleeves, T shirts or similar are not allowed.</li>
+                    </ol>
+                    <h2>Starting Position</h2>
+                    <p>Both competitors must start by doing the Sumo stomp and walking up to each other. They must face each other, and place both arms on their opponents opposite shoulders.
+                    Bouts can only commence when the Centre Referee calls start.
+                    Bouts can only finish when the Centre Referee calls stop.
+                    The Centre referee is the only one who can start or stop bouts and issue warnings.</p>
+                    <h2>Legal Scoring Techniques</h2>
+                    <p>You can push your opponent out of the ring; both feet of your opponent must be out to score a point.
+                    You can pull your opponent down by the shoulders or arms; a point will be scored, where any part of their body touch the mat, except their feet.</p>
+                    <h2>Illegal Techniques</h2>
+                    <p>No throws of any type allowed.
+                    No Pinching of opponent’s body allowed.
+                    No talking back to the Referee or disputing his/her final call.
+                    No charging at your opponent at any time.
+                    No Lifting of the leg of any type to an opponent.
+                    No Sweeping of the legs allowed.</p>
+                    <h2>Equipment Required</h2>
+                    <p>Headgear, Mouth guard and Full Martial Arts Uniform must be worn Karate Kung fu or Taekwondo Gi with long sleeves (No Exceptions).</p>
                 </div>
             </div>
         </div>

@@ -4,18 +4,14 @@
 {{##def.content:
 <div class="text-center">
     <h1>Tricking</h1>
-    <div class="container">
-        <div class="col-sm-12">
-            <div class="box">
-                <div class="icon">
-                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
-                    <div class="info">
-                        <div id="para">
-                            <h2>Tricking Description</h2>
-                            <p>Tricking (short for “martial arts tricking”) is the informal name of a relatively new underground alternative sport movement, combining martial arts, gymnastics, and other activities to create an “aesthetic blend of flips, kicks, and twists.” Tricking incorporates a variety of moves from different arts such as flips from gymnastics, 540 kick from Taekwondo, butterfly twist from Wushu and double leg from Capoeira. Tricking is recognizable by its flashy kicks, complex flips and twists, and its highly stylized movements, which separate it from other arts. An individual who practises tricking is typically referred to as a “trickster” or “tricker”.</p>
-                            <p>The actual terminology used in tricking is a somewhat complex array of prefixes and suffixes denoting rotational degrees, stylistic flairs, setups, and technical arrangements. Words like swipe, gyro, cheat, pop, missleg, switch, swingthru and hyper are all common and denote variations to basic moves</p>
-                        </div>
-                    </div>
+    <div class="box">
+        <div class="icon">
+            <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
+            <div class="info">
+                <div id="para">
+                    <h2>Tricking Description</h2>
+                    <p>Tricking (short for “martial arts tricking”) is the informal name of a relatively new underground alternative sport movement, combining martial arts, gymnastics, and other activities to create an “aesthetic blend of flips, kicks, and twists.” Tricking incorporates a variety of moves from different arts such as flips from gymnastics, 540 kick from Taekwondo, butterfly twist from Wushu and double leg from Capoeira. Tricking is recognizable by its flashy kicks, complex flips and twists, and its highly stylized movements, which separate it from other arts. An individual who practises tricking is typically referred to as a “trickster” or “tricker”.</p>
+                    <p>The actual terminology used in tricking is a somewhat complex array of prefixes and suffixes denoting rotational degrees, stylistic flairs, setups, and technical arrangements. Words like swipe, gyro, cheat, pop, missleg, switch, swingthru and hyper are all common and denote variations to basic moves</p>
                 </div>
             </div>
         </div>
