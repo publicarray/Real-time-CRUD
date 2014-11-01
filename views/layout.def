@@ -55,11 +55,6 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Themes <b class="caret"></b></a>
-          <ul class="dropdown-menu" id="ThemeList">
-          </ul>
-        </li>
         <li>
           <a href="/admin">Login</a>
         </li>
@@ -82,18 +77,6 @@
   <script>window.jQuery || document.write('<script src="lib/jquery-2.1.1.min.js"><\/script>')</script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script>if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/lib/bootstrap.min.js"><\/script>')}</script>
-  <script src="/lib/jquery.cookie-1.4.1.min.js"></script>
-  <script src="/lib/themeswitcher.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#ThemeList').bootstrapThemeSwitcher({defaultCssFile: '/lib/flatly/bootstrap.min.css'});
-      var themeName = $.cookie("themeName");
-      var themePath = $.cookie("themePath");
-      if (themeName !== undefined) {
-        $().bootstrapThemeSwitcher('loadThemeFromCookie');
-      }
-    });
-  </script>
   {{#def.script || ""}}
 </body>
 </html>
