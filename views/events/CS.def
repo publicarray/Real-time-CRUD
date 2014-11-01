@@ -8,7 +8,7 @@
         <div class="col-sm-12">
             <div class="box">
                 <div class="icon">
-                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80px"></div>
+                    <div class="image"><img src="/img/icon.jpg" alt="kata" class="img-circle" width="80"></div>
                     <div class="info">
                         <div id="para">
                             <h2>Winning of a Bout</h2>

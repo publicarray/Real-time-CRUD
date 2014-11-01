@@ -4,16 +4,18 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>{{#def.title || "ISKA Queensland State Titles"}}</title>
-  <link href="/lib/flatly/bootstrap.min.css" rel="stylesheet">
+  <meta name="author" content="Sebastian Schmidt">
+  <link href="/lib/flatly/bootstrap.min.css" id="bootstrapTheme" rel="stylesheet">
   <style>
-  .navbar-brand div {display:block; text-align:center;}
-  .navbar-brand img {display:block; padding:0 0 0 59px; margin:0 auto;}
-  .glyphicon { margin-right:5px;}
-  .rating .glyphicon {font-size: 22px;}
-  .rating {margin: 0}
-  @media(min-width: 570px){.navbar-brand div {display:inline; text-align:left;}
-  .rating {margin: 0 0 0 140px;}
-  .navbar-brand img {display:inline; margin:0; padding:0}}
+  .navbar-header {display:block; text-align:center; width: 70%; margin:0 auto!important;}
+  .navbar-collapse {margin:0 auto!important;}
+  .navbar-header p{margin: 0;}
+  .navbar-toggle {position: absolute; right: 10px;}
+  .glyphicon {margin-right:5px;}
+  .rating .glyphicon {font-size:22px;}
+  .rating {margin:0;}
+  .navbar-link:hover{color: #ffc829!important;}
+  @media(min-width: 768px){.navbar-header {text-align:left;} .navbar-header p, .navbar-header div{display:inline-block;}}
   {{#def.style || ""}}
   </style>
   {{#def.head || ""}}
@@ -35,26 +37,29 @@
         </button>
         <a class="navbar-brand" href="/" style="float: none;">
           <img alt="ISKA" src="/img/ISKA-Logo.png" style="max-height: 80px;">
-          <div>Queensland State Titles&nbsp;</div>
-          <div>Gold Coast&nbsp;</div>
+          <p>Queensland State Titles&nbsp;</p>
+          <p>Gold Coast&nbsp;</p>
           <br>
-          <div class="rating">
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-            <span class="glyphicon glyphicon-star-empty"></span>
-          </div>
+        </a>
+        <div class="rating navbar-link">
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star-empty"></span>
+          <span class="glyphicon glyphicon-star-empty"></span>
           {{? it.users}}
           &nbsp;
-          <div>
-            <span class="glyphicon glyphicon-user">{{=it.users}}</span>
-          </div>
+          <span class="glyphicon glyphicon-user">{{=it.users}}</span>
           {{?}}
-        </a>
+        </div>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Themes <b class="caret"></b></a>
+          <ul class="dropdown-menu" id="ThemeList">
+          </ul>
+        </li>
         <li>
           <a href="/admin">Login</a>
         </li>
@@ -67,7 +72,7 @@
     {{#def.content || ""}}
   </div>
 
-  <footer class="text-center" style="display:block; background:#f7f7f9; border-top:1px solid #e1e1e8; margin:40px 0 0 0; padding:40px 0">
+  <footer class="text-center well" style="display:block; border-top:1px solid rgba(113, 113, 116, .2); margin:40px 0 0 0; padding:40px 0; border-radius: 0;">
   <div class="container">
     <p>Website Developed by&nbsp;<a href="http://publicarray.com">Sebastian Schmidt&nbsp;</a>| Design by Nathan Naumann and Sebastian Schmidt</p>
   </div>
@@ -77,6 +82,14 @@
   <script>window.jQuery || document.write('<script src="lib/jquery-2.1.1.min.js"><\/script>')</script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script>if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/lib/bootstrap.min.js"><\/script>')}</script>
+  <script src="/lib/jquery.cookie-1.4.1.min.js"></script>
+  <script src="/lib/themeswitcher.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#ThemeList').bootstrapThemeSwitcher();
+      $().bootstrapThemeSwitcher('loadThemeFromCookie');
+    });
+  </script>
   {{#def.script || ""}}
 </body>
 </html>
