@@ -86,9 +86,12 @@
   <script src="/lib/themeswitcher.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('#ThemeList').bootstrapThemeSwitcher();
-      $().bootstrapThemeSwitcher('switchTheme', 'default', '/lib/flatly/bootstrap.min.css');
-      $().bootstrapThemeSwitcher('loadThemeFromCookie');
+      $('#ThemeList').bootstrapThemeSwitcher({defaultCssFile: '/lib/flatly/bootstrap.min.css'});
+      var themeName = $.cookie("themeName");
+      var themePath = $.cookie("themePath");
+      if (themeName !== undefined) {
+        $().bootstrapThemeSwitcher('loadThemeFromCookie');
+      }
     });
   </script>
   {{#def.script || ""}}
