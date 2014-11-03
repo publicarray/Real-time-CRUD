@@ -1,52 +1,6 @@
 // Copyright Sebastian Schmidt
 var socket = io();
-
-function checkbox (id) {
-  $(':checkbox', $('#'+id)).change(function(){
-    var checkbox = $(this);
-    var line = $(this).parent().parent();
-    var done = 0;
-    if (checkbox.prop('checked')) {
-      done = 1;
-    }
-    // potentialy dangerous
-    $('#editModalLabel').text('Edit '+name);
-    var name = line.find('td:nth-child(2)').text();
-    var ring = line.find('td:nth-child(3)').text();
-    var comp = line.find('td:nth-child(4)').text();
-    var orderNo = line.find('td:nth-child(5)').text();
-    socket.emit('update', id, name, ring, comp, orderNo, done);
-  });
-}
-
-function delBtn (id) {
-  $('.btn-danger', $('#'+id)).on('click', function(){
-    socket.emit('delete', id);
-  });
-}
-
-function editBtn(id) {
-   $('.modelBtn', $('#'+id)).on('click', function() {
-    var line = $(this).parent().parent();
-    var checkbox = line.find(':checkbox');
-    // potentialy dangerous
-    var name = line.find('td:nth-child(2)').text();
-    var ring = line.find('td:nth-child(3)').text();
-    var comp = line.find('td:nth-child(4)').text();
-    var orderNo = line.find('td:nth-child(5)').text();
-    var done = 0;
-    if (checkbox.prop('checked')) {
-      done = 1;
-    }
-    $('#editModalLabel').text('Edit '+name);
-    $('#idModel').text(id);
-    $('#nameModel').val(name);
-    $('#ringModel').val(ring);
-    $('#compModel').val(comp);
-    $('#orderModel').val(orderNo);
-    $('#doneModel').text(done);
-  });
-}
+var doc = document;
 
 function display (data) {
   var done = parseInt(data.done);
@@ -57,12 +11,37 @@ function display (data) {
     done = '<input type="checkbox" checked>';
     style = 'class="success"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + data.orderNo + '</td><td>' + done + '</td><td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + data.orderNo + '</td><td>' + done + '</td><td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal" onclick="modalData(this)">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
   return htmlStr;
 }
 
+function reset() {
+  doc.getElementById('idModel').textContent = '';
+  doc.getElementById('nameModel').value = '';
+  doc.getElementById('ringModel').value = '';
+  doc.getElementById('compModel').value = '';
+  doc.getElementById('orderModel').value = '';
+  doc.getElementById('doneModel').textContent = '';
+}
+
+function edit() {
+  var id = doc.getElementById('idModel').textContent;
+  var name = doc.getElementById('nameModel').value;
+  var ring = doc.getElementById('ringModel').value;
+  var comp = doc.getElementById('compModel').value;
+  var orderNo = doc.getElementById('orderModel').value;
+  var done = doc.getElementById('doneModel').textContent;
+  socket.emit('update', id, name, ring, comp, orderNo, done);
+  reset();
+}
+
+function updateUsers() {
+  var num = doc.getElementById('users').value;
+  socket.emit('updateUsers', parseInt(num));
+}
+
 $(document).ready(function() {
-  $(':checkbox', $('#data')).change(function(){
+  $('#data').on('change', ':checkbox', function() {
     var checkbox = $(this);
     var line = $(this).parent().parent();
     var done = 0;
@@ -78,14 +57,37 @@ $(document).ready(function() {
     socket.emit('update', id, name, ring, comp, orderNo, done);
   });
 
-  $('.btn-danger').on('click', function() {
+  $('#data').on('click', '.btn-danger', function() {
     var line = $(this).parent().parent();
     // potentialy dangerous
     var id = line.find('td:nth-child(1)').text();
     socket.emit('delete', id);
   });
 
-  $('.modelBtn').on('click', function() {
+  // function modalData(e) {
+  //   // var line  = e.parentNode.innerHTML = 'stuff';
+  //   // var line  = e.parentNode.parentNode;
+  //   var line = $(e).parent().parent();
+  //   var checkbox = line.find(':checkbox');
+  //   // potentialy dangerous
+  //   var id = line.find('td:nth-child(1)').text();
+  //   var name = line.find('td:nth-child(2)').text();
+  //   var ring = line.find('td:nth-child(3)').text();
+  //   var comp = line.find('td:nth-child(4)').text();
+  //   var orderNo = line.find('td:nth-child(5)').text();
+  //   var done = 0;
+  //   if (checkbox.prop('checked')) {
+  //     done = 1;
+  //   }
+  //   doc.getElementById('idModel').textContent = id;
+  //   doc.getElementById('nameModel').value = name;
+  //   doc.getElementById('ringModel').value = ring;
+  //   doc.getElementById('compModel').value = comp;
+  //   doc.getElementById('orderModel').value = orderNo;
+  //   doc.getElementById('doneModel').textContent = done;
+  // }
+
+  $('#data').on('click', '.modelBtn', function() {
     var line = $(this).parent().parent();
     var checkbox = line.find(':checkbox');
     // potentialy dangerous
@@ -98,12 +100,12 @@ $(document).ready(function() {
     if (checkbox.prop('checked')) {
       done = 1;
     }
-    $('#idModel').text(id);
-    $('#nameModel').val(name);
-    $('#ringModel').val(ring);
-    $('#compModel').val(comp);
-    $('#orderModel').val(orderNo);
-    $('#doneModel').text(done);
+    doc.getElementById('idModel').textContent = id;
+    doc.getElementById('nameModel').value = name;
+    doc.getElementById('ringModel').value = ring;
+    doc.getElementById('compModel').value = comp;
+    doc.getElementById('orderModel').value = orderNo;
+    doc.getElementById('doneModel').textContent = done;
   });
 
   $('#create').submit(function() {
@@ -112,27 +114,21 @@ $(document).ready(function() {
       done = 1
     }
     socket.emit('add', $('#name').val(), $('#ring').val(), $('#comp').val(), $('#order').val(), done);
-      $('#name').val('');
-      $('#ring').val('');
-      $('#comp').val('');
-      $('#order').val('');
+      doc.getElementById('name').value = '';
+      doc.getElementById('ring').value = '';
+      doc.getElementById('comp').value = '';
+      doc.getElementById('order').value = '';
       return false;
   });
 
   socket.on('add', function (data) {
-    $('#data').append(display(data));
-    checkbox(data.id);
-    delBtn(data.id);
-    editBtn(data.id);
+    doc.getElementById('data').innerHTML += (display(data));
   });
   socket.on('update', function (data) {
-    $('#'+data.id).replaceWith(display(data));
-    checkbox(data.id);
-    delBtn(data.id);
-    editBtn(data.id);
+    doc.getElementById(data.id).outerHTML = (display(data));
   });
   socket.on('delete', function (data) {
-    $('#'+data).remove('#'+data);
+    doc.getElementById(data).remove();
   });
   socket.on('disconnect',function() {
     $('#alert').fadeIn(1000);
@@ -141,28 +137,3 @@ $(document).ready(function() {
     $('#alert').fadeOut(1000);
   });
 });
-
-function reset() {
-  $('#idModel').text('');
-  $('#nameModel').val('');
-  $('#ringModel').val('');
-  $('#compModel').val('');
-  $('#orderModel').val('');
-  $('#doneModel').text('');
-}
-
-function edit() {
-  var id = $('#idModel').text();
-  var name = $('#nameModel').val();
-  var ring = $('#ringModel').val();
-  var comp = $('#compModel').val();
-  var orderNo = $('#orderModel').val();
-  var done = $('#doneModel').text();
-  socket.emit('update', id, name, ring, comp, orderNo, done);
-  reset();
-}
-
-function updateUsers() {
-  var num = $('#users').val();
-  socket.emit('updateUsers', parseInt(num));
-}
