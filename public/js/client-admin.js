@@ -35,11 +35,6 @@ function edit() {
   reset();
 }
 
-function updateUsers() {
-  var num = doc.getElementById('users').value;
-  socket.emit('updateUsers', parseInt(num));
-}
-
 $(document).ready(function() {
   $('#data').on('change', ':checkbox', function() {
     var checkbox = $(this);

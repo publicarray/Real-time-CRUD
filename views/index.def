@@ -1,114 +1,13 @@
 {{#def.include('layout')}}
-{{##def.style:.status .panel-title{font-family: 'Oswald', sans-serif; font-size: 72px; color: #fff;} #rings{text-align: center;} #rings a{display: inline-block; margin: 0;}@media(min-width: 490px){#rings a{margin: 2%;}#}}
+{{##def.style: #rings{text-align: center;} #rings a{display: inline-block; margin: 0;}@media(min-width: 500px){#rings a{margin: 2%;}#}}
 {{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
-<div class="row">
-  <a href="events/TF">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-danger">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">TF</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/PS">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-warning">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">PS</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/SC">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-success">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">SC</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/SU">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-info">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">SU</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/CS">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-primary">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">CS</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/TW">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-danger">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">TW</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/TR">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-warning">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">TR</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/EF">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-success">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">EF</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/EW">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-info">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">EW</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/SS">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-primary">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">SS</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-  <a href="events/SD">
-    <div class="col-xs-6 col-md-3">
-      <div class="panel status panel-danger">
-        <div class="panel-heading">
-          <h1 class="panel-title text-center">SD</h1>
-        </div>
-      </div>
-    </div>
-  </a>
-</div>
 <div class="col-sm-12" id="rings">
 <h2>Rings</h2>
-  <a href="/1" class="btn btn-lg btn-danger">1</a>
-  <a href="/2" class="btn btn-lg btn-warning">2</a>
-  <a href="/3" class="btn btn-lg btn-success">3</a>
-  <a href="/4" class="btn btn-lg btn-info">4</a>
+  <a href="/1" class="btn btn-lg btn-primary">1</a>
+  <a href="/2" class="btn btn-lg btn-primary">2</a>
+  <a href="/3" class="btn btn-lg btn-primary">3</a>
+  <a href="/4" class="btn btn-lg btn-primary">4</a>
   <a href="/5" class="btn btn-lg btn-primary">5</a>
 </div>
 <table class="table table-hover table-striped" id="table">

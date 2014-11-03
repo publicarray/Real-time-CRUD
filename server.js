@@ -44,7 +44,7 @@ app.get('/admin', function (req, res) {
     var user = new Buffer(req.query.hash, 'base64').toString('utf8');
     user = JSON.parse(escapeHtml(user));
     var userTime = (parseInt(user.time));
-    if (!user || user.name !== 'karate' || user.pass !== 'cma') {
+    if (!user || user.name !== 'admin' || user.pass !== 'password') {
       res.render('login', {message: 'The user name or password you entered is incorrect.', users:numUsers});
       //time allowed to stay loged is 120s / time out(response time)
     } else if ((userTime+120) < now || userTime > (now+120)) {
@@ -61,11 +61,6 @@ app.get('/admin', function (req, res) {
   } else {
     res.render('login', {users:numUsers});
   }
-});
-
-app.get('/events/:id(CS|EF|EW|PS|SC|SD|SS|SU|TF|TR|TW)', function (req, res) {
-  var id = escapeHtml(req.param('id'));
-  res.render('events/'+id, {users:numUsers});
 });
 
 app.get('/data', function (req, res) {
@@ -122,9 +117,6 @@ io.on('connection', function (socket) {
       }
     io.emit('delete', id);
     });
-  });
-  socket.on('updateUsers', function (num) {
-    numUsers = parseInt(num);
   });
 });
 
