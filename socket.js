@@ -1,4 +1,4 @@
-module.exports = function(io, db, escapeHtml) {
+module.exports = function(io, knex, escapeHtml) {
   "use strict";
   io.on('connection', function (socket) {
     socket.on('add', function (name, ring, comp, orderNo, done) {
@@ -7,14 +7,12 @@ module.exports = function(io, db, escapeHtml) {
       comp = escapeHtml(comp);
       orderNo = escapeHtml(orderNo);
       done = escapeHtml(done);
-      db.run("INSERT INTO Events VALUES (null, ?, ?, ?, ?, ?)", [name, ring, comp, orderNo, done], function (err, row) {
-        if (err) {
-          console.err(err);
-        } else {
-          var data = {'id':this.lastID, 'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
-          io.emit('add', data);
-          // console.log('Created', data);
-        }
+      knex('Events').insert({'name':name, 'ring':ring, 'competitors':comp, 'orderNo':orderNo, 'done':done}).then(function(rows) {
+        var data = {'id':rows[0], 'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
+        io.emit('add', data);
+        // console.log('Created', data);
+      }).catch(function(error) {
+        console.error(error);
       });
     });
     socket.on('update', function (id, name, ring, comp, orderNo, done) {
@@ -24,26 +22,20 @@ module.exports = function(io, db, escapeHtml) {
       comp = escapeHtml(comp);
       orderNo = escapeHtml(orderNo);
       done = escapeHtml(done);
-      db.run("UPDATE Events SET name = ?, ring = ?, competitors = ?, orderNo = ?, done = ? WHERE id = ?", [name, ring, comp, orderNo, done, id], function (err, row) {
-        if (err) {
-          console.err(err);
-        } else {
-          // console.log('Updated', data);
-        }
+      knex('Events').where('id', id).update({'name':name, 'ring':ring, 'competitors':comp, 'orderNo':orderNo, 'done':done}).catch(function(error) {
+        console.error(error);
       });
       var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
       io.emit('update', data);
+      // console.log('Updated', data);
     });
     socket.on('delete', function (id) {
       id = escapeHtml(id);
-      db.run("DELETE FROM Events WHERE id = ?", [id], function (err, row) {
-        if (err) {
-          console.err(err);
-        } else {
-          // console.log('Deleted', id);
-        }
-      io.emit('delete', id);
+      knex('Events').where('id', id).del().catch(function(error) {
+        console.error(error);
       });
+      io.emit('delete', id);
+      // console.log('Deleted', id);
     });
   });
 }

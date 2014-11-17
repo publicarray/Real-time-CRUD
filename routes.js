@@ -1,24 +1,20 @@
-module.exports = function(app, db, escapeHtml) {
+module.exports = function(app, knex, escapeHtml) {
 	"use strict";
 	app.get('/', function (req, res) {
-	  db.all("SELECT * FROM Events ORDER BY orderNo DESC, ring ASC, done DESC", function (err, row) {
-	    if (err) {
-	      console.err(err);
-	    } else {
-	      res.render('index', {events:row});
-	    }
-	  });
+    knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
+      res.render('index', {events:rows});
+    }).catch(function(error) {
+      console.error(error);
+    });
 	});
 
 	app.get('/:id(\\d+)/', function (req, res) {
 	  var ring = escapeHtml(req.param('id'));
-	  db.all("SELECT * FROM Events WHERE ring = ? ORDER BY orderNo DESC, ring ASC, done DESC", [ring], function (err, row) {
-	    if (err) {
-	      console.err(err);
-	    } else {
-	      res.render('ring', {events:row});
-	    }
-	  });
+    knex.select().from('Events').where('ring', ring).orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
+      res.render('ring', {events:rows});
+    }).catch(function(error) {
+      console.error(error);
+    });
 	});
 
 	app.get('/admin', function (req, res) {
@@ -33,13 +29,11 @@ module.exports = function(app, db, escapeHtml) {
 	    } else if ((userTime+120) < now || userTime > (now+120)) {
 	      res.render('login', {message: 'The session has timed out.'});
 	    } else {
-	      db.all("SELECT * FROM Events ORDER BY orderNo DESC, ring ASC, done DESC", function (err, row) {
-	        if (err) {
-	          console.err(err);
-	        } else {
-	          res.render('admin', {events:row});
-	        }
-	      });
+        knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
+          res.render('admin', {events:rows});
+        }).catch(function(error) {
+          console.error(error);
+        });
 	    }
 	  } else {
 	    res.render('login');
@@ -48,13 +42,11 @@ module.exports = function(app, db, escapeHtml) {
 
   // return table as json
 	app.get('/data', function (req, res) {
-	  db.all("SELECT * FROM Events ORDER BY orderNo DESC, ring ASC, done DESC", function (err, row) {
-	    if (err) {
-	      console.err(err);
-	    } else {
-	      res.json(row);
-	    }
-	  });
+    knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
+      res.json(rows);
+    }).catch(function(error) {
+      console.error(error);
+    });
 	});
 
 	// return friendly 404 errors

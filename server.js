@@ -4,8 +4,12 @@ var express = require('express');
 var app = express();
 var server = app.listen(port);
 var io = require('socket.io')(server);
-var sqlite3 = require("sqlite3").verbose();
-var db = new sqlite3.Database('db.sqlite');
+var knex = require('knex')({
+  client: 'sqlite3',
+  connection: {
+    filename: 'db.sqlite'
+  }
+});
 var sanitizer = require('sanitizer');
 var http = require('http');
 var https = require('https');
@@ -16,7 +20,15 @@ app.engine("def", require("dot-emc").init({app: app}).renderFile);
 app.set("view engine", "def");
 http.globalAgent.maxSockets = 1000;
 https.globalAgent.maxSockets = 1000;
-db.run("CREATE TABLE IF NOT EXISTS Events (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ring INTEGER, competitors INTEGER, done BOOLEAN, orderNo INTEGER);");
+
+knex.schema.createTable('Events', function (table) {
+  table.increments();
+  table.string('name');
+  table.integer('ring');
+  table.integer('competitors');
+  table.boolean('done');
+  table.integer('orderNo');
+})
 
 function escapeHtml(text) {
   if (text) {
@@ -34,7 +46,7 @@ function escapeHtml(text) {
   }
 }
 
-require('./routes')(app, db, escapeHtml);
-require('./socket')(io, db, escapeHtml);
+require('./routes')(app, knex, escapeHtml);
+require('./socket')(io, knex, escapeHtml);
 
 console.log('Listening on port: ' + port + '\nCTRL + C to shutdown');
