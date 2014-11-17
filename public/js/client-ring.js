@@ -22,18 +22,18 @@ $(document).ready(function() {
 
   socket.on('add', function (data) {
     if (data.ring === ring) {
-      doc.getElementById('data').innerHTML += (display(data));
+      document.getElementById('data').innerHTML += (display(data));
       sort.refresh();
     }
   });
   socket.on('update', function (data) {
     if (data.ring === ring) {
-      doc.getElementById(data.id).outerHTML = (display(data));
+      document.getElementById(data.id).outerHTML = (display(data));
       sort.refresh();
     }
   });
   socket.on('delete', function (data) {
-    doc.getElementById(data).remove();
+    document.getElementById(data).remove();
   });
   socket.on('disconnect',function() {
     $('#alert').fadeIn(1000);

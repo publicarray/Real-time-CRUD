@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <title>{{#def.title || "ISKA Queensland State Titles"}}</title>
+  <title>{{#def.title || "RESTfull sockets"}}</title>
   <meta name="author" content="Sebastian Schmidt">
   <link href="/lib/bootstrap.min.css" id="bootstrapTheme" rel="stylesheet">
   <style>
