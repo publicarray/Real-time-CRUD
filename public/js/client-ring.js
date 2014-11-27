@@ -8,12 +8,17 @@ function display (data) {
   var done = parseInt(data.done);
   var style = '';
   if (done === 0) {
-    done = 'No';
+    data.done = 'No';
   } else {
-    done = 'Yes';
-    style = 'class="success"';
+    data.done = 'Yes';
+    style = ' class="success"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + done + '</td></tr>';
+  var htmlStr = '<tr id="'+data.id+'"'+style+'>';
+  for (var prop in data) {
+    if (prop !== 'id' && prop !== 'orderNo'){
+      htmlStr += '<td>' + data[prop] + '</td>';
+    }
+  }
   return htmlStr;
 }
 

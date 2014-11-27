@@ -3,7 +3,6 @@ module.exports = function(app, knex, escapeHtml) {
 	app.get('/', function (req, res) {
     knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
       res.render('index', {events:rows});
-      console.log(rows);
     }).catch(function(error) {
       console.error(error);
     });

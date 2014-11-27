@@ -13,7 +13,6 @@ function display (data) {
   }
   var htmlStr = '<tr id="'+data.id+'"'+style+'>';
   for (var prop in data) {
-    console.log(prop + " is " + data[prop]);
     if (prop !== 'id' && prop !== 'orderNo'){
       htmlStr += '<td>' + data[prop] + '</td>';
     }

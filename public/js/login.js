@@ -18,7 +18,7 @@ $(document).ready(function () {
     var pass = escapeHtml($('#pass').val());
     var min = Math.round(new Date().getTime() / 1000);
     var url = document.URL.split("?");
-    url = url[0] + '?hash=' + btoa('{"name": "'+name+'", "pass": "'+pass+'", "time": "'+min+'"}');
+    url = url[0] + '?hash=' + btoa(JSON.stringify({"name" : name, "pass" : pass, "time" : min}));
     window.location.href = url;
   });
 });

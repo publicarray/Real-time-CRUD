@@ -35,19 +35,11 @@ knex.schema.hasTable('Events').then(function(exists) {
 });
 
 function escapeHtml(text) {
-  if (text) {
-    text = text.toString();
-    text = sanitizer.sanitize(text); //escape or sanitize
-    if (!isNaN(text)){
-      text = parseInt(text);
-      if (text<0) {
-        text = 0;
-      }
-    }
-    return text
-  } else {
-    return 0;
+  text = sanitizer.sanitize(text); //escape or sanitize
+  if (!isNaN(text) && text != ''){
+    text = parseInt(text);
   }
+  return text
 }
 
 require('./routes')(app, knex, escapeHtml);

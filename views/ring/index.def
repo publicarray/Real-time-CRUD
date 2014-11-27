@@ -5,20 +5,22 @@
 <h2>Ring {{? it.events[0]}}{{=it.events[0].ring}}{{?}}</h2>
 <table class="table table-hover table-striped" id="table">
   <thead>
-    <tr>
-      <th>Event</th>
-      <th>Ring</th>
-      <th># of Competitors</th>
-      <th>Event Finished</th>
-    </tr>
+    {{ for(var col in it.events[0]) { }}
+      {{? col !== 'id' && col !== 'orderNo'}}<th>{{!col}}</th>{{?}}
+    {{ } }}
   </thead>
   <tbody id="data">
-  {{~it.events :val:index}}
-    <tr id="{{=val.id}}" {{? val.done === 1 }}class="success"{{?}}>
-      <td>{{=val.name}}</td>
-      <td>{{=val.ring}}</td>
-      <td>{{=val.competitors}}</td>
-      <td>{{? val.done === 0 }}No{{??}}Yes{{?}}</td>
+  {{~it.events :row}}
+    <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
+    {{ for(var item in row) { }}
+      {{? item === 'done' && row.done === 0 }}
+      <td>No</td>
+      {{?? item === 'done' && row.done === 1 }}
+      <td>Yes</td>
+      {{?? item !== 'id' && item !== 'orderNo'}}
+      <td>{{!row[item]}}</td>
+      {{?}}
+    {{ } }}
     </tr>
   {{~}}
   </tbody>
