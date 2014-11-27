@@ -34,5 +34,5 @@ username is `admin`
 password is `password`
 
 ## License
-Copyright (C) 2014 Sebastian Schmidt
-Distributed under the GNU GPL v3.0 License
+Copyleft (C) 2014 Sebastian Schmidt
+Distributed under the Mozilla Public License, version 2.0

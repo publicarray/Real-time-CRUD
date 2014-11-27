@@ -1,4 +1,7 @@
-module.exports = function(app, knex, escapeHtml, config, bcrypt) {
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ module.exports = function(app, knex, escapeHtml, config, bcrypt) {
   "use strict";
   app.get('/', function (req, res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
@@ -41,7 +44,7 @@ module.exports = function(app, knex, escapeHtml, config, bcrypt) {
   });
 
   // return table as json
-  app.get('/data', function (req, res) {
+  app.get('/api', function (req, res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
       res.json(rows);
     }).catch(function(error) {
@@ -49,7 +52,7 @@ module.exports = function(app, knex, escapeHtml, config, bcrypt) {
     });
   });
 
-  // return friendly 404 errors
+  // return html friendly 404 errors
   app.use(function(req, res, next){
     res.status(404);
     if (req.accepts('html')) {
