@@ -1,16 +1,16 @@
 {{#def.include('../layout')}}
-{{##def.title:Ring {{? it.events[0]}}{{=it.events[0].ring}}{{?}}#}}
+{{##def.title:{{!it.detail}} {{? it.table[0]}}{{=it.table[0][it.detail]}}{{?}}#}}
 {{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
-<h2>Ring {{? it.events[0]}}{{=it.events[0].ring}}{{?}}</h2>
+<h2>{{!it.detail}} {{? it.table[0]}}{{=it.table[0][it.detail]}}{{?}}</h2>
 <table class="table table-hover table-striped" id="table">
   <thead>
-    {{ for(var col in it.events[0]) { }}
+    {{ for(var col in it.table[0]) { }}
       {{? col !== 'id' && col !== 'orderNo'}}<th>{{!col}}</th>{{?}}
     {{ } }}
   </thead>
   <tbody id="data">
-  {{~it.events :row}}
+  {{~it.table :row}}
     <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
     {{ for(var item in row) { }}
       {{? item === 'done' && row.done === 0 }}

@@ -1,8 +1,8 @@
 {{#def.include('layout')}}
-{{##def.style: #rings{text-align: center;} #rings a{display: inline-block; margin: 0;}@media(min-width: 500px){#rings a{margin: 2%;}#}}
+{{##def.style: #detail{text-align: center;} #detail a{display: inline-block; margin: 0;}@media(min-width: 500px){#detail a{margin: 2%;}#}}
 {{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
-<!-- <div class="col-sm-12" id="rings">
+<!-- <div class="col-sm-12" id="detail">
 <h2>Rings</h2>
   <a href="/1" class="btn btn-lg btn-primary">1</a>
   <a href="/2" class="btn btn-lg btn-primary">2</a>
@@ -13,7 +13,7 @@
 <table class="table table-hover table-striped" id="table">
   <thead>
     <tr>
-      {{ for(var col in it.events[0]) { }}
+      {{ for(var col in it.table[0]) { }}
         {{? col !== 'id' && col !== 'orderNo'}}<th>{{!col}}</th>{{?}}
       {{ } }}
 <!--       <th>Event</th>
@@ -23,7 +23,7 @@
     </tr>
   </thead>
   <tbody id="data">
-  {{~it.events :row}}
+  {{~it.table :row}}
     <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
     {{ for(var item in row) { }}
       {{? item === 'done' && row.done === 0 }}

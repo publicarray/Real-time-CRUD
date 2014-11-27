@@ -1,16 +1,17 @@
-module.exports = function(io, knex, escapeHtml) {
+module.exports = function(io, knex, escapeHtml, config) {
   "use strict";
   io.on('connection', function (socket) {
-    socket.on('add', function (name, ring, comp, orderNo, done) {
-      name = escapeHtml(name);
-      ring = escapeHtml(ring);
-      comp = escapeHtml(comp);
-      orderNo = escapeHtml(orderNo);
-      done = escapeHtml(done);
-      knex('Events').insert({'name':name, 'ring':ring, 'competitors':comp, 'orderNo':orderNo, 'done':done}).then(function(rows) {
-        var data = {'id':rows[0], 'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
-        io.emit('add', data);
-        // console.log('Created', data);
+    socket.on('add', function () {
+      var object = {};
+      var colNo = 0;
+      for (var column in config.table) {
+        object[column] = escapeHtml(arguments[colNo]);
+        colNo++;
+      }
+      knex(config.tableName).insert(object).then(function(rows) {
+        object['id'] = rows[0];
+        io.emit('add', object);
+        // console.log('Created', object);
       }).catch(function(error) {
         console.error(error);
       });
@@ -22,7 +23,7 @@ module.exports = function(io, knex, escapeHtml) {
       comp = escapeHtml(comp);
       orderNo = escapeHtml(orderNo);
       done = escapeHtml(done);
-      knex('Events').where('id', id).update({'name':name, 'ring':ring, 'competitors':comp, 'orderNo':orderNo, 'done':done}).catch(function(error) {
+      knex(config.tableName).where('id', id).update({'name':name, 'ring':ring, 'competitors':comp, 'orderNo':orderNo, 'done':done}).catch(function(error) {
         console.error(error);
       });
       var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
@@ -31,7 +32,7 @@ module.exports = function(io, knex, escapeHtml) {
     });
     socket.on('delete', function (id) {
       id = escapeHtml(id);
-      knex('Events').where('id', id).del().catch(function(error) {
+      knex(config.tableName).where('id', id).del().catch(function(error) {
         console.error(error);
       });
       io.emit('delete', id);

@@ -1,17 +1,17 @@
-module.exports = function(app, knex, escapeHtml) {
+module.exports = function(app, knex, escapeHtml, config) {
 	"use strict";
 	app.get('/', function (req, res) {
-    knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
-      res.render('index', {events:rows});
+    knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
+      res.render('index', {table:rows});
     }).catch(function(error) {
       console.error(error);
     });
 	});
 
 	app.get('/:id(\\d+)/', function (req, res) {
-	  var ring = escapeHtml(req.param('id'));
-    knex.select().from('Events').where('ring', ring).orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
-      res.render('ring', {events:rows});
+	  var num = escapeHtml(req.param('id'));
+    knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function(rows) {
+      res.render('detail', {table:rows, detail:config.detail});
     }).catch(function(error) {
       console.error(error);
     });
@@ -29,8 +29,8 @@ module.exports = function(app, knex, escapeHtml) {
 	    } else if ((userTime+120) < now || userTime > (now+120)) {
 	      res.render('login', {message: 'The session has timed out.'});
 	    } else {
-        knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
-          res.render('admin', {events:rows});
+        knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
+          res.render('admin', {table:rows, schema:config.table});
         }).catch(function(error) {
           console.error(error);
         });
@@ -42,7 +42,7 @@ module.exports = function(app, knex, escapeHtml) {
 
   // return table as json
 	app.get('/data', function (req, res) {
-    knex.select().from('Events').orderByRaw('orderNo DESC, ring ASC, done DESC').then(function(rows) {
+    knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
       res.json(rows);
     }).catch(function(error) {
       console.error(error);

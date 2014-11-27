@@ -6,21 +6,27 @@ function display (data) {
   var done = parseInt(data.done);
   var style = '';
   if (done === 0) {
-    done = '<input type="checkbox">';
+    data.done = '<input type="checkbox">';
   } else {
-    done = '<input type="checkbox" checked>';
-    style = 'class="success"';
+    data.done = '<input type="checkbox" checked>';
+    style = ' class="success"';
   }
-  var htmlStr = '<tr '+style+' id="'+data.id+'"><td>' + data.id + '</td><td>' + data.name + '</td><td>' + data.ring + '</td><td>' + data.comp + '</td><td>' + data.orderNo + '</td><td>' + done + '</td><td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal" onclick="modalData(this)">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
-  return htmlStr;
+  var htmlStr = '<tr id="'+data.id+'"'+style+'>';
+  htmlStr += '<td>' + data.id + '</td>';
+  for (var prop in data) {
+    if (prop !== 'id'){
+      htmlStr += '<td>' + data[prop] + '</td>';
+    }
+  }
+  return htmlStr += '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal" onclick="modalData(this)">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
 }
 
 function reset() {
   doc.getElementById('idModel').textContent = '';
   doc.getElementById('nameModel').value = '';
   doc.getElementById('ringModel').value = '';
-  doc.getElementById('compModel').value = '';
-  doc.getElementById('orderModel').value = '';
+  doc.getElementById('competitorsModel').value = '';
+  doc.getElementById('orderNoModel').value = '';
   doc.getElementById('doneModel').textContent = '';
 }
 
@@ -28,10 +34,10 @@ function edit() {
   var id = doc.getElementById('idModel').textContent;
   var name = doc.getElementById('nameModel').value;
   var ring = doc.getElementById('ringModel').value;
-  var comp = doc.getElementById('compModel').value;
-  var orderNo = doc.getElementById('orderModel').value;
+  var competitors = doc.getElementById('competitorsModel').value;
+  var orderNo = doc.getElementById('orderNoModel').value;
   var done = doc.getElementById('doneModel').textContent;
-  socket.emit('update', id, name, ring, comp, orderNo, done);
+  socket.emit('update', id, name, ring, competitors, orderNo, done);
   reset();
 }
 
@@ -47,9 +53,9 @@ $(document).ready(function() {
     var id = line.find('td:nth-child(1)').text();
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
-    var comp = line.find('td:nth-child(4)').text();
+    var competitors = line.find('td:nth-child(4)').text();
     var orderNo = line.find('td:nth-child(5)').text();
-    socket.emit('update', id, name, ring, comp, orderNo, done);
+    socket.emit('update', id, name, ring, competitors, orderNo, done);
   });
 
   $('#data').on('click', '.btn-danger', function() {
@@ -89,7 +95,7 @@ $(document).ready(function() {
     var id = line.find('td:nth-child(1)').text();
     var name = line.find('td:nth-child(2)').text();
     var ring = line.find('td:nth-child(3)').text();
-    var comp = line.find('td:nth-child(4)').text();
+    var competitors = line.find('td:nth-child(4)').text();
     var orderNo = line.find('td:nth-child(5)').text();
     var done = 0;
     if (checkbox.prop('checked')) {
@@ -98,8 +104,8 @@ $(document).ready(function() {
     doc.getElementById('idModel').textContent = id;
     doc.getElementById('nameModel').value = name;
     doc.getElementById('ringModel').value = ring;
-    doc.getElementById('compModel').value = comp;
-    doc.getElementById('orderModel').value = orderNo;
+    doc.getElementById('competitorsModel').value = competitors;
+    doc.getElementById('orderNoModel').value = orderNo;
     doc.getElementById('doneModel').textContent = done;
   });
 
@@ -108,11 +114,11 @@ $(document).ready(function() {
     if (document.getElementById('done').checked) {
       done = 1
     }
-    socket.emit('add', $('#name').val(), $('#ring').val(), $('#comp').val(), $('#order').val(), done);
+    socket.emit('add', $('#name').val(), $('#ring').val(), $('#competitors').val(), $('#orderNo').val(), done);
       doc.getElementById('name').value = '';
       doc.getElementById('ring').value = '';
-      doc.getElementById('comp').value = '';
-      doc.getElementById('order').value = '';
+      doc.getElementById('competitors').value = '';
+      doc.getElementById('orderNo').value = '';
       return false;
   });
 

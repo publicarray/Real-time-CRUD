@@ -13,20 +13,19 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Event</th>
-              <th>Ring</th>
-              <th># of Competitors</th>
-              <th>Order Priority</th>
+              {{ for(var col in it.table[0]) { }}
+                {{? it.schema[col]!='boolean'}}<th>{{!col}}</th>{{?}}
+              {{ } }}
             </tr>
           </thead>
          <tbody>
           <div role="form" class="form-inline">
             <td><span id="idModel"></span></td>
-            <td><input type="text" id="nameModel" placeholder="Enter Event" class="form-control"></td>
-            <td><input type="number" id="ringModel" placeholder="Enter Ring" class="form-control"></td>
-            <td><input type="number" id="compModel" placeholder="Enter # of Competitors" class="form-control"></td>
-            <td><input type="number" id="orderModel" placeholder="Enter Order Priority" class="form-control"></td>
+            {{ for(var col in it.schema) { }}
+              {{? it.schema[col]!='boolean'}}
+                <td><input type="{{? it.schema[col]==='string'}}text{{?? it.schema[col]==='integer'}}number{{?}}" id="{{!col}}Model" placeholder="Enter {{!col}}" class="form-control"></td>
+              {{?}}
+            {{ } }}
             <td style="display:none;"><span id="doneModel"></span></td>
           </div>
          </tbody>
@@ -43,25 +42,25 @@
 <table class="table table-hover table-striped">
   <thead>
     <tr>
-      <th>#</th>
-      <th>Event</th>
-      <th>Ring</th>
-      <th># of Competitors</th>
-      <th>Order Priority</th>
-      <th>Event Finished</th>
+      {{ for(var col in it.table[0]) { }}
+        <th>{{!col}}</th>
+      {{ } }}
       <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody id="data">
-  {{~it.events :val:index}}
-    <tr id="{{=val.id}}" {{? val.done === 1 }}class="success"{{?}}>
-      <td>{{=val.id}}</td>
-      <td>{{=val.name}}</td>
-      <td>{{=val.ring}}</td>
-      <td>{{=val.competitors}}</td>
-      <td>{{=val.orderNo}}</td>
-      <td><input type="checkbox"{{? val.done === 1 }} checked{{?}}></td>
+  {{~it.table :row}}
+    <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
+      {{ for(var item in row) { }}
+        {{? item === 'done' && row.done === 0 }}
+        <td><input type="checkbox"></td>
+        {{?? item === 'done' && row.done === 1 }}
+        <td><input type="checkbox" checked></td>
+        {{??}}
+        <td>{{!row[item]}}</td>
+        {{?}}
+      {{ } }}
       <td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td>
       <td><button class="btn btn-danger" type="button">Delete</button></td>
     </tr>
@@ -71,11 +70,11 @@
     <tr>
       <form id="create" role="form">
         <td></td>
-        <td><input type="text" id="name" placeholder="Enter Event" class="form-control"></td>
-        <td><input type="number" id="ring" placeholder="Enter Ring" class="form-control"></td>
-        <td><input type="number" id="comp" placeholder="Enter # of Competitors" class="form-control"></td>
-        <td><input type="number" id="order" placeholder="Enter Order Priority" class="form-control"></td>
-        <td><input type="checkbox" id="done"></td>
+        {{ for(var col in it.schema) { }}
+        {{? it.schema[col]==='boolean'}}<td><input type="checkbox" id="{{!col}}"></td>{{??}}
+          <td><input type="{{? it.schema[col]==='string'}}text{{?? it.schema[col]==='integer'}}number{{?}}" id="{{!col}}" placeholder="Enter {{!col}}" class="form-control"></td>
+          {{?}}
+        {{ } }}
         <td><button type="submit" class="btn btn-primary">Create</button></td>
         <td></td>
       </form>
