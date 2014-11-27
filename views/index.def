@@ -2,30 +2,38 @@
 {{##def.style: #rings{text-align: center;} #rings a{display: inline-block; margin: 0;}@media(min-width: 500px){#rings a{margin: 2%;}#}}
 {{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
-<div class="col-sm-12" id="rings">
+<!-- <div class="col-sm-12" id="rings">
 <h2>Rings</h2>
   <a href="/1" class="btn btn-lg btn-primary">1</a>
   <a href="/2" class="btn btn-lg btn-primary">2</a>
   <a href="/3" class="btn btn-lg btn-primary">3</a>
   <a href="/4" class="btn btn-lg btn-primary">4</a>
   <a href="/5" class="btn btn-lg btn-primary">5</a>
-</div>
+</div> -->
 <table class="table table-hover table-striped" id="table">
   <thead>
     <tr>
-      <th>Event</th>
+      {{ for(var col in it.events[0]) { }}
+        {{? col !== 'id' && col !== 'orderNo'}}<th>{{!col}}</th>{{?}}
+      {{ } }}
+<!--       <th>Event</th>
       <th>Ring</th>
       <th># of Competitors</th>
-      <th>Event Finished</th>
+      <th>Event Finished</th> -->
     </tr>
   </thead>
   <tbody id="data">
-  {{~it.events :val:index}}
-    <tr id="{{=val.id}}" {{? val.done === 1 }}class="success"{{?}}>
-      <td>{{=val.name}}</td>
-      <td><a href="/{{=val.ring}}">{{=val.ring}}</a></td>
-      <td>{{=val.competitors}}</td>
-      <td>{{? val.done === 0 }}No{{??}}Yes{{?}}</td>
+  {{~it.events :row}}
+    <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
+    {{ for(var item in row) { }}
+      {{? item === 'done' && row.done === 0 }}
+      <td>No</td>
+      {{?? item === 'done' && row.done === 1 }}
+      <td>Yes</td>
+      {{?? item !== 'id' && item !== 'orderNo'}}
+      <td>{{!row[item]}}</td>
+      {{?}}
+    {{ } }}
     </tr>
   {{~}}
   </tbody>

@@ -21,14 +21,18 @@ app.set("view engine", "def");
 http.globalAgent.maxSockets = 1000;
 https.globalAgent.maxSockets = 1000;
 
-knex.schema.createTable('Events', function (table) {
-  table.increments();
-  table.string('name');
-  table.integer('ring');
-  table.integer('competitors');
-  table.boolean('done');
-  table.integer('orderNo');
-})
+knex.schema.hasTable('Events').then(function(exists) {
+  if (!exists) {
+    return knex.schema.createTable('Events', function (table) {
+      table.increments();
+      table.string('name');
+      table.integer('ring');
+      table.integer('competitors');
+      table.boolean('done');
+      table.integer('orderNo');
+    });
+  }
+});
 
 function escapeHtml(text) {
   if (text) {
