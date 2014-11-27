@@ -4,6 +4,8 @@ var express = require('express');
 var app = express();
 var server = app.listen(port);
 var io = require('socket.io')(server);
+var sanitizer = require('sanitizer');
+var bcrypt = require('bcrypt');
 var knex = require('knex')({
   client: 'sqlite3', // database driver. mysql|pg|sqlite3
   connection: { // to connect a database server. see http://knexjs.org/#Installation-client
@@ -19,10 +21,11 @@ var config = {
     orderNo : "integer",
     done : "boolean"
   },
+  username : "admin",
+  password : bcrypt.hashSync('password', 12),
   detail : "ring", // a table column whose table is accessed with /{number}. - must be of type integer
   orderBy : "orderNo DESC, ring ASC, done DESC" //order the table by column name. - ASC|DESC
 };
-var sanitizer = require('sanitizer');
 var http = require('http');
 var https = require('https');
 
@@ -45,7 +48,8 @@ knex.schema.hasTable(config.tableName).then(function(exists) {
 });
 
 function escapeHtml(text) {
-  text = sanitizer.sanitize(text); //sanitizer.escape or sanitizer.sanitize
+  text = sanitizer.sanitize(text);
+  text = sanitizer.escape(text);
   if (!isNaN(text) && text != ''){
     text = parseFloat(text, 10);
   }
@@ -60,7 +64,7 @@ Object.size = function(obj) {
   }
   return size;
 }
-require('./routes')(app, knex, escapeHtml, config);
+require('./routes')(app, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 
 console.log('Listening on port: ' + port + '\nCTRL + C to shutdown');

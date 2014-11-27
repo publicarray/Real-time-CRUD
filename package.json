@@ -1,11 +1,12 @@
 {
-  "name": "ISK-Queensland-State-Titles",
+  "name": "RESTfull-sockets",
   "version": "0.0.1",
   "description": "Real-time RESTfull Database app with sockets.io",
   "author": "Sebastian Schmidt",
   "repository": "https://github.com/publicarray/RESTfull-sockets",
   "url": "http://iska.publicarray.com/",
   "dependencies": {
+    "bcrypt": "^0.8.0",
     "dot-emc": "^0.1.2",
     "express": "^4.9.8",
     "knex": "^0.7.3",

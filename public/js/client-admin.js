@@ -18,7 +18,7 @@ function display (data) {
       htmlStr += '<td>' + data[prop] + '</td>';
     }
   }
-  return htmlStr += '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal" onclick="modalData(this)">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  return htmlStr += '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
 }
 
 function reset() {
