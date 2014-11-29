@@ -1,6 +1,6 @@
 Real-Time RESTfull Database Web Application
 ===
-[![Dependencies](https://david-dm.org/publicarray/CMA.png)](https://david-dm.org/publicarray/CMA)
+[![Dependencies](https://david-dm.org/publicarray/RESTfull-sockets.png)](https://david-dm.org/publicarray/RESTfull-sockets)
 
 A real-time database web application build on node.js, express, sockets.io and SQLite
 
@@ -33,6 +33,21 @@ username is `admin`
 
 password is `password`
 
+
+## Dependencies
+* [bcrypt](https://www.npmjs.org/package/bcrypt)
+* [dot-emc](https://www.npmjs.org/package/dot-emc)
+* [express](https://www.npmjs.org/package/express)
+* [knex](https://www.npmjs.org/package/knex)
+* [sanitizer](https://www.npmjs.org/package/sanitizer)
+* [socket.io](https://www.npmjs.org/package/socket.io)
+
+#### Database specific Dependencies - all are installed by default
+* [mysql](https://www.npmjs.org/package/mysql)
+* [pg](https://www.npmjs.org/package/pg)
+* [sqlite3](https://www.npmjs.org/package/sqlite3)
+
+
 ## License
-Copyleft (C) 2014 Sebastian Schmidt
+Copyleft 2014 Sebastian Schmidt
 Distributed under the Mozilla Public License, version 2.0

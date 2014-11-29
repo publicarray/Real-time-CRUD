@@ -18,11 +18,11 @@ var knex = require('knex')({
 var config = {
   tableName : "Events", // database table name.
   table : { // the table columns and type. the column 'id' and 'done' is reserved. - string|integer|boolean
-    name : "string",
-    ring : "integer",
-    competitors : "integer",
-    orderNo : "integer",
-    done : "boolean"
+    Events : "string",  // don't change these without resetting the database
+    Ring : "integer",  // don't change these without resetting the database
+    No_of_Competitors : "integer",  // don't change these without resetting the database
+    OrderNo : "integer",  // don't change these without resetting the database
+    done : "boolean"  // don't change these without resetting the database // needs to be last
   },
   username : "admin",
   password : bcrypt.hashSync('password', 12),
@@ -60,13 +60,13 @@ function escapeHtml(text) {
 }
 
  // var numOfCols = Object.size(config.table);
-Object.size = function(obj) {
-  var size = 0, key;
-  for (key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-}
+// Object.size = function(obj) {
+//   var size = 0, key;
+//   for (key in obj) {
+//     if (obj.hasOwnProperty(key)) size++;
+//   }
+//   return size;
+// }
 require('./routes')(app, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 

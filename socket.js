@@ -4,34 +4,36 @@
 module.exports = function(io, knex, escapeHtml, config) {
   "use strict";
   io.on('connection', function (socket) {
-    socket.on('add', function () {
+    socket.on('add', function (data) {
       var object = {};
       var colNo = 0;
       for (var column in config.table) {
-        object[column] = escapeHtml(arguments[colNo]);
+        object[column] = escapeHtml(data[colNo]);
         colNo++;
       }
       knex(config.tableName).insert(object).then(function(rows) {
-        object['id'] = rows[0];
+        object['id'] = rows[0]; // get last id from db and add to the end of object
         io.emit('add', object);
-        // console.log('Created', object);
+        console.log('Created', object);
       }).catch(function(error) {
         console.error(error);
       });
     });
-    socket.on('update', function (id, name, ring, comp, orderNo, done) {
-      id = escapeHtml(id);
-      name = escapeHtml(name);
-      ring = escapeHtml(ring);
-      comp = escapeHtml(comp);
-      orderNo = escapeHtml(orderNo);
-      done = escapeHtml(done);
-      knex(config.tableName).where('id', id).update({'name':name, 'ring':ring, 'competitors':comp, 'orderNo':orderNo, 'done':done}).catch(function(error) {
+
+    socket.on('update', function (data) {
+      var object = {};
+      var colNo = 2; // skip first argument (id)
+      var id = escapeHtml(data[1]);
+      for (var column in config.table) {
+        object[column] = escapeHtml(data[colNo]);
+        colNo++;
+      }
+      knex(config.tableName).where('id', id).update(object).catch(function(error) {
         console.error(error);
       });
-      var data = {'id':id ,'name':name, 'ring':ring, 'comp':comp, 'orderNo':orderNo, 'done':done};
-      io.emit('update', data);
-      // console.log('Updated', data);
+      object['id'] = id; // add to the id the end of object
+      io.emit('update', object);
+      // console.log('Updated', object);
     });
     socket.on('delete', function (id) {
       id = escapeHtml(id);

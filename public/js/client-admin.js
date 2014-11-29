@@ -14,9 +14,9 @@ function display (data) {
     style = ' class="success"';
   }
   var htmlStr = '<tr id="'+data.id+'"'+style+'>';
-  htmlStr += '<td>' + data.id + '</td>';
+  htmlStr += '<td>' + data.id + '</td>'; // display the id first
   for (var prop in data) {
-    if (prop !== 'id'){
+    if (prop !== 'id'){ // skip id
       htmlStr += '<td>' + data[prop] + '</td>';
     }
   }
@@ -25,103 +25,90 @@ function display (data) {
 
 function reset() {
   doc.getElementById('idModel').textContent = '';
-  doc.getElementById('nameModel').value = '';
-  doc.getElementById('ringModel').value = '';
-  doc.getElementById('competitorsModel').value = '';
-  doc.getElementById('orderNoModel').value = '';
+  $('.model').each( function (index, element) {
+    element.value = '';
+  });
   doc.getElementById('doneModel').textContent = '';
 }
-
+// update
 function edit() {
-  var id = doc.getElementById('idModel').textContent;
-  var name = doc.getElementById('nameModel').value;
-  var ring = doc.getElementById('ringModel').value;
-  var competitors = doc.getElementById('competitorsModel').value;
-  var orderNo = doc.getElementById('orderNoModel').value;
-  var done = doc.getElementById('doneModel').textContent;
-  socket.emit('update', id, name, ring, competitors, orderNo, done);
+  var data = [];
+  data[1] = doc.getElementById('idModel').textContent;
+  $('.model').each(function (index, element) {
+    data[index+2] = element.value;
+  });
+  data.push(doc.getElementById('doneModel').textContent);
+  socket.emit('update', data);
   reset();
 }
 
 $(document).ready(function() {
+  // check-box update
   $('#data').on('change', ':checkbox', function() {
-    var checkbox = $(this);
     var line = $(this).parent().parent();
-    var done = 0;
-    if (checkbox.prop('checked')) {
-      done = 1;
+    var data = [];
+    for (var i = 1; i <= line.children().length-2; i++) {  // items in the row - the 2 buttons; start at child 1
+      var td = line.find('td:nth-child('+i+')');
+      if (td.contents().is('input')) {
+        if (td.contents().prop('checked')) {
+          data[i] = 1;
+        } else {
+          data[i] = 0;
+        }
+      } else {
+        data[i] = td.text(); // from left to right
+      }
     }
-    // potentialy dangerous
-    var id = line.find('td:nth-child(1)').text();
-    var name = line.find('td:nth-child(2)').text();
-    var ring = line.find('td:nth-child(3)').text();
-    var competitors = line.find('td:nth-child(4)').text();
-    var orderNo = line.find('td:nth-child(5)').text();
-    socket.emit('update', id, name, ring, competitors, orderNo, done);
+    socket.emit('update', data);
   });
-
+  // delete button
   $('#data').on('click', '.btn-danger', function() {
     var line = $(this).parent().parent();
-    // potentialy dangerous
     var id = line.find('td:nth-child(1)').text();
     socket.emit('delete', id);
   });
-
-  // function modalData(e) {
-  //   // var line  = e.parentNode.innerHTML = 'stuff';
-  //   // var line  = e.parentNode.parentNode;
-  //   var line = $(e).parent().parent();
-  //   var checkbox = line.find(':checkbox');
-  //   // potentialy dangerous
-  //   var id = line.find('td:nth-child(1)').text();
-  //   var name = line.find('td:nth-child(2)').text();
-  //   var ring = line.find('td:nth-child(3)').text();
-  //   var comp = line.find('td:nth-child(4)').text();
-  //   var orderNo = line.find('td:nth-child(5)').text();
-  //   var done = 0;
-  //   if (checkbox.prop('checked')) {
-  //     done = 1;
-  //   }
-  //   doc.getElementById('idModel').textContent = id;
-  //   doc.getElementById('nameModel').value = name;
-  //   doc.getElementById('ringModel').value = ring;
-  //   doc.getElementById('compModel').value = comp;
-  //   doc.getElementById('orderModel').value = orderNo;
-  //   doc.getElementById('doneModel').textContent = done;
-  // }
-
+  // create model
   $('#data').on('click', '.modelBtn', function() {
     var line = $(this).parent().parent();
-    var checkbox = line.find(':checkbox');
-    // potentialy dangerous
-    var id = line.find('td:nth-child(1)').text();
-    var name = line.find('td:nth-child(2)').text();
-    var ring = line.find('td:nth-child(3)').text();
-    var competitors = line.find('td:nth-child(4)').text();
-    var orderNo = line.find('td:nth-child(5)').text();
-    var done = 0;
-    if (checkbox.prop('checked')) {
-      done = 1;
+    var data = [];
+    for (var i = 1; i <= line.children().length-2; i++) {  // items in the row - the 2 buttons; start at child 1
+      var td = line.find('td:nth-child('+i+')');
+      if (td.contents().is('input')) {
+        if (td.contents().prop('checked')) {
+          data[i] = 1;
+        } else {
+          data[i] = 0;
+        }
+      } else {
+        data[i] = td.text(); // from left to right
+      }
     }
-    doc.getElementById('idModel').textContent = id;
-    doc.getElementById('nameModel').value = name;
-    doc.getElementById('ringModel').value = ring;
-    doc.getElementById('competitorsModel').value = competitors;
-    doc.getElementById('orderNoModel').value = orderNo;
-    doc.getElementById('doneModel').textContent = done;
+    doc.getElementById('idModel').textContent = data[1];
+    doc.getElementById('doneModel').textContent = data[data.length-1]; // done my not be the last item TO DO
+    $('.model').each( function (index, element) {
+      element.value = data[index+2];
+    });
   });
-
+  // create
   $('#create').submit(function() {
-    var done = 0;
-    if (document.getElementById('done').checked) {
-      done = 1
-    }
-    socket.emit('add', $('#name').val(), $('#ring').val(), $('#competitors').val(), $('#orderNo').val(), done);
-      doc.getElementById('name').value = '';
-      doc.getElementById('ring').value = '';
-      doc.getElementById('competitors').value = '';
-      doc.getElementById('orderNo').value = '';
-      return false;
+    var data = [];
+    $('.input').each(function (index, element) {
+      if ($(this).is(':checkbox')) {
+        if ($(this).prop('checked')) {
+          data[index] = 1;
+        } else {
+          data[index] = 0;
+        }
+      } else {
+        data[index] = element.value;
+      }
+    });
+    socket.emit('add', data);
+    // reset input
+    $('.input').each( function (index, element) {
+      element.value = '';
+    });
+    return false;
   });
 
   socket.on('add', function (data) {
