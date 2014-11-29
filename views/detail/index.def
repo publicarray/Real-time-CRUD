@@ -6,18 +6,18 @@
 <table class="table table-hover table-striped" id="table">
   <thead>
     {{ for(var col in it.table[0]) { }}
-      {{? col !== 'id' && col !== 'orderNo'}}<th>{{!col}}</th>{{?}}
+      {{? col !== 'id'}}<th>{{!col}}</th>{{?}}
     {{ } }}
   </thead>
   <tbody id="data">
   {{~it.table :row}}
-    <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
+    <tr id="{{!row.id}}" {{? row.Done }}class="success"{{?}}>
     {{ for(var item in row) { }}
-      {{? item === 'done' && row.done === 0 }}
+      {{? it.schema[item] === 'boolean' && !row[item] }}
       <td>No</td>
-      {{?? item === 'done' && row.done === 1 }}
+      {{?? it.schema[item] === 'boolean' && row[item] }}
       <td>Yes</td>
-      {{?? item !== 'id' && item !== 'orderNo'}}
+      {{?? item !== 'id'}}
       <td>{{!row[item]}}</td>
       {{?}}
     {{ } }}

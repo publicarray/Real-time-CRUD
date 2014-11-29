@@ -1,11 +1,11 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
- module.exports = function(app, knex, escapeHtml, config, bcrypt) {
+ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   "use strict";
   app.get('/', function (req, res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
-      res.render('index', {table:rows});
+      res.render('index', {table:rows, schema:config.table});
     }).catch(function(error) {
       console.error(error);
     });
@@ -14,7 +14,7 @@
   app.get('/:id(\\d+)/', function (req, res) {
     var num = escapeHtml(req.param('id'));
     knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function(rows) {
-      res.render('detail', {table:rows, detail:config.detail});
+      res.render('detail', {table:rows, detail:config.detail, schema:config.table});
     }).catch(function(error) {
       console.error(error);
     });
@@ -53,7 +53,7 @@
   });
 
   // return html friendly 404 errors
-  app.use(function(req, res, next){
+  app.use(function (req, res, next) {
     res.status(404);
     if (req.accepts('html')) {
       res.render('404', {url: req.url});

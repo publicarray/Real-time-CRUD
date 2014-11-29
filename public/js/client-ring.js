@@ -7,45 +7,46 @@ var table = document.getElementById('table');
 var sort = new Tablesort(table);
 
 function display (data) {
-  var done = parseInt(data.done);
-  var style = '';
-  if (done === 0) {
-    data.done = 'No';
-  } else {
-    data.done = 'Yes';
-    style = ' class="success"';
-  }
-  var htmlStr = '<tr id="'+data.id+'"'+style+'>';
+  var firstLine = '<tr id='+data.id+'>';
+  var htmlStr = '';
   for (var prop in data) {
-    if (prop !== 'id' && prop !== 'orderNo'){
+    if (typeof data[prop] === 'boolean') {
+      if (data[prop]) {
+        firstLine = '<tr id='+data.id+' class="success">';
+        data[prop] = 'Yes';
+      } else {
+        data[prop] = 'No';
+      }
+    }
+    if (prop !== 'id'){
       htmlStr += '<td>' + data[prop] + '</td>';
     }
   }
-  return htmlStr;
+  return firstLine + htmlStr + '</tr>';
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   var socket = io();
 
   socket.on('add', function (data) {
-    if (data.ring === ring) {
+    if (data.Ring === Ring) {
       document.getElementById('data').innerHTML += (display(data));
       sort.refresh();
     }
   });
   socket.on('update', function (data) {
-    if (data.ring === ring) {
+    if (data.Ring === Ring) {
       document.getElementById(data.id).outerHTML = (display(data));
       sort.refresh();
     }
   });
-  socket.on('delete', function (data) {
-    document.getElementById(data).remove();
+  socket.on('delete', function (id) {
+    document.getElementById(id).remove();
   });
-  socket.on('disconnect',function() {
+  socket.on('disconnect',function () {
     $('#alert').fadeIn(1000);
   });
-  socket.on('connect',function() {
+  socket.on('connect',function () {
     $('#alert').fadeOut(1000);
   });
 });

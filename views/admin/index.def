@@ -23,10 +23,11 @@
             <td><span id="idModel"></span></td>
             {{ for(var col in it.schema) { }}
               {{? it.schema[col]!='boolean'}}
-                <td><input type="{{? it.schema[col]==='string'}}text{{?? it.schema[col]==='integer'}}number{{?}}" class="model" placeholder="Enter {{!col}}" class="form-control"></td>
+                <td><input type="{{? it.schema[col]==='string'}}text{{?? it.schema[col]==='integer'}}number{{?}}" placeholder="Enter {{!col}}" class="model form-control"></td>
+              {{??}}
+                <td style="display:none;"><input class="model" type="checkbox"></td>
               {{?}}
             {{ } }}
-            <td style="display:none;"><span id="doneModel"></span></td>
           </div>
          </tbody>
        </table>
@@ -51,11 +52,11 @@
   </thead>
   <tbody id="data">
   {{~it.table :row}}
-    <tr id="{{!row.id}}" {{? row.done === 1 }}class="success"{{?}}>
+    <tr id="{{!row.id}}" {{? row.Done === 1 }}class="success"{{?}}>
       {{ for(var item in row) { }}
-        {{? item === 'done' && row.done === 0 }}
+        {{? it.schema[item] === 'boolean' && !row[item] }}
         <td><input type="checkbox"></td>
-        {{?? item === 'done' && row.done === 1 }}
+        {{?? it.schema[item] === 'boolean' && row[item] }}
         <td><input type="checkbox" checked></td>
         {{??}}
         <td>{{!row[item]}}</td>

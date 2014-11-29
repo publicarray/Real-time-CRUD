@@ -5,46 +5,48 @@ var socket = io();
 var doc = document;
 
 function display (data) {
-  var done = parseInt(data.done);
-  var style = '';
-  if (done === 0) {
-    data.done = '<input type="checkbox">';
-  } else {
-    data.done = '<input type="checkbox" checked>';
-    style = ' class="success"';
-  }
-  var htmlStr = '<tr id="'+data.id+'"'+style+'>';
-  htmlStr += '<td>' + data.id + '</td>'; // display the id first
+  var firstLine = '<tr id='+data.id+'>';
+  var htmlStr = '<td>' + data.id + '</td>'; // display the id first
   for (var prop in data) {
-    if (prop !== 'id'){ // skip id
+    if (typeof data[prop] === 'boolean') {
+      if (data[prop]) {
+        firstLine = '<tr id='+data.id+' class="success">';
+        data[prop] = '<input type="checkbox" checked>';
+      } else {
+        data[prop] = '<input type="checkbox">';
+      }
+    }
+    if (prop !== 'id'){
       htmlStr += '<td>' + data[prop] + '</td>';
     }
   }
-  return htmlStr += '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  return firstLine + htmlStr + '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
 }
 
-function reset() {
+function reset () {
   doc.getElementById('idModel').textContent = '';
   $('.model').each( function (index, element) {
     element.value = '';
   });
-  doc.getElementById('doneModel').textContent = '';
 }
 // update
-function edit() {
+function edit () {
   var data = [];
   data[1] = doc.getElementById('idModel').textContent;
   $('.model').each(function (index, element) {
-    data[index+2] = element.value;
+    if ($(this).is(':checkbox')) {
+      data[index+2] = $(this).prop('checked') ? 1 : 0;
+    } else {
+      data[index+2] = element.value;
+    }
   });
-  data.push(doc.getElementById('doneModel').textContent);
   socket.emit('update', data);
   reset();
 }
 
 $(document).ready(function() {
   // check-box update
-  $('#data').on('change', ':checkbox', function() {
+  $('#data').on('change', ':checkbox', function () {
     var line = $(this).parent().parent();
     var data = [];
     for (var i = 1; i <= line.children().length-2; i++) {  // items in the row - the 2 buttons; start at child 1
@@ -62,13 +64,13 @@ $(document).ready(function() {
     socket.emit('update', data);
   });
   // delete button
-  $('#data').on('click', '.btn-danger', function() {
+  $('#data').on('click', '.btn-danger', function () {
     var line = $(this).parent().parent();
     var id = line.find('td:nth-child(1)').text();
     socket.emit('delete', id);
   });
   // create model
-  $('#data').on('click', '.modelBtn', function() {
+  $('#data').on('click', '.modelBtn', function () {
     var line = $(this).parent().parent();
     var data = [];
     for (var i = 1; i <= line.children().length-2; i++) {  // items in the row - the 2 buttons; start at child 1
@@ -83,14 +85,22 @@ $(document).ready(function() {
         data[i] = td.text(); // from left to right
       }
     }
+
     doc.getElementById('idModel').textContent = data[1];
-    doc.getElementById('doneModel').textContent = data[data.length-1]; // done my not be the last item TO DO
     $('.model').each( function (index, element) {
-      element.value = data[index+2];
+      if ($(this).is(':checkbox')) {
+        if (data[index+2]) {
+          $(this).prop('checked', true);
+        } else {
+          $(this).prop('checked', false);
+        }
+      } else {
+        element.value = data[index+2];
+      }
     });
   });
   // create
-  $('#create').submit(function() {
+  $('#create').submit(function () {
     var data = [];
     $('.input').each(function (index, element) {
       if ($(this).is(':checkbox')) {
@@ -117,13 +127,13 @@ $(document).ready(function() {
   socket.on('update', function (data) {
     doc.getElementById(data.id).outerHTML = (display(data));
   });
-  socket.on('delete', function (data) {
-    doc.getElementById(data).remove();
+  socket.on('delete', function (id) {
+    doc.getElementById(id).remove();
   });
-  socket.on('disconnect',function() {
+  socket.on('disconnect',function () {
     $('#alert').fadeIn(1000);
   });
-  socket.on('connect',function() {
+  socket.on('connect',function () {
     $('#alert').fadeOut(1000);
   });
 });

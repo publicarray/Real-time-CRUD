@@ -20,14 +20,14 @@ var config = {
   table : { // the table columns and type. the column 'id' and 'done' is reserved. - string|integer|boolean
     Events : "string",  // don't change these without resetting the database
     Ring : "integer",  // don't change these without resetting the database
-    No_of_Competitors : "integer",  // don't change these without resetting the database
-    OrderNo : "integer",  // don't change these without resetting the database
-    done : "boolean"  // don't change these without resetting the database // needs to be last
+    'No of Competitors' : "integer",  // don't change these without resetting the database
+    Details : "string",  // don't change these without resetting the database
+    Done : "boolean"  // don't change these without resetting the database // needs to be last
   },
   username : "admin",
   password : bcrypt.hashSync('password', 12),
-  detail : "ring", // a table column whose table is accessed with /{number}. - must be of type integer
-  orderBy : "orderNo DESC, ring ASC, done DESC" //order the table by column name. - ASC|DESC
+  detail : "Ring", // a table column whose table is accessed with /{number}. - must be of type integer
+  orderBy : "Ring ASC, done DESC" //order the table by column name. - ASC|DESC
 };
 var http = require('http');
 var https = require('https');
@@ -39,7 +39,7 @@ app.set("view engine", "def");
 http.globalAgent.maxSockets = 1000;
 https.globalAgent.maxSockets = 1000;
 
-knex.schema.hasTable(config.tableName).then(function(exists) {
+knex.schema.hasTable(config.tableName).then(function (exists) {
   if (!exists) {
     return knex.schema.createTable(config.tableName, function (table) {
       table.increments();
@@ -50,7 +50,7 @@ knex.schema.hasTable(config.tableName).then(function(exists) {
   }
 });
 
-function escapeHtml(text) {
+function escapeHtml (text) {
   text = sanitizer.sanitize(text);
   text = sanitizer.escape(text);
   if (!isNaN(text) && text != ''){
