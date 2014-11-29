@@ -19,15 +19,19 @@
     </tr>
   </thead>
   <tbody id="data">
+
   {{~it.table :row}}
-    <tr id="{{!row.id}}" {{? it.schema.Done === 'boolean' && row.Done }}class="success"{{?}}>
+    <tr id="{{!row.id}}">
     {{ for(var item in row) { }}
       {{? it.schema[item] === 'boolean' && !row[item] }}
-      <td>No</td>
+        <td>No</td>
       {{?? it.schema[item] === 'boolean' && row[item] }}
-      <td>Yes</td>
+        <script type="text/javascript">
+          document.getElementById("{{!row.id}}").className = "success";
+        </script>
+        <td>Yes</td>
       {{?? item !== 'id'}}
-      <td>{{=row[item]}}</td>
+        <td>{{=row[item]}}</td>
       {{?}}
     {{ } }}
     </tr>

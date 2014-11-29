@@ -1,6 +1,3 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 var socket = io();
 var doc = document;
 
@@ -69,7 +66,7 @@ $(document).ready(function() {
     var id = line.find('td:nth-child(1)').text();
     socket.emit('delete', id);
   });
-  // create model
+  // push data to model / pop-up
   $('#data').on('click', '.modelBtn', function () {
     var line = $(this).parent().parent();
     var data = [];

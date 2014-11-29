@@ -1,6 +1,16 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+/* Copyright 2014 Sebastian Schmidt
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.*/
 "use strict";
 var port = Number(process.env.PORT || 8080);
 var express = require('express');
@@ -18,16 +28,15 @@ var knex = require('knex')({
 var config = {
   tableName : "Events", // database table name.
   table : { // the table columns and type. the column 'id' and 'done' is reserved. - string|integer|boolean
-    Events : "string",  // don't change these without resetting the database
+    Event : "string",  // don't change these without resetting the database
     Ring : "integer",  // don't change these without resetting the database
-    'No of Competitors' : "integer",  // don't change these without resetting the database
-    Details : "string",  // don't change these without resetting the database
-    Done : "boolean"  // don't change these without resetting the database // needs to be last
+    '# of Competitors' : "integer",  // don't change these without resetting the database
+    Finished : "boolean"  // don't change these without resetting the database
   },
   username : "admin",
   password : bcrypt.hashSync('password', 12),
   detail : "Ring", // a table column whose table is accessed with /{number}. - must be of type integer
-  orderBy : "Ring ASC, done DESC" //order the table by column name. - ASC|DESC
+  orderBy : "Ring ASC, Finished DESC" //order the table by column name. - ASC|DESC
 };
 var http = require('http');
 var https = require('https');
@@ -59,14 +68,6 @@ function escapeHtml (text) {
   return text
 }
 
- // var numOfCols = Object.size(config.table);
-// Object.size = function(obj) {
-//   var size = 0, key;
-//   for (key in obj) {
-//     if (obj.hasOwnProperty(key)) size++;
-//   }
-//   return size;
-// }
 require('./routes')(app, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 

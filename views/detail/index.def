@@ -11,14 +11,17 @@
   </thead>
   <tbody id="data">
   {{~it.table :row}}
-    <tr id="{{!row.id}}" {{? row.Done }}class="success"{{?}}>
+    <tr id="{{!row.id}}">
     {{ for(var item in row) { }}
       {{? it.schema[item] === 'boolean' && !row[item] }}
-      <td>No</td>
+        <td>No</td>
       {{?? it.schema[item] === 'boolean' && row[item] }}
-      <td>Yes</td>
+        <script type="text/javascript">
+          document.getElementById("{{!row.id}}").className = "success";
+        </script>
+        <td>Yes</td>
       {{?? item !== 'id'}}
-      <td>{{!row[item]}}</td>
+        <td>{{!row[item]}}</td>
       {{?}}
     {{ } }}
     </tr>
@@ -29,4 +32,35 @@
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
 <script src="/js/client-ring.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  var socket = io();
+  var url = window.location.href;
+  var detail = parseInt(url.substr(url.lastIndexOf('/')+1));
+
+  socket.on('add', function (data) {
+    if (data.{{!it.detail}} === detail) {
+      document.getElementById('data').innerHTML += (display(data));
+      sort.refresh();
+    }
+  });
+  socket.on('update', function (data) {
+    if (data.{{!it.detail}} === detail) {
+      document.getElementById(data.id).outerHTML = (display(data));
+      sort.refresh();
+    }
+  });
+  socket.on('delete', function (id) {
+    if (document.getElementById(id)){
+      document.getElementById(id).remove();
+    }
+  });
+  socket.on('disconnect',function () {
+    $('#alert').fadeIn(1000);
+  });
+  socket.on('connect',function () {
+    $('#alert').fadeOut(1000);
+  });
+});
+</script>
 #}}

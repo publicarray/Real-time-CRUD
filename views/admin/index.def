@@ -44,7 +44,7 @@
   <thead>
     <tr>
       {{ for(var col in it.table[0]) { }}
-        <th>{{!col}}</th>
+      <th>{{!col}}</th>
       {{ } }}
       <th></th>
       <th></th>
@@ -52,11 +52,14 @@
   </thead>
   <tbody id="data">
   {{~it.table :row}}
-    <tr id="{{!row.id}}" {{? row.Done === 1 }}class="success"{{?}}>
+    <tr id="{{!row.id}}">
       {{ for(var item in row) { }}
         {{? it.schema[item] === 'boolean' && !row[item] }}
         <td><input type="checkbox"></td>
         {{?? it.schema[item] === 'boolean' && row[item] }}
+        <script type="text/javascript">
+          document.getElementById("{{!row.id}}").className = "success";
+        </script>
         <td><input type="checkbox" checked></td>
         {{??}}
         <td>{{!row[item]}}</td>

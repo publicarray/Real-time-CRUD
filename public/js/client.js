@@ -1,6 +1,3 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 var table = document.getElementById('table');
 var sort = new Tablesort(table);
 
@@ -23,7 +20,7 @@ function display (data) {
   return firstLine + htmlStr + '</tr>';
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   var socket = io();
 
   socket.on('add', function (data) {
