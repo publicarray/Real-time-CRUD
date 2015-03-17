@@ -13,7 +13,7 @@ module.exports = function (io, knex, escapeHtml, config) {
         colNo++;
       }
       knex(config.tableName).insert(object).then(function(rows) {
-        object['id'] = rows[0]; // get last id from db and add to the end of object
+        object.id = rows[0]; // get last id from db and add to the end of object
         io.emit('add', object);
         // console.log('Created', object);
       }).catch(function(error) {
@@ -36,7 +36,7 @@ module.exports = function (io, knex, escapeHtml, config) {
       knex(config.tableName).where('id', id).update(object).catch(function(error) {
         console.error(error);
       });
-      object['id'] = id; // add to the id the end of object
+      object.id = id; // add to the id the end of object
       io.emit('update', object);
       // console.log('Updated', object);
     });
@@ -49,4 +49,4 @@ module.exports = function (io, knex, escapeHtml, config) {
       // console.log('Deleted', id);
     });
   });
-}
+};

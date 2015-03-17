@@ -1,4 +1,4 @@
- module.exports = function (app, knex, escapeHtml, config, bcrypt) {
+module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   "use strict";
   app.get('/', function (req, res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
@@ -57,4 +57,4 @@
       return;
     }
   });
-}
+};

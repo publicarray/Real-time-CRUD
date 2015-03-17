@@ -1,6 +1,6 @@
 Real-Time RESTfull Database Web Application
 ===
-[![Dependencies](https://david-dm.org/publicarray/RESTfull-sockets.png)](https://david-dm.org/publicarray/RESTfull-sockets)
+[![Dependencies](https://david-dm.org/publicarray/RESTfull-sockets.svg)](https://david-dm.org/publicarray/RESTfull-sockets)
 
 A real-time database web application build on node.js, express, sockets.io and SQLite
 
