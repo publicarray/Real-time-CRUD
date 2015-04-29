@@ -1,8 +1,8 @@
 module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   "use strict";
   app.get('/', function (req, res) {
-    knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
-      res.render('index', {table:rows, schema:config.table});
+    knex.select().from(config.tableName).orderByRaw(config.orderBy||"id").then(function(rows) {
+      res.render('index', {table:rows, schema:config.table, title:config.appTitle||"RESTfull sockets"});
     }).catch(function(error) {
       console.error(error);
     });
@@ -11,8 +11,8 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   if (config.detail) {
     app.get('/:id(\\d+)/', function (req, res) {
       var num = escapeHtml(req.params.id);
-      knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function(rows) {
-        res.render('detail', {table:rows, detail:config.detail, schema:config.table});
+      knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy||"id").then(function(rows) {
+        res.render('detail', {table:rows, detail:config.detail, schema:config.table, title:config.appTitle||"RESTfull sockets"});
       }).catch(function(error) {
         console.error(error);
       });
@@ -31,20 +31,20 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
       } else if ((userTime+120) < now || userTime > (now+120)) {
         res.render('login', {message: 'The session has timed out.'});
       } else {
-        knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
-          res.render('admin', {table:rows, schema:config.table});
+        knex.select().from(config.tableName).orderByRaw(config.orderBy||"id").then(function(rows) {
+          res.render('admin', {table:rows, schema:config.table, title:config.appTitle||"RESTfull sockets"});
         }).catch(function(error) {
           console.error(error);
         });
       }
     } else {
-      res.render('login');
+      res.render('login', {title:config.appTitle||"RESTfull sockets"});
     }
   });
 
   // return table as json
   // app.get('/api', function (req, res) {
-  //   knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
+  //   knex.select().from(config.tableName).orderByRaw(config.orderBy||"id").then(function(rows) {
   //     res.json(rows);
   //   }).catch(function(error) {
   //     console.error(error);

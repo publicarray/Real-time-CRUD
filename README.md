@@ -20,6 +20,9 @@ $ node server
 
 The default port is 8080.
 
+## Configuration
+All of the User configuration is done via the `config.js` file.
+
 ## URLs
 `/` is the full database list
 
@@ -27,7 +30,7 @@ The default port is 8080.
 
 `/{number}` is a list of the events for that {number} ring
 
-### Login Details
+### Default Login Details
 
 username is `admin`
 
