@@ -9,7 +9,7 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   });
 
   app.get('/:id(\\d+)/', function (req, res) {
-    var num = escapeHtml(req.param('id'));
+    var num = escapeHtml(req.params.id);
     knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function(rows) {
       res.render('detail', {table:rows, detail:config.detail, schema:config.table});
     }).catch(function(error) {
