@@ -19,27 +19,67 @@ var app = express();
 var server = app.listen(port);
 var io = require('socket.io')(server);
 var sanitizer = require('sanitizer');
-var bcrypt = require('bcrypt');
-var knex = require('knex')({
-  client: 'sqlite3', // database driver. mysql|pg|sqlite3
-  connection: { // to connect a database server. see http://knexjs.org/#Installation-client
-    filename: 'db.sqlite'
-  }
-});
-var config = {
-  tableName : "Events", // database table name.
-  table : { // the table columns and type. the column 'id' and 'done' is reserved. - string|integer|boolean
-    Event : "string",  // don't change these without resetting the database
-    Ring : "integer",  // don't change these without resetting the database
-    '# of Competitors' : "integer",  // don't change these without resetting the database
-    Finished : "boolean"  // don't change these without resetting the database
-  },
-  username : "admin",
-  password : bcrypt.hashSync('password', 12),
-  detail : "Ring", // a table column whose table is accessed with /{number}. - must be of type integer
-  orderBy : "Ring ASC, Finished DESC" //order the table by column name. - ASC|DESC
+var bcrypt = require('bcrypt'); // crypto library
+var config = {orderBy : "id"};
+
+//*****************************************************************//
+//                     USER CONFIGURATION                          //
+//*****************************************************************//
+//
+// Title
+config.appTitle = "RESTfull sockets";
+
+// SQL Database driver
+// options are: mysql|pg|sqlite3
+config.client = "sqlite3";
+
+// Database connection
+// more information see http://knexjs.org/#Installation-client
+config.connection = {
+  filename : "db.sqlite"
+  // host     : '127.0.0.1',
+  // user     : 'your_database_user',
+  // password : 'your_database_password',
+  // database : 'my_database_name'
 };
 
+// SQL Table Name
+// NOTE: If you change it you need to delete the "db.sqlite" file to reset the database
+config.tableName = "Events";
+
+// SQL Table Schema
+// Column Name : Type
+// The Type can be one of string|integer|boolean
+// NOTE: If you change it you need to delete the "db.sqlite" file to reset the database
+config.table = {
+  Event : "string",
+  Ring : "integer",
+  '# of Competitors' : "integer",
+  Finished : "boolean"
+};
+
+// Username of the login
+config.username = "admin";
+
+// Password
+config.password = bcrypt.hashSync('password', 12);
+
+// A special table column whose table is accessed with /{number}
+// NOTE: must be of type integer
+// config.detail = "Ring"
+
+// Order the table by columns
+// ASC = acceding
+// DESC = descending
+// config.orderBy = "Ring ASC, Finished DESC"
+
+//*****************************************************************//
+//                    END USER CONFIGURATION                       //
+//*****************************************************************//
+var knex = require('knex')({
+  client: config.client,
+  connection: config.connection
+});
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.engine("def", require("dot-emc").init({app: app}).renderFile);

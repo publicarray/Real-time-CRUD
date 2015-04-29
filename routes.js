@@ -8,14 +8,16 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
     });
   });
 
-  app.get('/:id(\\d+)/', function (req, res) {
-    var num = escapeHtml(req.params.id);
-    knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function(rows) {
-      res.render('detail', {table:rows, detail:config.detail, schema:config.table});
-    }).catch(function(error) {
-      console.error(error);
+  if (config.detail) {
+    app.get('/:id(\\d+)/', function (req, res) {
+      var num = escapeHtml(req.params.id);
+      knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function(rows) {
+        res.render('detail', {table:rows, detail:config.detail, schema:config.table});
+      }).catch(function(error) {
+        console.error(error);
+      });
     });
-  });
+  }
 
   app.get('/admin', function (req, res) {
     if (req.query.hash) {
@@ -41,13 +43,13 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   });
 
   // return table as json
-  app.get('/api', function (req, res) {
-    knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
-      res.json(rows);
-    }).catch(function(error) {
-      console.error(error);
-    });
-  });
+  // app.get('/api', function (req, res) {
+  //   knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
+  //     res.json(rows);
+  //   }).catch(function(error) {
+  //     console.error(error);
+  //   });
+  // });
 
   // return html friendly 404 errors
   app.use(function (req, res, next) {
