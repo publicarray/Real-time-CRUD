@@ -13,18 +13,18 @@
  *   limitations under the License.*/
 /* jslint node: true */
 "use strict";
-var port = Number(process.env.PORT || 8080);
+// require('look').start(8081);
+var config = require('./config'); // get user config file
+var bcrypt = require('bcrypt'); // a crypto library
+config.password = bcrypt.hashSync(config.password, 12); // hash password
 var express = require('express');
 var app = express();
-var server = app.listen(port);
+var server = app.listen(config.port);
 var io = require('socket.io')(server);
 var sanitizer = require('sanitizer');
-var bcrypt = require('bcrypt'); // a crypto library
-var config = require('./config'); // include config file
-config.password = bcrypt.hashSync(config.password, 12); // hash password
 var knex = require('knex')({
-  client: config.client || "sqlite3",
-  connection: config.connection || {filename : "db.sqlite"}
+  client: config.client,
+  connection: config.connection
 });
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
@@ -54,4 +54,4 @@ function escapeHtml (text) {
 require('./routes')(app, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 
-console.log('Listening on port: ' + port + '\nCTRL + C to shutdown');
+console.log('Listening on port: ' + config.port + '\nCTRL + C to shutdown');

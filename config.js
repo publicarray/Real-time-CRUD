@@ -1,4 +1,20 @@
-var config = {};
+// set config to sensible defaults - PLEASE DO NOT MODEFY
+var config = {
+  appTitle: 'RESTfull sockets',
+  client: 'sqlite3',
+  connection: {
+    filename : 'db.sqlite'
+  },
+  tableName: 'Table',
+  table: {
+    Name: 'string',
+    age: 'integer'
+  },
+  orderBy: 'id',
+  username: 'admin',
+  password:'password',
+  port: process.env.PORT || 8080
+};
 //*****************************************************************//
 //                     USER CONFIGURATION                          //
 //*****************************************************************//
@@ -42,12 +58,15 @@ config.password = "password";
 
 // A special table column whose table is accessed with /{number}
 // NOTE: must be of type integer
-// config.detail = "Ring"
+// config.detail = "Ring";
 
 // Order the table by columns
 // ASC = acceding
 // DESC = descending
-// config.orderBy = "Ring ASC, Finished DESC"
+// config.orderBy = "Ring ASC, Finished DESC";
+
+// Web Server Port
+config.port = 8080;
 
 //*****************************************************************//
 //                    END USER CONFIGURATION                       //
