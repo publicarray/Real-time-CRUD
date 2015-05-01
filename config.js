@@ -1,6 +1,6 @@
 // set config to sensible defaults - PLEASE DO NOT MODEFY
 var config = {
-  appTitle: 'RESTfull sockets',
+  appTitle: 'Real-time CRUD',
   client: 'sqlite3',
   connection: {
     filename : 'db.sqlite'
@@ -20,7 +20,7 @@ var config = {
 //*****************************************************************//
 
 // Title
-config.appTitle = "RESTfull sockets";
+config.appTitle = "Real-time CRUD";
 
 // SQL Database driver
 // options are: mysql|pg|sqlite3

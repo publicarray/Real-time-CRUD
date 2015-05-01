@@ -42,6 +42,8 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
     }
   });
 
+  // TODO API
+
   // return table as json
   // app.get('/api', function (req, res) {
   //   knex.select().from(config.tableName).orderByRaw(config.orderBy||"id").then(function(rows) {

@@ -47,9 +47,6 @@ knex.schema.hasTable(config.tableName).then(function (exists) {
 function escapeHtml (text) {
   text = sanitizer.sanitize(text);
   text = sanitizer.escape(text);
-  // if (!isNaN(text) && text !== ''){
-  //   text = parseFloat(text, 10);
-  // }
   return text;
 }
 

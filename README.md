@@ -1,8 +1,8 @@
-Real-Time RESTfull Database Web Application
+Easy to configure, Real-time CRUD Database Web Application
 ===
 [![Dependencies](https://david-dm.org/publicarray/RESTfull-sockets.svg)](https://david-dm.org/publicarray/RESTfull-sockets)
 
-A real-time database web application build on node.js, express, sockets.io and SQLite
+A real-time database web application build on node.js, express, sockets.io and knex.js
 
 ##Installation
 Install dependencies:
@@ -22,13 +22,14 @@ The default port is 8080.
 
 ## Configuration
 All of the User configuration is done via the `config.js` file.
+Explanations are in the file
 
 ## URLs
-`/` is the full database list
+`/` displays the database table.
 
-`/admin` allows adding, removing and updating data
+`/admin` allows to add, delete and updates of data.
 
-`/{number}` is a list of the events for that {number} ring
+`/{number}` is a list of the events for that {number} ring. (optional)
 
 ### Default Login Details
 
@@ -45,11 +46,11 @@ password is `password`
 * [sanitizer](https://www.npmjs.org/package/sanitizer)
 * [socket.io](https://www.npmjs.org/package/socket.io)
 
-#### Database specific Dependencies - all are installed by default
+#### Database specific Dependencies/Drivers - mysql, pg and sqlite3 are installed by default
 * [mysql](https://www.npmjs.org/package/mysql)
 * [pg](https://www.npmjs.org/package/pg)
 * [sqlite3](https://www.npmjs.org/package/sqlite3)
-
+* [more...](http://knexjs.org/#Installation-node)
 
 ## License
 Copyright 2014 Sebastian Schmidt
