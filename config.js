@@ -31,13 +31,14 @@ config.client = "sqlite3";
 config.connection = {
   filename : "db.sqlite"
   // host     : '127.0.0.1',
+  // port     :  5432,
   // user     : 'your_database_user',
   // password : 'your_database_password',
   // database : 'my_database_name'
 };
 
 // SQL Table Name
-config.tableName = "Events";
+config.tableName = "event";
 
 // SQL Table Schema
 // Column Name : Type

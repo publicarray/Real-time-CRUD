@@ -25,7 +25,7 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
       var user = new Buffer(req.query.hash, 'base64').toString('utf8');
       user = JSON.parse(user);
       var userTime = (parseInt(user.time));
-    if (!user || user.name !== config.username || !bcrypt.compareSync(user.pass, config.password)) {
+    if (!user || user.name !== config.username || !bcrypt.compareSync(user.pass, config.password)) { // TODO - increase security
         res.render('login', {message: 'The user name or password you entered is incorrect.'});
         //time allowed to stay sign-in is 120s / time out(response time)
       } else if ((userTime+120) < now || userTime > (now+120)) {
