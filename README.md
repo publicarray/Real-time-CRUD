@@ -1,6 +1,6 @@
 Easy to configure, Real-time CRUD Database Web Application
 ===
-[![Dependencies](https://david-dm.org/publicarray/RESTfull-sockets.svg)](https://david-dm.org/publicarray/RESTfull-sockets)
+[![Dependencies](https://david-dm.org/publicarray/Real-time-CRUD.svg)](https://david-dm.org/publicarray/Real-time-CRUD)
 
 A real-time database web application build on node.js, express, sockets.io and knex.js
 
