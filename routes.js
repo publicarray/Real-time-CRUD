@@ -22,14 +22,19 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   app.get('/admin', function (req, res) {
     if (req.query.hash) {
       var now = Math.round(new Date().getTime() / 1000);
-      var user = new Buffer(req.query.hash, 'base64').toString('utf8');
-      user = JSON.parse(user);
+      var user = "";
+      try {
+        user = new Buffer(req.query.hash, 'base64').toString('utf8');
+        user = JSON.parse(user);
+      } catch (e) {
+        console.error("/admin: " + e.message);
+      }
       var userTime = (parseInt(user.time));
     if (!user || user.name !== config.username || !bcrypt.compareSync(user.pass, config.password)) { // TODO - increase security
-        res.render('login', {message: 'The user name or password you entered is incorrect.'});
+        res.render('login', {message: 'The user name or password you entered is incorrect.', title:config.appTitle});
         //time allowed to stay sign-in is 120s / time out(response time)
       } else if ((userTime+120) < now || userTime > (now+120)) {
-        res.render('login', {message: 'The session has timed out.'});
+        res.render('login', {message: 'The session has timed out.', title:config.appTitle});
       } else {
         knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
           res.render('admin', {table:rows, schema:config.table, title:config.appTitle});
