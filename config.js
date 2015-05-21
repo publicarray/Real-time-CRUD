@@ -5,14 +5,14 @@ var config = {
   connection: {
     filename : 'db.sqlite'
   },
-  tableName: 'Table',
+  tableName: 'table',
   table: {
     Name: 'string',
     age: 'integer'
   },
   orderBy: 'id',
   username: 'admin',
-  password:'password',
+  password: 'password',
   port: process.env.PORT || 8080
 };
 //*****************************************************************//
@@ -32,9 +32,9 @@ config.connection = {
   filename : "db.sqlite"
   // host     : '127.0.0.1',
   // port     :  5432,
-  // user     : 'your_database_user',
-  // password : 'your_database_password',
-  // database : 'my_database_name'
+  // user     : 'database_username',
+  // password : 'database_password',
+  // database : 'database_name'
 };
 
 // SQL Table Name
@@ -43,7 +43,7 @@ config.tableName = "event";
 // SQL Table Schema
 // Column Name : Type
 // The Type can be one of string|integer|boolean
-// NOTE: If you change it you need to reset the table manually
+// NOTE: If you change it you need to reset the Database table manually
 config.table = {
   Event : "string",
   Ring : "integer",

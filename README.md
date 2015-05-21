@@ -2,7 +2,7 @@ Easy to configure, Real-time CRUD Database Web Application
 ===
 [![Dependencies](https://david-dm.org/publicarray/Real-time-CRUD.svg)](https://david-dm.org/publicarray/Real-time-CRUD)
 
-A real-time database web application build on node.js, express, sockets.io and knex.js
+A real-time database web application build on node.js, express, socket.io and knex.js
 
 ##Installation
 Install dependencies:
@@ -46,11 +46,13 @@ password is `password`
 * [sanitizer](https://www.npmjs.org/package/sanitizer)
 * [socket.io](https://www.npmjs.org/package/socket.io)
 
-#### Database specific Dependencies/Drivers - mysql, pg and sqlite3 are installed by default
+#### Database specific Dependencies/Drivers
 * [mysql](https://www.npmjs.org/package/mysql)
 * [pg](https://www.npmjs.org/package/pg)
 * [sqlite3](https://www.npmjs.org/package/sqlite3)
 * [more...](http://knexjs.org/#Installation-node)
+
+Note: mysql, pg and sqlite3 are all installed by default.
 
 ## License
 Copyright 2014 Sebastian Schmidt
