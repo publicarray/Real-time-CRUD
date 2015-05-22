@@ -62,7 +62,7 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
   app.use(function (req, res, next) {
     res.status(404);
     if (req.accepts('html')) {
-      res.render('404', {url: req.url});
+      res.render('404', {url: req.url, title:config.appTitle});
       return;
     }
   });
