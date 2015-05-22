@@ -1,8 +1,8 @@
 {{#def.include('../layout')}}
-{{##def.title:{{!it.detail}} {{? it.table[0]}}{{=it.table[0][it.detail]}}{{?}}#}}
+{{##def.title:{{!it.detail}} {{? it.table[0]}}{{!it.table[0][it.detail]}}{{?}}#}}
 {{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
-<h2>{{!it.detail}} {{? it.table[0]}}{{=it.table[0][it.detail]}}{{?}}</h2>
+<h2>{{!it.detail}} {{? it.table[0]}}{{!it.table[0][it.detail]}}{{?}}</h2>
 <table class="table table-hover table-striped" id="table">
   <thead>
     {{ for(var col in it.table[0]) { }}

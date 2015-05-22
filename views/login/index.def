@@ -12,7 +12,7 @@
       <div class="form-group">
         <input type="password" id="pass" name="pass" placeholder="Password" required="" class="form-control" autocomplete="off">
       </div>
-        {{? it.message }}<p class="alert alert-danger">{{=it.message}}</p>{{?}}
+        {{? it.message }}<p class="alert alert-danger">{{!it.message}}</p>{{?}}
         <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
     </form>
   </div>

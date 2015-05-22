@@ -18,7 +18,7 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
 <title>
 {{ if ({{#!def.title}}) { }}
-  {{=it.title}}
+  {{!it.title}}
 {{ } }}
 {{ else { }}
   {{#def.title || ""}}
@@ -58,7 +58,7 @@
         </button>
         <a class="navbar-brand" href="/" style="float: none;">
           <br>
-          <p>{{=it.title}}</p>
+          <p>{{!it.title}}</p>
         </a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

@@ -31,7 +31,7 @@
         </script>
         <td>Yes</td>
       {{?? item !== 'id'}}
-        <td>{{=row[item]}}</td>
+        <td>{{!row[item]}}</td>
       {{?}}
     {{ } }}
     </tr>

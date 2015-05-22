@@ -47,6 +47,7 @@ knex.schema.hasTable(config.tableName).then(function (exists) {
 function escapeHtml (text) {
   text = sanitizer.sanitize(text);
   text = sanitizer.escape(text);
+  text = text.replace(/{{|}}/g, '');
   return text;
 }
 
