@@ -42,7 +42,7 @@
 #}}
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
-<script src='js/client.min.js'></script>
+<script src='js/client.js'></script>
 <script>
 $(document).ready(function () {
   var socket = io();
