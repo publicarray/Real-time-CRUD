@@ -42,5 +42,28 @@
 #}}
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
-<script src="/js/client.js"></script>
+<script src='js/client.min.js'></script>
+<script>
+$(document).ready(function () {
+  var socket = io();
+
+  socket.on('add', function (data) {
+    document.getElementById('data').innerHTML += (display(data));
+    sort.refresh();
+  });
+  socket.on('update', function (data) {
+    document.getElementById(data.id).outerHTML = (display(data));
+    sort.refresh();
+  });
+  socket.on('delete', function (id) {
+    document.getElementById(id).remove();
+  });
+  socket.on('disconnect',function () {
+    $('#alert').fadeIn(1000);
+  });
+  socket.on('connect',function () {
+    $('#alert').fadeOut(1000);
+  });
+});
+</script>
 #}}

@@ -11,9 +11,7 @@
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *   See the License for the specific language governing permissions and
  *   limitations under the License.*/
-/* jslint node: true */
 "use strict";
-// require('look').start(8081);
 var config = require('./config'); // get user config file
 var bcrypt = require('bcrypt'); // a crypto library
 config.password = bcrypt.hashSync(config.password, 12); // hash password

@@ -21,25 +21,3 @@ function display (data) {
   }
   return firstLine + htmlStr + '</tr>';
 }
-
-$(document).ready(function () {
-  var socket = io();
-
-  socket.on('add', function (data) {
-    document.getElementById('data').innerHTML += (display(data));
-    sort.refresh();
-  });
-  socket.on('update', function (data) {
-    document.getElementById(data.id).outerHTML = (display(data));
-    sort.refresh();
-  });
-  socket.on('delete', function (id) {
-    document.getElementById(id).remove();
-  });
-  socket.on('disconnect',function () {
-    $('#alert').fadeIn(1000);
-  });
-  socket.on('connect',function () {
-    $('#alert').fadeOut(1000);
-  });
-});

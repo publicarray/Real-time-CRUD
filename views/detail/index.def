@@ -31,7 +31,7 @@
 #}}
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
-<script src="/js/client-ring.js"></script>
+<script src="/js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   var socket = io();
@@ -45,10 +45,16 @@ $(document).ready(function () {
     }
   });
   socket.on('update', function (data) {
-    if (data.{{!it.detail}} === detail) {
-      document.getElementById(data.id).outerHTML = (display(data));
-      sort.refresh();
-    }
+      if (data.{{!it.detail}} === detail && document.getElementById(data.id) == null) {
+        document.getElementById('data').innerHTML += (display(data));
+        sort.refresh();
+      } else if (data.{{!it.detail}} !== detail && document.getElementById(data.id)) {
+        document.getElementById(data.id).remove();
+        sort.refresh();
+      } else {
+        document.getElementById(data.id).outerHTML = (display(data));
+        sort.refresh();
+      }
   });
   socket.on('delete', function (id) {
     if (document.getElementById(id)){
