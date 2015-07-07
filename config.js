@@ -43,7 +43,7 @@ config.tableName = "event";
 // SQL Table Schema
 // Column Name : Type
 // The Type can be one of string|integer|boolean
-// NOTE: If you change it you need to reset the Database table manually
+// NOTE: Any change you make must be also me made to the database table manually
 config.table = {
   Event : "string",
   Ring : "integer",

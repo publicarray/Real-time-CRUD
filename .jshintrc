@@ -1,0 +1,6 @@
+{
+  "globals": {
+    "io": false,
+    "Tablesort": false
+  }
+}

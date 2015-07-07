@@ -5,14 +5,16 @@ module.exports = function (io, knex, escapeHtml, config) {
       var object = {};
       var colNo = 0;
       for (var column in config.table) {
-        if (config.table[column] === 'boolean') {
-          object[column] = parseInt(data[colNo], 10) === 1 ? true : false;
-        } else if (config.table[column] === 'integer') {
-          object[column] = parseFloat(data[colNo], 10) || 0;
-        } else {
-          object[column] = escapeHtml(data[colNo]);
+        if (config.table.hasOwnProperty(column)) {
+          if (config.table[column] === 'boolean') {
+            object[column] = parseInt(data[colNo], 10) === 1 ? true : false;
+          } else if (config.table[column] === 'integer') {
+            object[column] = parseFloat(data[colNo], 10) || 0;
+          } else {
+            object[column] = escapeHtml(data[colNo]);
+          }
+          colNo++;
         }
-        colNo++;
       }
 
       knex(config.tableName)
@@ -34,14 +36,16 @@ module.exports = function (io, knex, escapeHtml, config) {
       var colNo = 2; // skip first argument (id)
       var id = parseInt(data[1], 10);
       for (var column in config.table) {
-        if (config.table[column] === 'boolean') {
-          object[column] = parseInt(data[colNo], 10) === 1 ? true : false;
-        } else if (config.table[column] === 'integer') {
-          object[column] = parseFloat(data[colNo], 10) || 0;
-        } else {
-          object[column] = escapeHtml(data[colNo]);
+        if (config.table.hasOwnProperty(column)) {
+          if (config.table[column] === 'boolean') {
+            object[column] = parseInt(data[colNo], 10) === 1 ? true : false;
+          } else if (config.table[column] === 'integer') {
+            object[column] = parseFloat(data[colNo], 10) || 0;
+          } else {
+            object[column] = escapeHtml(data[colNo]);
+          }
+          colNo++;
         }
-        colNo++;
       }
       knex(config.tableName)
         .where('id', id)

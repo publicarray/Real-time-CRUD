@@ -5,16 +5,18 @@ function display (data) {
   var firstLine = '<tr id='+data.id+'>';
   var htmlStr = '<td>' + data.id + '</td>'; // display the id first
   for (var prop in data) {
-    if (typeof data[prop] === 'boolean') {
-      if (data[prop]) {
-        firstLine = '<tr id='+data.id+' class="success">';
-        data[prop] = '<input type="checkbox" checked>';
-      } else {
-        data[prop] = '<input type="checkbox">';
+    if (data.hasOwnProperty(prop)) {
+      if (typeof data[prop] === 'boolean') {
+        if (data[prop]) {
+          firstLine = '<tr id='+data.id+' class="success">';
+          data[prop] = '<input type="checkbox" checked>';
+        } else {
+          data[prop] = '<input type="checkbox">';
+        }
       }
-    }
-    if (prop !== 'id'){
-      htmlStr += '<td>' + data[prop] + '</td>';
+      if (prop !== 'id'){
+        htmlStr += '<td>' + data[prop] + '</td>';
+      }
     }
   }
   return firstLine + htmlStr + '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
@@ -26,6 +28,8 @@ function reset () {
     element.value = '';
   });
 }
+
+/*jshint unused:false*/
 // update
 function edit () {
   var data = [];
@@ -40,6 +44,7 @@ function edit () {
   socket.emit('update', data);
   reset();
 }
+/*jshint unused:true*/
 
 $(document).ready(function() {
   // check-box update

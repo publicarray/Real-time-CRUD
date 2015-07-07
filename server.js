@@ -36,7 +36,9 @@ knex.schema.hasTable(config.tableName).then(function (exists) {
     return knex.schema.createTable(config.tableName, function (table) {
       table.increments();
       for (var column in config.table) {
-        table[config.table[column]](column); // eg. config.table[column] = string and column = name. - table.string('name');
+        if (config.table.hasOwnProperty(column)) {
+          table[config.table[column]](column); // eg. config.table[column] = string and column = name. - table.string('name');
+        }
       }
     });
   }
