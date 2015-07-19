@@ -6,6 +6,8 @@
   "repository": "https://github.com/publicarray/Real-time-CRUD",
   "dependencies": {
     "bcrypt": "^0.8.0",
+    "body-parser": "^1.13.2",
+    "cookie-session": "^1.2.0",
     "dot-emc": "^0.1.2",
     "express": "^4.9.8",
     "knex": "^0.8.0",

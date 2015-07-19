@@ -5,12 +5,12 @@
   <div class="col-sm-6 col-md-4 col-md-offset-4">
     <h1 class="text-center">Sign in</h1>
     <br>
-    <form method="GET">
+    <form method="post" action="/admin">
       <div class="form-group">
-        <input type="text" id="name" name="name" placeholder="Username" required="" autofocus="" class="form-control" autocomplete="off">
+        <input type="text" id="username" name="username" placeholder="Username" required="" autofocus="" class="form-control" autocomplete="off">
       </div>
       <div class="form-group">
-        <input type="password" id="pass" name="pass" placeholder="Password" required="" class="form-control" autocomplete="off">
+        <input type="password" id="password" name="password" placeholder="Password" required="" class="form-control" autocomplete="off">
       </div>
         {{? it.message }}<p class="alert alert-danger">{{!it.message}}</p>{{?}}
         <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
@@ -18,4 +18,3 @@
   </div>
 </div>
 #}}
-{{##def.script:<script src="/js/login.js"></script>#}}

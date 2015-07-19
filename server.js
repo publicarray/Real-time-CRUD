@@ -14,6 +14,8 @@
 "use strict";
 var config = require('./config'); // get user config file
 var bcrypt = require('bcrypt'); // a crypto library
+var cookieSession = require('cookie-session'); // cookie sessions
+var bodyParser = require('body-parser'); // parse post requests
 config.password = bcrypt.hashSync(config.password, 12); // hash password
 var express = require('express');
 var app = express();
@@ -24,6 +26,7 @@ var knex = require('knex')({
   client: config.client,
   connection: config.connection
 });
+app.disable('x-powered-by');
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.engine("def", require("dot-emc").init({app: app}).renderFile);
@@ -44,6 +47,20 @@ knex.schema.hasTable(config.tableName).then(function (exists) {
   console.error(error);
 });
 
+// app.set('trust proxy', 1); // trust first proxy
+app.use(cookieSession({
+  name: 'session',
+  keys: ['username', 'password'],
+  domain: config.domain
+}));
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({
+  extended: false,
+  limit: 1024,
+  type: 'application/x-www-form-urlencoded'
+});
+
 function escapeHtml (text) {
   text = sanitizer.sanitize(text);
   text = sanitizer.escape(text);
@@ -51,7 +68,7 @@ function escapeHtml (text) {
   return text;
 }
 
-require('./routes')(app, knex, escapeHtml, config, bcrypt);
+require('./routes')(app, urlencodedParser, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 
 console.log('Listening on port: ' + config.port + '\nCTRL + C to shutdown');

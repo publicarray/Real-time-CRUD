@@ -64,7 +64,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li>
+          {{? it.signin}}
+          <a href="/admin?logout=true">Log out</a>
+          {{??}}
           <a href="/admin">Login</a>
+          {{?}}
         </li>
       </ul>
       </div>

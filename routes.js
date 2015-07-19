@@ -1,4 +1,4 @@
-module.exports = function (app, knex, escapeHtml, config, bcrypt) {
+module.exports = function (app, urlencodedParser, knex, escapeHtml, config, bcrypt) {
   "use strict";
   app.get('/', function (req, res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
@@ -19,29 +19,42 @@ module.exports = function (app, knex, escapeHtml, config, bcrypt) {
     });
   }
 
+  function renderAdmin(res)
+  {
+    knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
+    res.render('admin', {table:rows, schema:config.table, signin:true, title:config.appTitle});
+    }).catch(function(error) {
+      console.error(error);
+    });
+  }
+
   app.get('/admin', function (req, res) {
-    if (req.query.hash) {
-      var now = Math.round(new Date().getTime() / 1000);
-      var user = "";
-      try {
-        user = new Buffer(req.query.hash, 'base64').toString('utf8');
-        user = JSON.parse(user);
-      } catch (e) {
-        console.error("/admin: " + e.message);
-      }
-      var userTime = (parseInt(user.time));
-    if (!user || user.name !== config.username || !bcrypt.compareSync(user.pass, config.password)) { // TODO - increase security
-        res.render('login', {message: 'The user name or password you entered is incorrect.', title:config.appTitle});
-        //time allowed to stay sign-in is 120s / time out(response time)
-      } else if ((userTime+120) < now || userTime > (now+120)) {
-        res.render('login', {message: 'The session has timed out.', title:config.appTitle});
+    if (req.session.populated && req.session.username && req.session.password)
+    {
+      // Already logged in.
+      if (req.query.logout)
+      {
+        req.session = null; // logout
+        res.render('login', {title:config.appTitle});
       } else {
-        knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function(rows) {
-          res.render('admin', {table:rows, schema:config.table, title:config.appTitle});
-        }).catch(function(error) {
-          console.error(error);
-        });
+        renderAdmin(res);
       }
+    } else {
+      res.render('login', {title:config.appTitle});
+    }
+  });
+
+  app.post('/admin', urlencodedParser, function (req, res) {
+    var user = req.body.username;
+    var pass = req.body.password;
+    if (user == config.username && bcrypt.compareSync(pass, config.password))
+    {
+      // Set the sessions.
+      req.session.username = user;
+      req.session.password = pass;
+      renderAdmin(res);
+    } else if (user || pass) {
+      res.render('login', {message: 'The username or password you entered is incorrect.', title:config.appTitle});
     } else {
       res.render('login', {title:config.appTitle});
     }

@@ -22,6 +22,9 @@ var config = {
 // Title
 config.appTitle = "Real-time CRUD";
 
+// Domain the website is hosted at
+// config.domain = "mydomain.com";
+
 // SQL Database driver
 // options are: mysql|pg|sqlite3
 config.client = "sqlite3";
