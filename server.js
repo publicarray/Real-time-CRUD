@@ -27,7 +27,11 @@ var knex = require('knex')({
   client: config.client,
   connection: config.connection
 });
-app.disable('x-powered-by');
+var helmet = require('helmet');
+app.disable('x-powered-by'); // Remove default x-powered-by response header
+app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
+app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
+app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.engine("def", require("dot-emc").init({app: app}).renderFile);
@@ -58,10 +62,6 @@ if (config.ssl) {
     cert: fs.readFileSync(config.ssl.certificate)
   };
 
-  // var https = require('https');
-  // var secureServer = https.createServer(sslOptions, app).listen(config.ssl.port);
-  // io = require('socket.io')(secureServer); // start socket.io server
-
   // stunnel obtained from: <http://stackoverflow.com/questions/17285180/use-both-http-and-https-for-socket-io>
   tls.createServer(sslOptions, function (cleartextStream) {
     var cleartextRequest = net.connect({
@@ -78,12 +78,12 @@ if (config.ssl) {
 
 // app.set('trust proxy', 1); // trust first proxy
 app.use(cookieSession({
-  name: 'session',
+  name: 'sessionId',
   keys: ['username', 'password'],
   cookie: {
     domain: config.domain,
     httpOnly: true,
-    secure: true,
+    // secure: true, // need https
     signed: true
   }
 }));
