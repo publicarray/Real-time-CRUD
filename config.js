@@ -1,6 +1,7 @@
 // set config to sensible defaults - PLEASE DO NOT MODEFY
 var config = {
   appTitle: 'Real-time CRUD',
+  domain: 'localhost',
   client: 'sqlite3',
   connection: {
     filename : 'db.sqlite'
@@ -71,6 +72,15 @@ config.password = "password";
 
 // Web Server Port
 config.port = 8080;
+
+// Enable secure https
+// Tutorial on how to create certificates:
+//  <http://greengeckodesign.com:8880/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/>
+// config.ssl = {
+//   privateKey: "ssl/privatekey.key",
+//   certificate: "ssl/certificate.crt",
+//   port: "8081"
+// };
 
 //*****************************************************************//
 //                    END USER CONFIGURATION                       //

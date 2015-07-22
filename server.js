@@ -14,13 +14,14 @@
 "use strict";
 var config = require('./config'); // get user config file
 var bcrypt = require('bcrypt'); // a crypto library
+var salt = bcrypt.genSaltSync(); // create salt
+config.password = bcrypt.hashSync(config.password, salt, 12); // hash password
 var cookieSession = require('cookie-session'); // cookie sessions
 var bodyParser = require('body-parser'); // parse post requests
-config.password = bcrypt.hashSync(config.password, 12); // hash password
 var express = require('express');
 var app = express();
-var server = app.listen(config.port);
-var io = require('socket.io')(server);
+var server = app.listen(config.port); // start server
+var io = require('socket.io')(server); // start socket.io server
 var sanitizer = require('sanitizer');
 var knex = require('knex')({
   client: config.client,
@@ -47,11 +48,44 @@ knex.schema.hasTable(config.tableName).then(function (exists) {
   console.error(error);
 });
 
+if (config.ssl) {
+  var fs = require('fs'); // read files
+  var tls = require('tls');
+  var net = require('net');
+
+  var sslOptions = {
+    key: fs.readFileSync(config.ssl.privateKey),
+    cert: fs.readFileSync(config.ssl.certificate)
+  };
+
+  // var https = require('https');
+  // var secureServer = https.createServer(sslOptions, app).listen(config.ssl.port);
+  // io = require('socket.io')(secureServer); // start socket.io server
+
+  // stunnel obtained from: <http://stackoverflow.com/questions/17285180/use-both-http-and-https-for-socket-io>
+  tls.createServer(sslOptions, function (cleartextStream) {
+    var cleartextRequest = net.connect({
+        port: config.port,
+        host: config.domain
+    }, function () {
+        cleartextStream.pipe(cleartextRequest);
+        cleartextRequest.pipe(cleartextStream);
+    });
+  }).listen(config.ssl.port);
+
+  console.log('TSL/SSL [ON]\nListening on https://' + config.domain + ':' + config.ssl.port);
+}
+
 // app.set('trust proxy', 1); // trust first proxy
 app.use(cookieSession({
   name: 'session',
   keys: ['username', 'password'],
-  domain: config.domain
+  cookie: {
+    domain: config.domain,
+    httpOnly: true,
+    secure: true,
+    signed: true
+  }
 }));
 
 // create application/x-www-form-urlencoded parser
@@ -71,4 +105,4 @@ function escapeHtml (text) {
 require('./routes')(app, urlencodedParser, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 
-console.log('Listening on port: ' + config.port + '\nCTRL + C to shutdown');
+console.log('Listening on http://' + config.domain + ':' + config.port +'\nCTRL + C to shutdown');
