@@ -1,17 +1,27 @@
 # Easy to configure, Real-time CRUD Database Web Application
-[![Dependencies](https://david-dm.org/publicarray/Real-time-CRUD.svg)](https://david-dm.org/publicarray/Real-time-CRUD) [![Code Climate](https://codeclimate.com/github/publicarray/Real-time-CRUD/badges/gpa.svg)](https://codeclimate.com/github/publicarray/Real-time-CRUD)
+[![Dependencies](https://david-dm.org/publicarray/Real-time-CRUD.svg)](https://david-dm.org/publicarray/Real-time-CRUD)
+[![Code Climate](https://codeclimate.com/github/publicarray/Real-time-CRUD/badges/gpa.svg)](https://codeclimate.com/github/publicarray/Real-time-CRUD)
 
 A real-time database web application build on node.js, express, socket.io and knex.js
 
+* [Installation](#installation)
+  * [ Start the server](#start-the-server)
+  * [Configuration](#configuration)
+  * [URLs](#urls)
+    * [Default Login Details](#default-login-details)
+  * [How to Create a self signed certificate](#how-to-create-a-self-signed-certificate)
+* [Dependencies](#dependencies)
+  * [Database specific Dependencies/Drivers](#database-specific-dependenciesdrivers)
+* [License](#license)
+
 ## Installation
-Install dependencies:
+Install [dependencies](#dependencies):
 
 ```bash
 $ npm install
 ```
 
-## How to use
-Start the server:
+### Start the server
 
 ```bash
 $ node server
@@ -19,38 +29,22 @@ $ node server
 
 The default port is 8080.
 
-## Configuration
+### Configuration
 All of the User configuration is done via the `config.js` file. Explanations are in the file
 
-## URLs
+### URLs
 `/` displays the database table.
 
 `/admin` allows to add, delete and updates of data.
 
 `/{number}` is a list of the events for that {number} ring. (optional)
 
-### Default Login Details
+#### Default Login Details
 username is `admin`
 
 password is `password`
 
-## Dependencies
-- [bcrypt](https://www.npmjs.org/package/bcrypt)
-- [dot-emc](https://www.npmjs.org/package/dot-emc)
-- [express](https://www.npmjs.org/package/express)
-- [knex](https://www.npmjs.org/package/knex)
-- [sanitizer](https://www.npmjs.org/package/sanitizer)
-- [socket.io](https://www.npmjs.org/package/socket.io)
-
-### Database specific Dependencies/Drivers
-- [mysql](https://www.npmjs.org/package/mysql)
-- [pg](https://www.npmjs.org/package/pg)
-- [sqlite3](https://www.npmjs.org/package/sqlite3)
-- [more...](http://knexjs.org/#Installation-node)
-
-Note: mysql, pg and sqlite3 are all installed by default.
-
-## TLS/SSL - Create a self signed certificate
+### How to Create a self signed certificate
 
 First install [openssl](https://www.openssl.org/)
 
@@ -68,6 +62,22 @@ Create the SSL certificate:
 openssl req -new -key ssl/privatekey.pem -out ssl/csr.pem
 openssl x509 -req -days 365 -in ssl/csr.pem -signkey ssl/privatekey.pem -out ssl/certificate.crt
 ```
+
+## Dependencies
+- [bcrypt](https://www.npmjs.org/package/bcrypt)
+- [dot-emc](https://www.npmjs.org/package/dot-emc)
+- [express](https://www.npmjs.org/package/express)
+- [knex](https://www.npmjs.org/package/knex)
+- [sanitizer](https://www.npmjs.org/package/sanitizer)
+- [socket.io](https://www.npmjs.org/package/socket.io)
+
+### Database specific Dependencies/Drivers
+- [mysql](https://www.npmjs.org/package/mysql)
+- [pg](https://www.npmjs.org/package/pg)
+- [sqlite3](https://www.npmjs.org/package/sqlite3)
+- [more...](http://knexjs.org/#Installation-node)
+
+Note: mysql, pg and sqlite3 are all installed by default.
 
 ## License
 Copyright 2014 Sebastian Schmidt
