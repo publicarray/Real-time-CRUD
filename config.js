@@ -74,10 +74,13 @@ config.password = "password";
 config.port = 8080;
 
 // Enable secure https
-// Tutorial on how to create certificates:
-//  <http://greengeckodesign.com:8880/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/>
+// Tutorial on how to create certificates: <http://greengeckodesign.com:8880/blog/2013/06/15/creating-an-ssl-certificate-for-node-dot-js/>
+//  First install openssl: <https://www.openssl.org/>
+//  Create RSA key: openssl genrsa 1024 > ssl/privatekey.pem
+//  CreateSSL certificate: openssl req -new -key ssl/privatekey.pem -out ssl/csr.pem
+//      openssl x509 -req -days 365 -in ssl/csr.pem -signkey ssl/privatekey.pem -out ssl/certificate.crt
 // config.ssl = {
-//   privateKey: "ssl/privatekey.key",
+//   privateKey: "ssl/privatekey.pem",
 //   certificate: "ssl/certificate.crt",
 //   port: "8081"
 // };
