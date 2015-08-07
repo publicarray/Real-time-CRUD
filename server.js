@@ -57,9 +57,36 @@ if (config.ssl) {
   var tls = require('tls');
   var net = require('net');
 
+  // from <https://certsimple.com/blog/a-plus-node-js-ssl>
   var sslOptions = {
     key: fs.readFileSync(config.ssl.privateKey),
-    cert: fs.readFileSync(config.ssl.certificate)
+    cert: fs.readFileSync(config.ssl.certificate),
+    // fix forward secrecy by using ciphers from the iojs docs
+    // <https://github.com/nodejs/io.js/blob/master/doc/api/tls.markdown#tlscreateserveroptions-secureconnectionlistener>
+    ciphers: process.env.CIPHERS || [
+      "ECDHE-RSA-AES128-GCM-SHA256",
+      "ECDHE-ECDSA-AES128-GCM-SHA256",
+      "ECDHE-RSA-AES256-GCM-SHA384",
+      "ECDHE-ECDSA-AES256-GCM-SHA384",
+      "DHE-RSA-AES128-GCM-SHA256",
+      "ECDHE-RSA-AES128-SHA256",
+      "DHE-RSA-AES128-SHA256",
+      "ECDHE-RSA-AES256-SHA384",
+      "DHE-RSA-AES256-SHA384",
+      "ECDHE-RSA-AES256-SHA256",
+      "DHE-RSA-AES256-SHA256",
+      "HIGH",
+      "!aNULL",
+      "!eNULL",
+      "!EXPORT",
+      "!DES",
+      "!RC4", // disable weak cipher
+      "!MD5",
+      "!PSK",
+      "!SRP",
+      "!CAMELLIA"
+    ].join(':'),
+    honorCipherOrder: true // migrate BEAST attacks
   };
 
   // stunnel obtained from: <http://stackoverflow.com/questions/17285180/use-both-http-and-https-for-socket-io>
