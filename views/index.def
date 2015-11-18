@@ -1,6 +1,6 @@
 {{#def.include('layout')}}
 {{##def.style: #detail{text-align: center;} #detail a{display: inline-block; margin: 0;}@media(min-width: 500px){#detail a{margin: 2%;}#}}
-{{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
+{{##def.head:<link href="/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
 <!-- <div class="col-sm-12" id="detail">
 <h2>Rings</h2>
@@ -42,6 +42,7 @@
 #}}
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
+<script src='/lib/tablesort.numeric.js'></script>
 <script src='js/client.js'></script>
 <script>
 $(document).ready(function () {

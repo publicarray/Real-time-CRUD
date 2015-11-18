@@ -1,6 +1,6 @@
 {{#def.include('../layout')}}
 {{##def.title:{{!it.detail}} {{? it.table[0]}}{{!it.table[0][it.detail]}}{{?}}#}}
-{{##def.head:<link href="/lib/tablesort.css" rel="stylesheet">#}}
+{{##def.head:<link href="/tablesort.css" rel="stylesheet">#}}
 {{##def.content:
 <h2>{{!it.detail}} {{? it.table[0]}}{{!it.table[0][it.detail]}}{{?}}</h2>
 <table class="table table-hover table-striped" id="table">
@@ -31,6 +31,7 @@
 #}}
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
+<script src='/lib/tablesort.numeric.js'></script>
 <script src="/js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {

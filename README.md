@@ -18,7 +18,7 @@ A real-time database web application build on node.js, express, socket.io and kn
 Install [dependencies](#dependencies):
 
 ```bash
-$ npm install
+$ npm install --production
 ```
 
 ### Start the server
@@ -78,6 +78,17 @@ openssl x509 -req -days 365 -in ssl/csr.pem -signkey ssl/privatekey.pem -out ssl
 - [more...](http://knexjs.org/#Installation-node)
 
 Note: mysql, pg and sqlite3 are all installed by default.
+
+## Update Bower Dependencies (Optional)
+
+To update dependencies from bower:
+```
+npm install
+bower install
+gulp
+```
+
+A version of bower dependencies are included in `public/lib`. These may me out of date but it allows users to get up and running faster.
 
 ## License
 Copyright 2014 Sebastian Schmidt
