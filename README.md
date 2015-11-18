@@ -88,7 +88,7 @@ bower install
 gulp
 ```
 
-A version of bower dependencies are included in `public/lib`. These may me out of date but it allows users to get up and running faster.
+A version of bower dependencies are included in `public/lib`. These may be out of date but it allows users to get up and running faster.
 
 ## License
 Copyright 2014 Sebastian Schmidt
