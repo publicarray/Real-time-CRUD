@@ -44,7 +44,13 @@ username is `admin`
 
 password is `password`
 
-### How to Create a self signed certificate
+### How to Create a certificate (used for https)
+
+Up-to-date information on certificate creation can he found here: https://www.feistyduck.com/library/openssl-cookbook/online/ch-openssl.html
+
+#### Self-signed certificate
+
+**Note: do not use in production!**
 
 First install [openssl](https://www.openssl.org/)
 
