@@ -1,9 +1,25 @@
 engines:
+  nodesecurity:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
   eslint:
     enabled: true
-  nodesecurity:
+  csslint:
     enabled: true
 
 ratings:
   paths:
     - "**.js"
+    - "**.css"
+
+exclude_paths:
+- bower_components/*
+- node_modules/*
+- .vagrant/*
+- public/lib/*
