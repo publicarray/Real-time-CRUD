@@ -27,7 +27,7 @@ var knex = require('knex')({
   client: config.client,
   connection: config.connection
 });
-var helmet = require('helmet');
+var helmet = require('helmet');  // Please read https://github.com/helmetjs/helmet/blob/master/README.md
 app.disable('x-powered-by'); // Remove default x-powered-by response header
 app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
 app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
