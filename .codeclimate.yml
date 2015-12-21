@@ -6,9 +6,4 @@ engines:
 
 ratings:
   paths:
-    - ".js"
-
-exclude_paths:
-- bower_components/**
-- node_modules/**
-- .vagrant/**
+    - "**.js"
