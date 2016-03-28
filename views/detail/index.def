@@ -30,14 +30,14 @@
 </table>
 #}}
 {{##def.script:
-<script src='/lib/tablesort.min.js'></script>
-<script src='/lib/tablesort.number.js'></script>
+<script src="/lib/tablesort.min.js"></script>
+<script src="/lib/tablesort.number.js"></script>
 <script src="/js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
   var socket = io();
   var url = window.location.href;
-  var detail = parseInt(url.substr(url.lastIndexOf('/')+1));
+  var detail = parseInt(url.substr(url.lastIndexOf('/') + 1));
 
   socket.on('add', function (data) {
     if (data.{{!it.detail}} === detail) {

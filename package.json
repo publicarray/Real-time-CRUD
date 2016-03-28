@@ -23,7 +23,10 @@
     "start": "server.js"
   },
   "devDependencies": {
+    "bower": "^1.7.7",
     "del": "^2.1.0",
+    "eslint": "^2.5.1",
+    "eslint-config-airbnb": "^6.2.0",
     "gulp": "^3.9.0",
     "gulp-rename": "^1.2.2"
   }

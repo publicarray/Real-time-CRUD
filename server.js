@@ -11,11 +11,10 @@
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *   See the License for the specific language governing permissions and
  *   limitations under the License.*/
-"use strict";
+'use strict';
 var config = require('./config'); // get user config file
 var bcrypt = require('bcrypt'); // a crypto library
 var salt = bcrypt.genSaltSync(); // create salt
-config.password = bcrypt.hashSync(config.password, salt, 12); // hash password
 var cookieSession = require('cookie-session'); // cookie sessions
 var bodyParser = require('body-parser'); // parse post requests
 var express = require('express');
@@ -29,27 +28,31 @@ var knex = require('knex')({
   useNullAsDefault: config.useNullAsDefault
 });
 var helmet = require('helmet');  // Please read https://github.com/helmetjs/helmet/blob/master/README.md
+config.password = bcrypt.hashSync(config.password, salt, 12); // hash password
+
 app.disable('x-powered-by'); // Remove default x-powered-by response header
 app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
 app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
 app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
-app.engine("def", require("dot-emc").init({app: app}).renderFile);
-app.set("view engine", "def");
+app.engine('def', require('dot-emc').init({ app: app }).renderFile);
+app.set('view engine', 'def');
 
-knex.schema.hasTable(config.tableName).then(function (exists) {
+knex.schema.hasTable(config.tableName).then(function createTableIfExists(exists) {
   if (!exists) {
-    return knex.schema.createTable(config.tableName, function (table) {
+    return knex.schema.createTable(config.tableName, function createTable(table) {
+      var column;
       table.increments();
-      for (var column in config.table) {
+      for (column in config.table) {
         if (config.table.hasOwnProperty(column)) {
           table[config.table[column]](column); // eg. config.table[column] = string and column = name. - table.string('name');
         }
       }
     });
   }
-}).catch(function(error) {
+  return null;
+}).catch(function printError(error) {
   console.error(error);
 });
 
@@ -65,37 +68,38 @@ if (config.ssl) {
     // fix forward secrecy by using ciphers from the iojs docs
     // <https://github.com/nodejs/io.js/blob/master/doc/api/tls.markdown#tlscreateserveroptions-secureconnectionlistener>
     ciphers: process.env.CIPHERS || [
-      "ECDHE-RSA-AES128-GCM-SHA256",
-      "ECDHE-ECDSA-AES128-GCM-SHA256",
-      "ECDHE-RSA-AES256-GCM-SHA384",
-      "ECDHE-ECDSA-AES256-GCM-SHA384",
-      "DHE-RSA-AES128-GCM-SHA256",
-      "ECDHE-RSA-AES128-SHA256",
-      "DHE-RSA-AES128-SHA256",
-      "ECDHE-RSA-AES256-SHA384",
-      "DHE-RSA-AES256-SHA384",
-      "ECDHE-RSA-AES256-SHA256",
-      "DHE-RSA-AES256-SHA256",
-      "HIGH",
-      "!aNULL",
-      "!eNULL",
-      "!EXPORT",
-      "!DES",
-      "!RC4", // disable weak cipher
-      "!MD5",
-      "!PSK",
-      "!SRP",
-      "!CAMELLIA"
+      'ECDHE-RSA-AES128-GCM-SHA256',
+      'ECDHE-ECDSA-AES128-GCM-SHA256',
+      'ECDHE-RSA-AES256-GCM-SHA384',
+      'ECDHE-ECDSA-AES256-GCM-SHA384',
+      'DHE-RSA-AES128-GCM-SHA256',
+      'ECDHE-RSA-AES128-SHA256',
+      'DHE-RSA-AES128-SHA256',
+      'ECDHE-RSA-AES256-SHA384',
+      'DHE-RSA-AES256-SHA384',
+      'ECDHE-RSA-AES256-SHA256',
+      'DHE-RSA-AES256-SHA256',
+      'HIGH',
+      '!aNULL',
+      '!eNULL',
+      '!EXPORT',
+      '!DES',
+      '!RC4', // disable weak cipher
+      '!MD5',
+      '!PSK',
+      '!SRP',
+      '!CAMELLIA'
     ].join(':'),
     honorCipherOrder: true // migrate BEAST attacks
   };
 
   // stunnel obtained from: <http://stackoverflow.com/questions/17285180/use-both-http-and-https-for-socket-io>
-  tls.createServer(sslOptions, function (cleartextStream) {
+  // direct link: <http://stackoverflow.com/a/22641671>
+  tls.createServer(sslOptions, function createStunnel(cleartextStream) {
     var cleartextRequest = net.connect({
       port: config.port,
       host: config.domain
-    }, function () {
+    }, function openStream() {
       cleartextStream.pipe(cleartextRequest);
       cleartextRequest.pipe(cleartextStream);
     });

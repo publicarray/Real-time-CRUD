@@ -1,12 +1,20 @@
 {
+  "root": true,
   "extends": "airbnb/legacy",
   "env": {
     "browser": true,
     "node": true
   },
-  "globals":
-  {
+  "globals": {
+    "$": false,
     "io": false,
     "Tablesort": false
+  },
+  "rules": {
+    "max-len": [1, 120, 2, {"ignoreComments": true}],
+    "no-unused-vars": [1, {"vars": "local", "args": "all"}],
+    "vars-on-top": 1,
+    "no-console": 0,
+    "no-param-reassign": 0
   }
 }

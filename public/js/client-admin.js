@@ -1,58 +1,59 @@
 var socket = io();
 var doc = document;
 
-function display (data) {
-  var firstLine = '<tr id='+data.id+'>';
+function display(data) {
+  var firstLine = '<tr id=' + data.id + '>';
   var htmlStr = '<td>' + data.id + '</td>'; // display the id first
-  for (var prop in data) {
+  var prop;
+  for (prop in data) {
     if (data.hasOwnProperty(prop)) {
       if (typeof data[prop] === 'boolean') {
         if (data[prop]) {
-          firstLine = '<tr id='+data.id+' class="success">';
+          firstLine = '<tr id=' + data.id + ' class="success">';
           data[prop] = '<input type="checkbox" checked>';
         } else {
           data[prop] = '<input type="checkbox">';
         }
       }
-      if (prop !== 'id'){
+      if (prop !== 'id') {
         htmlStr += '<td>' + data[prop] + '</td>';
       }
     }
   }
-  return firstLine + htmlStr + '<td><button class="btn btn-primary modelBtn" type="button" data-toggle="modal" data-target="#editModal">Edit</button></td><td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
+  return firstLine + htmlStr + '<td><button class="btn btn-primary modelBtn" ' +
+    'type="button" data-toggle="modal" data-target="#editModal">Edit</button></td>' +
+    '<td><button type="button" class="btn btn-danger">Delete</button></td></tr>';
 }
 
-function reset () {
+function reset() {
   doc.getElementById('idModel').textContent = '';
-  $('.model').each( function (index, element) {
+  $('.model').each(function (index, element) {
     element.value = '';
   });
 }
 
-/*jshint unused:false*/
 // update
-function edit () {
+function edit() {
   var data = [];
   data[1] = doc.getElementById('idModel').textContent;
   $('.model').each(function (index, element) {
     if ($(this).is(':checkbox')) {
-      data[index+2] = $(this).prop('checked') ? 1 : 0;
+      data[index + 2] = $(this).prop('checked') ? 1 : 0;
     } else {
-      data[index+2] = element.value;
+      data[index + 2] = element.value;
     }
   });
   socket.emit('update', data);
   reset();
 }
-/*jshint unused:true*/
 
-$(document).ready(function() {
+$(document).ready(function () {
   // check-box update
   $('#data').on('change', ':checkbox', function () {
     var line = $(this).parent().parent();
     var data = [];
-    for (var i = 1; i <= line.children().length-2; i++) {  // items in the row - the 2 buttons; start at child 1
-      var td = line.find('td:nth-child('+i+')');
+    for (var i = 1; i <= line.children().length - 2; i++) {  // items in the row - the 2 buttons; start at child 1
+      var td = line.find('td:nth-child(' + i + ')');
       if (td.contents().is('input')) {
         if (td.contents().prop('checked')) {
           data[i] = 1;
@@ -75,8 +76,8 @@ $(document).ready(function() {
   $('#data').on('click', '.modelBtn', function () {
     var line = $(this).parent().parent();
     var data = [];
-    for (var i = 1; i <= line.children().length-2; i++) {  // items in the row - the 2 buttons; start at child 1
-      var td = line.find('td:nth-child('+i+')');
+    for (var i = 1; i <= line.children().length - 2; i++) {  // items in the row - the 2 buttons; start at child 1
+      var td = line.find('td:nth-child(' + i + ')');
       if (td.contents().is('input')) {
         if (td.contents().prop('checked')) {
           data[i] = 1;
@@ -89,15 +90,15 @@ $(document).ready(function() {
     }
 
     doc.getElementById('idModel').textContent = data[1];
-    $('.model').each( function (index, element) {
+    $('.model').each(function (index, element) {
       if ($(this).is(':checkbox')) {
-        if (data[index+2]) {
+        if (data[index + 2]) {
           $(this).prop('checked', true);
         } else {
           $(this).prop('checked', false);
         }
       } else {
-        element.value = data[index+2];
+        element.value = data[index + 2];
       }
     });
   });
@@ -117,25 +118,25 @@ $(document).ready(function() {
     });
     socket.emit('add', data);
     // reset input
-    $('.input').each( function (index, element) {
+    $('.input').each(function (index, element) {
       element.value = '';
     });
     return false;
   });
 
-  socket.on('add', function (data) {
+  socket.on('add', function add(data) {
     doc.getElementById('data').innerHTML += (display(data));
   });
-  socket.on('update', function (data) {
+  socket.on('update', function update(data) {
     doc.getElementById(data.id).outerHTML = (display(data));
   });
-  socket.on('delete', function (id) {
+  socket.on('delete', function remove(id) {
     doc.getElementById(id).remove();
   });
-  socket.on('disconnect',function () {
+  socket.on('disconnect', function disconnect() {
     $('#alert').fadeIn(1000);
   });
-  socket.on('connect',function () {
+  socket.on('connect', function connect() {
     $('#alert').fadeOut(1000);
   });
 });
