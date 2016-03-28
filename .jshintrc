@@ -1,9 +1,0 @@
-{
-  "node": true,
-  "browser": true,
-  "globals":
-  {
-    "io": false,
-    "Tablesort": false
-  }
-}

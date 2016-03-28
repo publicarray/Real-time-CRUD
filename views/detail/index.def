@@ -31,7 +31,7 @@
 #}}
 {{##def.script:
 <script src='/lib/tablesort.min.js'></script>
-<script src='/lib/tablesort.numeric.js'></script>
+<script src='/lib/tablesort.number.js'></script>
 <script src="/js/client.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {

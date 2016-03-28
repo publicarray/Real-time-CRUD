@@ -25,7 +25,8 @@ var io = require('socket.io')(server); // start socket.io server
 var sanitizer = require('sanitizer');
 var knex = require('knex')({
   client: config.client,
-  connection: config.connection
+  connection: config.connection,
+  useNullAsDefault: config.useNullAsDefault
 });
 var helmet = require('helmet');  // Please read https://github.com/helmetjs/helmet/blob/master/README.md
 app.disable('x-powered-by'); // Remove default x-powered-by response header
@@ -92,11 +93,11 @@ if (config.ssl) {
   // stunnel obtained from: <http://stackoverflow.com/questions/17285180/use-both-http-and-https-for-socket-io>
   tls.createServer(sslOptions, function (cleartextStream) {
     var cleartextRequest = net.connect({
-        port: config.port,
-        host: config.domain
+      port: config.port,
+      host: config.domain
     }, function () {
-        cleartextStream.pipe(cleartextRequest);
-        cleartextRequest.pipe(cleartextStream);
+      cleartextStream.pipe(cleartextRequest);
+      cleartextRequest.pipe(cleartextStream);
     });
   }).listen(config.ssl.port);
 
@@ -122,7 +123,7 @@ var urlencodedParser = bodyParser.urlencoded({
   type: 'application/x-www-form-urlencoded'
 });
 
-function escapeHtml (text) {
+function escapeHtml(text) {
   text = sanitizer.sanitize(text);
   text = sanitizer.escape(text);
   text = text.replace(/{{|}}/g, '');
@@ -132,4 +133,4 @@ function escapeHtml (text) {
 require('./routes')(app, urlencodedParser, knex, escapeHtml, config, bcrypt);
 require('./socket')(io, knex, escapeHtml, config);
 
-console.log('Listening on http://' + config.domain + ':' + config.port +'\nCTRL + C to shutdown');
+console.log('Listening on http://' + config.domain + ':' + config.port + '\nCTRL + C to shutdown');

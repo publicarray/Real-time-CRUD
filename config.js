@@ -4,8 +4,9 @@ var config = {
   domain: process.env.HOST || 'localhost',
   client: 'sqlite3',
   connection: {
-    filename : 'db.sqlite'
+    filename: 'db.sqlite'
   },
+  useNullAsDefault: true,
   tableName: 'table',
   table: {
     Name: 'string',
@@ -33,7 +34,7 @@ config.client = "sqlite3";
 // Database connection
 // more information see http://knexjs.org/#Installation-client
 config.connection = {
-  filename : "db.sqlite"
+  filename: "db.sqlite"
   // host     : '127.0.0.1',
   // port     :  5432,
   // user     : 'database_username',
@@ -49,10 +50,10 @@ config.tableName = "event";
 // The Type can be one of string|integer|boolean
 // NOTE: Any change you make must be also me made to the database table manually
 config.table = {
-  Event : "string",
-  Ring : "integer",
-  '# of Competitors' : "integer",
-  Finished : "boolean"
+  Event: "string",
+  Ring: "integer",
+  '# of Competitors': "integer",
+  Finished: "boolean"
 };
 
 // Username of the login

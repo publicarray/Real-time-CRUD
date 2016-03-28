@@ -19,8 +19,8 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.5",
-    "jquery": "~2.1.4",
-    "tablesort": "table.sort#~3.1.0"
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4",
+    "tablesort": "table.sort#^4.0.0"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb/legacy",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals":
+  {
+    "io": false,
+    "Tablesort": false
+  }
+}
