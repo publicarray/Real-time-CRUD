@@ -1,4 +1,5 @@
 # Easy to configure, Real-time CRUD Database Web Application
+[![Dependency Status](https://gemnasium.com/publicarray/Real-time-CRUD.svg)](https://gemnasium.com/publicarray/Real-time-CRUD)
 [![Dependencies](https://david-dm.org/publicarray/Real-time-CRUD.svg)](https://david-dm.org/publicarray/Real-time-CRUD)
 [![Code Climate](https://codeclimate.com/github/publicarray/Real-time-CRUD/badges/gpa.svg)](https://codeclimate.com/github/publicarray/Real-time-CRUD)
 
@@ -46,7 +47,7 @@ password is `password`
 
 ### How to Create a certificate (used for https)
 
-Up-to-date information on certificate creation can he found here: https://www.feistyduck.com/library/openssl-cookbook/online/ch-openssl.html
+Information on certificate creation can he found here: https://www.feistyduck.com/library/openssl-cookbook/online/ch-openssl.html
 
 #### Self-signed certificate
 
@@ -94,7 +95,7 @@ bower install
 gulp
 ```
 
-A version of bower dependencies are included in `public/lib`. These may be out of date but it allows users to get up and running faster.
+Minified versions of bower dependencies are included in `public/lib`. These may be out of date but it allows users to get up and running faster.
 
 ## License
 Copyright 2014 Sebastian Schmidt
