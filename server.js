@@ -34,7 +34,7 @@ app.disable('x-powered-by'); // Remove default x-powered-by response header
 app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
 app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
 app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
-app.use(helmet.dnsPrefetchControl()) // Stop DNS Pre-fetching
+app.use(helmet.dnsPrefetchControl()); // Stop DNS Pre-fetching
 app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report-uri.io/home/generate/
   // Specify directives as normal.
   directives: {
@@ -48,11 +48,11 @@ app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report
     sandbox: ['allow-forms', 'allow-scripts'],
     reflectedXss: 'filter',
     referrer: 'origin-when-cross-origin',
-    reportUri: '/report-violation',
+    reportUri: '/report-violation'
   },
   // Set to true if you only want browsers to report errors, not block them
-  reportOnly: false,
-}))
+  reportOnly: false
+}));
 
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
