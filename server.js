@@ -35,6 +35,25 @@ app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks 
 app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
 app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
 app.use(helmet.dnsPrefetchControl()) // Stop DNS Pre-fetching
+app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report-uri.io/home/generate/
+  // Specify directives as normal.
+  directives: {
+    defaultSrc: ['none'],
+    scriptSrc: ['self', 'unsafe-inline'],
+    styleSrc: ['self'],
+    imgSrc: ['self', 'data:'],
+    fontSrc: ['self'],
+    connectSrc: ['self'],
+    formAction: ['self'],
+    sandbox: ['allow-forms', 'allow-scripts'],
+    reflectedXss: 'filter',
+    referrer: 'origin-when-cross-origin',
+    reportUri: '/report-violation',
+  },
+  // Set to true if you only want browsers to report errors, not block them
+  reportOnly: false,
+}))
+
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.engine('def', require('dot-emc').init({ app: app }).renderFile);
