@@ -34,6 +34,7 @@ app.disable('x-powered-by'); // Remove default x-powered-by response header
 app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
 app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
 app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
+app.use(helmet.dnsPrefetchControl()) // Stop DNS Pre-fetching
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.engine('def', require('dot-emc').init({ app: app }).renderFile);
