@@ -36,19 +36,18 @@ app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <fr
 app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
 app.use(helmet.dnsPrefetchControl()); // Stop DNS Pre-fetching
 app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report-uri.io/home/generate/
-  // Specify directives as normal.
+  // Modify this at your discretion
   directives: {
-    defaultSrc: ['none'],
-    scriptSrc: ['self', 'unsafe-inline'],
-    styleSrc: ['self'],
-    imgSrc: ['self', 'data:'],
-    fontSrc: ['self'],
-    connectSrc: ['self'],
-    formAction: ['self'],
-    sandbox: ['allow-forms', 'allow-scripts'],
-    reflectedXss: 'filter',
+    defaultSrc: ["'none'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
+    imgSrc: ["'self'", 'data:'],
+    fontSrc: ["'self'"],
+    connectSrc: ["'self'", 'ws:', 'wss:'],
+    formAction: ["'self'"],
+    reflectedXss: 'block',
     referrer: 'origin-when-cross-origin',
-    reportUri: '/report-violation'
+    reportUri: '/report-violation' // Please change this
   },
   // Set to true if you only want browsers to report errors, not block them
   reportOnly: false
@@ -81,35 +80,64 @@ if (config.ssl) {
   var tls = require('tls');
   var net = require('net');
 
+  // HTTP Strict Transport Security
+  // app.use(helmet.hsts({
+  //   maxAge: 31536000000, // aprox one year
+  //   includeSubdomains: true,
+  //   force: true
+  // }));
+
   // from <https://certsimple.com/blog/a-plus-node-js-ssl>
   var sslOptions = {
     key: fs.readFileSync(config.ssl.privateKey),
     cert: fs.readFileSync(config.ssl.certificate),
-    // fix forward secrecy by using ciphers from the iojs docs
-    // <https://github.com/nodejs/io.js/blob/master/doc/api/tls.markdown#tlscreateserveroptions-secureconnectionlistener>
-    ciphers: process.env.CIPHERS || [
-      'ECDHE-RSA-AES128-GCM-SHA256',
-      'ECDHE-ECDSA-AES128-GCM-SHA256',
-      'ECDHE-RSA-AES256-GCM-SHA384',
-      'ECDHE-ECDSA-AES256-GCM-SHA384',
-      'DHE-RSA-AES128-GCM-SHA256',
-      'ECDHE-RSA-AES128-SHA256',
-      'DHE-RSA-AES128-SHA256',
-      'ECDHE-RSA-AES256-SHA384',
-      'DHE-RSA-AES256-SHA384',
-      'ECDHE-RSA-AES256-SHA256',
-      'DHE-RSA-AES256-SHA256',
-      'HIGH',
-      '!aNULL',
-      '!eNULL',
-      '!EXPORT',
-      '!DES',
-      '!RC4', // disable weak cipher
-      '!MD5',
-      '!PSK',
-      '!SRP',
-      '!CAMELLIA'
-    ].join(':'),
+    // <https://github.com/nodejs/node/blob/master/doc/api/tls.md#modifying-the-default-tls-cipher-suite>
+    // <https://wiki.mozilla.org/Security/Server_Side_TLS>
+    // ciphers: process.env.CIPHERS || [
+    // Modern
+      // 'ECDHE-ECDSA-AES256-GCM-SHA384',
+      // 'ECDHE-RSA-AES256-GCM-SHA384',
+      // 'ECDHE-ECDSA-CHACHA20-POLY1305',
+      // 'ECDHE-RSA-CHACHA20-POLY1305',
+      // 'ECDHE-ECDSA-AES128-GCM-SHA256',
+      // 'ECDHE-RSA-AES128-GCM-SHA256',
+      // 'ECDHE-ECDSA-AES256-SHA384',
+      // 'ECDHE-RSA-AES256-SHA384',
+      // 'ECDHE-ECDSA-AES128-SHA256',
+      // 'ECDHE-RSA-AES128-SHA256',
+    // Intermediate
+      // 'ECDHE-ECDSA-CHACHA20-POLY1305'
+      // 'ECDHE-RSA-CHACHA20-POLY1305'
+      // 'ECDHE-ECDSA-AES128-GCM-SHA256'
+      // 'ECDHE-RSA-AES128-GCM-SHA256'
+      // 'ECDHE-ECDSA-AES256-GCM-SHA384'
+      // 'ECDHE-RSA-AES256-GCM-SHA384'
+      // 'DHE-RSA-AES128-GCM-SHA256'
+      // 'DHE-RSA-AES256-GCM-SHA384'
+      // 'ECDHE-ECDSA-AES128-SHA256'
+      // 'ECDHE-RSA-AES128-SHA256'
+      // 'ECDHE-ECDSA-AES128-SHA'
+      // 'ECDHE-RSA-AES256-SHA384'
+      // 'ECDHE-RSA-AES128-SHA'
+      // 'ECDHE-ECDSA-AES256-SHA384'
+      // 'ECDHE-ECDSA-AES256-SHA'
+      // 'ECDHE-RSA-AES256-SHA'
+      // 'DHE-RSA-AES128-SHA256'
+      // 'DHE-RSA-AES128-SHA'
+      // 'DHE-RSA-AES256-SHA256'
+      // 'DHE-RSA-AES256-SHA'
+      // 'ECDHE-ECDSA-DES-CBC3-SHA'
+      // 'ECDHE-RSA-DES-CBC3-SHA'
+      // 'EDH-RSA-DES-CBC3-SHA'
+      // 'AES128-GCM-SHA256'
+      // 'AES256-GCM-SHA384'
+      // 'AES128-SHA256'
+      // 'AES256-SHA256'
+      // 'AES128-SHA'
+      // 'AES256-SHA'
+      // 'DES-CBC3-SHA'
+      // '!DSS'
+    // ].join(':'),
     honorCipherOrder: true // migrate BEAST attacks
   };
 
