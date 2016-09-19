@@ -35,6 +35,9 @@ app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks 
 app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
 app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
 app.use(helmet.dnsPrefetchControl()); // Stop DNS Pre-fetching
+app.use(helmet.referrerPolicy({policy: 'origin-when-cross-origin'})) // Prevent other websites from tracking visitors
+// options: "no-referrer", "no-referrer-when-downgrade", "same-origin", "origin", "origin-when-cross-origin", "unsafe-url"
+// see <https://www.w3.org/TR/referrer-policy/#referrer-policy-origin> for details
 app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report-uri.io/home/generate/
   // Modify this at your discretion
   directives: {
@@ -46,7 +49,7 @@ app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report
     connectSrc: ["'self'", 'ws:', 'wss:'],
     formAction: ["'self'"],
     reflectedXss: 'block',
-    referrer: 'origin-when-cross-origin',
+    referrer: 'origin-when-cross-origin', // see above, must have the same value
     reportUri: '/report-violation' // Please change this
   },
   // Set to true if you only want browsers to report errors, not block them
