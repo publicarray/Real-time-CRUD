@@ -85,7 +85,7 @@ if (config.ssl) {
 
   // HTTP Strict Transport Security
   // app.use(helmet.hsts({
-  //   maxAge: 31536000000, // aprox one year
+  //   maxAge: 31536000, // aprox one year in seconds
   //   includeSubdomains: true,
   //   force: true
   // }));
