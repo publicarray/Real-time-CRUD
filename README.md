@@ -13,7 +13,7 @@ A real-time database web application build on node.js, express, socket.io and kn
   * [How to Create a self signed certificate](#how-to-create-a-self-signed-certificate)
 * [Dependencies](#dependencies)
   * [Database specific Dependencies/Drivers](#database-specific-dependenciesdrivers)
-* [Scripts](#Scripts)
+* [Scripts](#scripts)
 * [License](#license)
 
 ## Installation
