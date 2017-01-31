@@ -2,9 +2,9 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
   'use strict';
   app.get('/', function home(req, res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function (rows) {
-      res.render('index', { table: rows, schema: config.table, title: config.appTitle });
-    }).catch(function printError(error) {
-      console.error(error);
+      res.render('index', {table: rows, schema: config.table, title: config.appTitle});
+    }).catch(function printError(err) {
+      console.error(err);
     });
   });
 
@@ -12,18 +12,18 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
     app.get('/:id(\\d+)/', function (req, res) {
       var num = escapeHtml(req.params.id);
       knex.select().from(config.tableName).where(config.detail, num).orderByRaw(config.orderBy).then(function (rows) {
-        res.render('detail', { table: rows, detail: config.detail, schema: config.table, title: config.appTitle });
-      }).catch(function printError(error) {
-        console.error(error);
+        res.render('detail', {table: rows, detail: config.detail, schema: config.table, title: config.appTitle});
+      }).catch(function printError(err) {
+        console.error(err);
       });
     });
   }
 
   function renderAdmin(res) {
     knex.select().from(config.tableName).orderByRaw(config.orderBy).then(function (rows) {
-      res.render('admin', { table: rows, schema: config.table, signin: true, title: config.appTitle });
-    }).catch(function printError(error) {
-      console.error(error);
+      res.render('admin', {table: rows, schema: config.table, signin: true, title: config.appTitle});
+    }).catch(function printError(err) {
+      console.error(err);
     });
   }
 
@@ -32,12 +32,12 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
       // Already logged in.
       if (req.query.logout) {
         req.session = null; // logout
-        res.render('login', { title: config.appTitle });
+        res.render('login', {title: config.appTitle});
       } else {
         renderAdmin(res);
       }
     } else {
-      res.render('login', { title: config.appTitle });
+      res.render('login', {title: config.appTitle});
     }
   });
 
@@ -50,9 +50,9 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
       req.session.password = pass;
       renderAdmin(res);
     } else if (user || pass) {
-      res.render('login', { message: 'The username or password you entered is incorrect.', title: config.appTitle });
+      res.render('login', {message: 'The username or password you entered is incorrect.', title: config.appTitle});
     } else {
-      res.render('login', { title: config.appTitle });
+      res.render('login', {title: config.appTitle});
     }
   });
 
@@ -71,7 +71,7 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
   app.use(function error404(req, res) {
     res.status(404);
     if (req.accepts('html')) {
-      res.render('404', { url: req.url, title: config.appTitle });
+      res.render('404', {url: req.url, title: config.appTitle});
       return;
     }
   });

@@ -26,8 +26,8 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
           io.emit('add', object);
           // console.log("Created", object);
         })
-        .catch(function printError(error) {
-          console.error(error);
+        .catch(function printError(err) {
+          console.error(err);
         }
       );
     });
@@ -52,8 +52,8 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
       knex(config.tableName)
         .where('id', id)
         .update(object)
-        .catch(function printError(error) {
-          console.error(error);
+        .catch(function printError(err) {
+          console.error(err);
         }
       );
       object.id = id; // add to the id the end of object
@@ -65,8 +65,8 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
       knex(config.tableName)
         .where('id', id)
         .del()
-        .catch(function printError(error) {
-          console.error(error);
+        .catch(function printError(err) {
+          console.error(err);
         }
       );
       io.emit('delete', id);

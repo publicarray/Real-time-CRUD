@@ -1,5 +1,5 @@
 {
-  "name": "Real-time-CRUD",
+  "name": "real-time-crud",
   "description": "Easy to configure, Real-time CRUD Database Web Application",
   "main": "server.js",
   "authors": [

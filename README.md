@@ -6,20 +6,21 @@
 A real-time database web application build on node.js, express, socket.io and knex.js
 
 * [Installation](#installation)
-  * [ Start the server](#start-the-server)
+  * [Start the server](#start-the-server)
   * [Configuration](#configuration)
   * [URLs](#urls)
     * [Default Login Details](#default-login-details)
   * [How to Create a self signed certificate](#how-to-create-a-self-signed-certificate)
 * [Dependencies](#dependencies)
   * [Database specific Dependencies/Drivers](#database-specific-dependenciesdrivers)
+* [Scripts](#Scripts)
 * [License](#license)
 
 ## Installation
 Install [dependencies](#dependencies):
 
 ```bash
-$ npm install --production
+$ yarn install --production
 ```
 
 ### Start the server
@@ -51,23 +52,16 @@ Information on certificate creation can he found here: https://www.feistyduck.co
 
 #### Self-signed certificate
 
-**Note: do not use in production!**
+**Note: For development only, do not use in production!**
 
 First install [openssl](https://www.openssl.org/)
 
 Than create a new folder: `mkdir ssl`
 
-Create a RSA key:
+Create the SSL certificate and private key:
 
-```
-openssl genrsa 2048 > ssl/privatekey.pem
-```
-
-Create the SSL certificate:
-
-```
-openssl req -new -key ssl/privatekey.pem -out ssl/csr.pem
-openssl x509 -req -days 365 -in ssl/csr.pem -signkey ssl/privatekey.pem -out ssl/certificate.crt
+```bash
+openssl req -x509 -nodes -sha256 -subj '/CN=localhost' -newkey rsa:4096 -keyout ssl/key.pem -out ssl/cert.pem -days 365
 ```
 
 ## Dependencies
@@ -89,13 +83,26 @@ Note: mysql, pg and sqlite3 are all installed by default.
 ## Update Bower Dependencies (Optional)
 
 To update dependencies from bower:
-```
-npm install
+
+```bash
+yarn install
 bower install
 gulp
 ```
 
 Minified versions of bower dependencies are included in `public/lib`. These may be out of date but it allows users to get up and running faster.
+
+## Scripts
+
+Scripts / Aliases for developers:
+
+```bash
+yarn first-run # install all dependencies
+yarn update-all # update all dependencies
+yarn build # run gulp
+yarn start # start node server
+yarn test # run linter
+```
 
 ## License
 Copyright 2014 Sebastian Schmidt

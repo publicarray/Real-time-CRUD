@@ -10,7 +10,7 @@
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *   See the License for the specific language governing permissions and
- *   limitations under the License.*/
+ *   limitations under the License. */
 'use strict';
 var config = require('./config'); // get user config file
 var bcrypt = require('bcrypt'); // a crypto library
@@ -30,35 +30,35 @@ var knex = require('knex')({
 var helmet = require('helmet');  // Please read https://github.com/helmetjs/helmet/blob/master/README.md
 config.password = bcrypt.hashSync(config.password, salt, 12); // hash password
 
-app.disable('x-powered-by'); // Remove default x-powered-by response header
-app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
-app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
-app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
-app.use(helmet.dnsPrefetchControl()); // Stop DNS Pre-fetching
-app.use(helmet.referrerPolicy({policy: 'origin-when-cross-origin'})) // Prevent other websites from tracking visitors
-// options: "no-referrer", "no-referrer-when-downgrade", "same-origin", "origin", "origin-when-cross-origin", "unsafe-url"
 // see <https://www.w3.org/TR/referrer-policy/#referrer-policy-origin> for details
 app.use(helmet.contentSecurityPolicy({ // Content-Security-Policy https://report-uri.io/home/generate/
   // Modify this at your discretion
   directives: {
-    defaultSrc: ["'none'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "'unsafe-inline'"],
-    imgSrc: ["'self'", 'data:'],
-    fontSrc: ["'self'"],
-    connectSrc: ["'self'", 'ws:', 'wss:'],
-    formAction: ["'self'"],
-    reflectedXss: 'block',
-    referrer: 'origin-when-cross-origin', // see above, must have the same value
+    defaultSrc: ['\'none\''],
+    scriptSrc: ['\'self\'', '\'unsafe-inline\''],
+    styleSrc: ['\'self\'', '\'unsafe-inline\''],
+    imgSrc: ['\'self\'', 'data:'],
+    fontSrc: ['\'self\''],
+    connectSrc: ['\'self\'', 'ws:', 'wss:'],
+    formAction: ['\'self\''],
+    sandbox: ['allow-forms', 'allow-scripts'],
     reportUri: '/report-violation' // Please change this
   },
   // Set to true if you only want browsers to report errors, not block them
   reportOnly: false
 }));
+app.use(helmet.dnsPrefetchControl()); // Stop DNS Pre-fetching
+app.use(helmet.frameguard()); // Trying to prevent: Your page being put in a <frame> or <iframe>
+app.disable('x-powered-by'); // Remove default x-powered-by response header
+app.use(helmet.noSniff()); // Don't infer the MIME type: noSniff
+app.use(helmet.referrerPolicy({policy: 'same-origin'})); // Prevent other websites from tracking visitors.
+// Options: "no-referrer","no-referrer-when-downgrade", "same-origin", "origin", "strict-origin",
+//   "origin-when-cross-origin", "strict-origin-when-cross-origin" "unsafe-url"
+app.use(helmet.xssFilter()); // Trying to prevent: Cross-site scripting attacks (XSS)
 
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
-app.engine('def', require('dot-emc').init({ app: app }).renderFile);
+app.engine('def', require('dot-emc').init({app: app}).renderFile);
 app.set('view engine', 'def');
 
 knex.schema.hasTable(config.tableName).then(function createTableIfExists(exists) {
@@ -74,8 +74,8 @@ knex.schema.hasTable(config.tableName).then(function createTableIfExists(exists)
     });
   }
   return null;
-}).catch(function printError(error) {
-  console.error(error);
+}).catch(function printError(err) {
+  console.error(err);
 });
 
 if (config.ssl) {
@@ -94,10 +94,12 @@ if (config.ssl) {
   var sslOptions = {
     key: fs.readFileSync(config.ssl.privateKey),
     cert: fs.readFileSync(config.ssl.certificate),
+    rejectUnauthorized: config.ssl.rejectUnauthorized,
+    requestCert: config.ssl.requestCert,
     // <https://github.com/nodejs/node/blob/master/doc/api/tls.md#modifying-the-default-tls-cipher-suite>
     // <https://wiki.mozilla.org/Security/Server_Side_TLS>
+    // Modern: compatible with Firefox 27, Chrome 30, IE 11 on Windows 7, Edge, Opera 17, Safari 9, Android 5.0, and Java 8.
     // ciphers: process.env.CIPHERS || [
-    // Modern
       // 'ECDHE-ECDSA-AES256-GCM-SHA384',
       // 'ECDHE-RSA-AES256-GCM-SHA384',
       // 'ECDHE-ECDSA-CHACHA20-POLY1305',
@@ -108,44 +110,13 @@ if (config.ssl) {
       // 'ECDHE-RSA-AES256-SHA384',
       // 'ECDHE-ECDSA-AES128-SHA256',
       // 'ECDHE-RSA-AES128-SHA256',
-    // Intermediate
-      // 'ECDHE-ECDSA-CHACHA20-POLY1305'
-      // 'ECDHE-RSA-CHACHA20-POLY1305'
-      // 'ECDHE-ECDSA-AES128-GCM-SHA256'
-      // 'ECDHE-RSA-AES128-GCM-SHA256'
-      // 'ECDHE-ECDSA-AES256-GCM-SHA384'
-      // 'ECDHE-RSA-AES256-GCM-SHA384'
-      // 'DHE-RSA-AES128-GCM-SHA256'
-      // 'DHE-RSA-AES256-GCM-SHA384'
-      // 'ECDHE-ECDSA-AES128-SHA256'
-      // 'ECDHE-RSA-AES128-SHA256'
-      // 'ECDHE-ECDSA-AES128-SHA'
-      // 'ECDHE-RSA-AES256-SHA384'
-      // 'ECDHE-RSA-AES128-SHA'
-      // 'ECDHE-ECDSA-AES256-SHA384'
-      // 'ECDHE-ECDSA-AES256-SHA'
-      // 'ECDHE-RSA-AES256-SHA'
-      // 'DHE-RSA-AES128-SHA256'
-      // 'DHE-RSA-AES128-SHA'
-      // 'DHE-RSA-AES256-SHA256'
-      // 'DHE-RSA-AES256-SHA'
-      // 'ECDHE-ECDSA-DES-CBC3-SHA'
-      // 'ECDHE-RSA-DES-CBC3-SHA'
-      // 'EDH-RSA-DES-CBC3-SHA'
-      // 'AES128-GCM-SHA256'
-      // 'AES256-GCM-SHA384'
-      // 'AES128-SHA256'
-      // 'AES256-SHA256'
-      // 'AES128-SHA'
-      // 'AES256-SHA'
-      // 'DES-CBC3-SHA'
-      // '!DSS'
     // ].join(':'),
     honorCipherOrder: true // migrate BEAST attacks
   };
 
   // stunnel obtained from: <http://stackoverflow.com/questions/17285180/use-both-http-and-https-for-socket-io>
   // direct link: <http://stackoverflow.com/a/22641671>
+  // <https://nodejs.org/docs/latest/api/tls.html#tls_tls_createserver_options_secureconnectionlistener>
   tls.createServer(sslOptions, function createStunnel(cleartextStream) {
     var cleartextRequest = net.connect({
       port: config.port,
@@ -166,7 +137,7 @@ app.use(cookieSession({
   cookie: {
     domain: config.domain,
     httpOnly: true,
-    // secure: true, // need https
+    secure: config.ssl || false, // need https
     signed: true
   }
 }));
