@@ -1,6 +1,7 @@
 # Easy to configure, Real-time CRUD Database Web Application
 [![Dependency Status](https://gemnasium.com/publicarray/Real-time-CRUD.svg)](https://gemnasium.com/publicarray/Real-time-CRUD)
 [![Dependencies](https://david-dm.org/publicarray/Real-time-CRUD.svg)](https://david-dm.org/publicarray/Real-time-CRUD)
+[![Known Vulnerabilities](https://snyk.io/test/github/publicarray/Real-time-CRUD/badge.svg)](https://snyk.io/test/github/publicarray/Real-ti
 [![Code Climate](https://codeclimate.com/github/publicarray/Real-time-CRUD/badges/gpa.svg)](https://codeclimate.com/github/publicarray/Real-time-CRUD)
 
 A real-time database web application build on node.js, express, socket.io and knex.js
