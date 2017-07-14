@@ -21,13 +21,13 @@ A real-time database web application build on node.js, express, socket.io and kn
 Install [dependencies](#dependencies):
 
 ```bash
-$ yarn install --production
+$ yarn first-run
 ```
 
 ### Start the server
 
 ```bash
-$ node server
+$ yarn start
 ```
 
 The default port is 8080.
@@ -86,9 +86,9 @@ Note: mysql, pg and sqlite3 are all installed by default.
 To update dependencies from bower:
 
 ```bash
-yarn install
-bower install
-gulp
+yarn first-run-dev
+yarn update-all
+yarn build
 ```
 
 Minified versions of bower dependencies are included in `public/lib`. These may be out of date but it allows users to get up and running faster.
