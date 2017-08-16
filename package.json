@@ -22,7 +22,7 @@
   "scripts": {
     "first-run": "yarn install --production; bower install",
     "first-run-dev": "yarn; bower install",
-    "update-all": "yarn upgrade-interactive; bower update",
+    "update-all": "yarn upgrade-interactive; npm shrinkwrap; bower update",
     "build": "gulp",
     "start": "node server",
     "test": "xo"
