@@ -10,34 +10,46 @@
     "body-parser": "^1.18.1",
     "cookie-session": "^2.0.0-beta.1",
     "dot-emc": "^0.1.2",
-    "express": "^4.15.4",
-    "helmet": "^3.8.1",
-    "knex": "^0.13.0",
+    "express": "^4.16.3",
+    "helmet": "^3.12.0",
+    "knex": "^0.14.4",
     "mysql": "^2.14.1",
     "pg": "^7.3.0",
     "sanitizer": "^0.1.3",
     "socket.io": "^2.0.3",
-    "sqlite3": "^3.1.11"
+    "sqlite3": "^4.0.0"
   },
   "scripts": {
-    "first-run": "yarn install --production; bower install",
+    "first-run": "yarn install --production; yarn bower install",
     "first-run-dev": "yarn; bower install",
-    "update-all": "yarn upgrade-interactive --latest; npm shrinkwrap; bower update",
+    "update-all": "yarn upgrade --latest; npm shrinkwrap; yarn bower update",
     "build": "gulp",
     "start": "node server",
-    "test": "xo"
+    "test": "snyk test && xo"
   },
   "devDependencies": {
     "bower": "^1.8.2",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
-    "xo": "^0.18.1"
+    "snyk": "^1.70.2",
+    "xo": "^0.20.3"
   },
   "xo": {
     "space": true,
     "ignores": [
       "public/lib/**"
-    ]
+    ],
+    "rules": {
+      "no-var": 0,
+      "prefer-const": 0,
+      "prefer-spread": 0,
+      "prefer-reflect": 0,
+      "prefer-template": 0,
+      "require-yield": 0,
+      "arrow-parens": 0,
+      "object-shorthand": 1,
+      "prefer-arrow-callback": 0
+    }
   }
 }
