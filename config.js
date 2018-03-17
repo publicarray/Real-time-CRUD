@@ -1,4 +1,4 @@
-// set config to sensible defaults - PLEASE DO NOT MODEFY
+// Set config to sensible defaults - PLEASE DO NOT MODEFY
 var config = {
   appTitle: 'Real-time CRUD',
   domain: process.env.HOST || 'localhost',

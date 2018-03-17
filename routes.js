@@ -31,7 +31,7 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
     if (req.session.populated && req.session.username && req.session.password) {
       // Already logged in.
       if (req.query.logout) {
-        req.session = null; // logout
+        req.session = null; // Logout
         res.render('login', {title: config.appTitle});
       } else {
         renderAdmin(res);
@@ -72,7 +72,6 @@ module.exports = function routes(app, urlencodedParser, knex, escapeHtml, config
     res.status(404);
     if (req.accepts('html')) {
       res.render('404', {url: req.url, title: config.appTitle});
-      return;
     }
   });
 };

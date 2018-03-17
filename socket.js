@@ -19,22 +19,21 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
       }
 
       knex(config.tableName)
-        .returning('id') // for PostgreSQL
+        .returning('id') // For PostgreSQL
         .insert(object)
         .then(function (rows) {
-          object.id = rows[0]; // get last id from db and add to the end of object
+          object.id = rows[0]; // Get last id from db and add to the end of object
           io.emit('add', object);
           // console.log("Created", object);
         })
         .catch(function printError(err) {
           console.error(err);
-        }
-      );
+        });
     });
 
     socket.on('update', function update(data) {
       var object = {};
-      var colNo = 2; // skip first argument (id)
+      var colNo = 2; // Skip first argument (id)
       var column;
       var id = parseInt(data[1], 10);
       for (column in config.table) {
@@ -54,9 +53,8 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
         .update(object)
         .catch(function printError(err) {
           console.error(err);
-        }
-      );
-      object.id = id; // add to the id the end of object
+        });
+      object.id = id; // Add to the id the end of object
       io.emit('update', object);
       // console.log("Updated", object);
     });
@@ -67,8 +65,7 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
         .del()
         .catch(function printError(err) {
           console.error(err);
-        }
-      );
+        });
       io.emit('delete', id);
       // console.log("Deleted", id);
     });

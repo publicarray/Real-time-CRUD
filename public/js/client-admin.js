@@ -3,7 +3,7 @@ var doc = document;
 
 function display(data) {
   var firstLine = '<tr id=' + data.id + '>';
-  var htmlStr = '<td>' + data.id + '</td>'; // display the id first
+  var htmlStr = '<td>' + data.id + '</td>'; // Display the id first
   var prop;
   for (prop in data) {
     if (data.hasOwnProperty(prop)) {
@@ -32,7 +32,7 @@ function reset() {
   });
 }
 
-// update
+// Update
 function edit() {
   var data = [];
   data[1] = doc.getElementById('idModel').textContent;
@@ -48,11 +48,11 @@ function edit() {
 }
 
 $(document).ready(function () {
-  // check-box update
+  // Check-box update
   $('#data').on('change', ':checkbox', function () {
     var line = $(this).parent().parent();
     var data = [];
-    for (var i = 1; i <= line.children().length - 2; i++) {  // items in the row - the 2 buttons; start at child 1
+    for (var i = 1; i <= line.children().length - 2; i++) { // Items in the row - the 2 buttons; start at child 1
       var td = line.find('td:nth-child(' + i + ')');
       if (td.contents().is('input')) {
         if (td.contents().prop('checked')) {
@@ -61,22 +61,22 @@ $(document).ready(function () {
           data[i] = 0;
         }
       } else {
-        data[i] = td.text(); // from left to right
+        data[i] = td.text(); // From left to right
       }
     }
     socket.emit('update', data);
   });
-  // delete button
+  // Delete button
   $('#data').on('click', '.btn-danger', function () {
     var line = $(this).parent().parent();
     var id = line.find('td:nth-child(1)').text();
     socket.emit('delete', id);
   });
-  // push data to model / pop-up
+  // Push data to model / pop-up
   $('#data').on('click', '.modelBtn', function () {
     var line = $(this).parent().parent();
     var data = [];
-    for (var i = 1; i <= line.children().length - 2; i++) {  // items in the row - the 2 buttons; start at child 1
+    for (var i = 1; i <= line.children().length - 2; i++) { // Items in the row - the 2 buttons; start at child 1
       var td = line.find('td:nth-child(' + i + ')');
       if (td.contents().is('input')) {
         if (td.contents().prop('checked')) {
@@ -85,7 +85,7 @@ $(document).ready(function () {
           data[i] = 0;
         }
       } else {
-        data[i] = td.text(); // from left to right
+        data[i] = td.text(); // From left to right
       }
     }
 
@@ -102,7 +102,7 @@ $(document).ready(function () {
       }
     });
   });
-  // create
+  // Create
   $('#create').submit(function () {
     var data = [];
     $('.input').each(function (index, element) {
@@ -117,7 +117,7 @@ $(document).ready(function () {
       }
     });
     socket.emit('add', data);
-    // reset input
+    // Reset input
     $('.input').each(function (index, element) {
       element.value = '';
     });
