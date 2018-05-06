@@ -6,6 +6,8 @@
 
 A real-time database web application build on node.js, express, socket.io and knex.js
 
+**This Application was designed for internal usage and should never be put on the public internet!**
+
 * [Installation](#installation)
   * [Start the server](#start-the-server)
   * [Configuration](#configuration)

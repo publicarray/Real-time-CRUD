@@ -1,6 +1,8 @@
 module.exports = function socketIO(io, knex, escapeHtml, config) {
   'use strict';
   io.on('connection', function connection(socket) {
+    // Note this API is public
+    // FixMe: add Auth checks -> https://www.npmjs.com/package/socketio-auth or https://github.com/jfromaniello/passport.socketio
     socket.on('add', function add(data) {
       var object = {};
       var colNo = 0;
@@ -58,6 +60,7 @@ module.exports = function socketIO(io, knex, escapeHtml, config) {
       io.emit('update', object);
       // console.log("Updated", object);
     });
+
     socket.on('delete', function remove(id) {
       id = escapeHtml(id);
       knex(config.tableName)
