@@ -19,7 +19,6 @@ ratings:
     - "**.css"
 
 exclude_paths:
-- bower_components/*
 - node_modules/*
 - .vagrant/*
 - public/lib/*

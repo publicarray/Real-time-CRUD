@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"@bower_components/bootstrap@twbs/bootstrap#^4.0.0", bootstrap@twbs/bootstrap#^4.0.0:
+"@bower_components/bootstrap@twbs/bootstrap#^4.1.1", bootstrap@twbs/bootstrap#^4.1.1:
   version "4.1.1"
   resolved "https://codeload.github.com/twbs/bootstrap/tar.gz/779ad9f174ea5ab7e755f6df0ec9e5912d67dd16"
 
-"@bower_components/jquery@jquery/jquery#^3.0.0", jquery@jquery/jquery#^3.0.0:
+"@bower_components/jquery@jquery/jquery#^3.3.1", jquery@jquery/jquery#^3.3.1:
   version "3.3.1"
   resolved "https://codeload.github.com/jquery/jquery/tar.gz/32b00373b3f42e5cdcb709df53f3b08b7184a944"
 
-"@bower_components/tablesort@tristen/tablesort#^4.1.0":
+"@bower_components/tablesort@tristen/tablesort#^4.1.0", tablesort@tristen/tablesort#^4.1.0:
   version "4.1.0"
   resolved "https://codeload.github.com/tristen/tablesort/tar.gz/72481c2bed958bf7728f092445a0e4dfb4f45936"
 
