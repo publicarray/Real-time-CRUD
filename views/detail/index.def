@@ -17,7 +17,7 @@
         <td>No</td>
       {{?? it.schema[item] === 'boolean' && row[item] }}
         <script type="text/javascript">
-          document.getElementById("{{!row.id}}").className = "success";
+          document.getElementById("{{!row.id}}").className = "bg-success text-white";
         </script>
         <td>Yes</td>
       {{?? item !== 'id'}}
@@ -62,11 +62,11 @@ $(document).ready(function () {
       document.getElementById(id).remove();
     }
   });
-  socket.on('disconnect',function () {
-    $('#alert').fadeIn(1000);
+  socket.on('disconnect', function () {
+    fadeIn('#alert');
   });
-  socket.on('connect',function () {
-    $('#alert').fadeOut(1000);
+  socket.on('connect', function () {
+    fadeOut('#alert');
   });
 });
 </script>

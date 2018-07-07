@@ -11,11 +11,11 @@
    - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    - See the License for the specific language governing permissions and
    - limitations under the License. -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>
 {{ if ({{#!def.title}}) { }}
   {{!it.title}}
@@ -28,14 +28,16 @@
   <link href="/lib/bootstrap.min.css" id="bootstrapTheme" rel="stylesheet">
   <style>
   td {height: 37px;}
-  .navbar-header {display:block; text-align:center; width: 70%; margin:0 auto!important;}
+  .navbar-header {display:block; text-align:center; width:70%; margin:0 auto!important;}
   .navbar-collapse {margin:0 auto!important;}
-  .navbar-header p{margin: 0;}
-  .navbar-toggle {position: absolute; right: 10px;}
+  .navbar-header p{margin:0;}
+  .navbar-toggle {position: absolute; right:10px;}
   .glyphicon {margin-right:5px;}
   .rating .glyphicon {font-size:22px;}
   .rating {margin:0;}
   .navbar-link:hover{color: #ffc829!important;}
+  .show {transition:opacity 1s; opacity:1;}
+  .hide {transition:opacity 1s; opacity:0;}
   @media(min-width: 768px){.navbar-header {text-align:left;} .navbar-header p, .navbar-header div{display:inline-block;}}
   {{#def.style || ""}}
   </style>
@@ -43,34 +45,29 @@
 </head>
 
 <body>
-  <div class="text-danger text-center" id="alert" style="display:none; padding:15px; position:fixed; width:100%; background:rgba(250,250,250, 0.9); z-index:9999">
+  <div class="text-danger text-center hide" id="alert" style="opacity:0; top:-99999px; padding:15px; position:absolute; width:100%; background:rgba(250,250,250, 0.9); z-index:9999;">
   <strong>Oh No! You are disconnected!</strong>
   <span>You lost connection to our server. Please check your Internet connection, Try again or Refresh the page.</span>
   </div>
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <nav class="navbar navbar-expand-md sticky-top navbar-light bg-light" role="navigation">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <br>
-        <a class="navbar-brand" href="/" style="float: none;">
-          <p>{{!it.title}}</p>
-        </a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          {{? it.signin}}
-          <a href="/admin?logout=true">Log out</a>
-          {{??}}
-          <a href="/admin">Login</a>
-          {{?}}
-        </li>
-      </ul>
+      <a class="navbar-brand" href="/">
+        <p>{{!it.title}}</p>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            {{? it.signin}}
+            <a class="nav-link" href="/admin?logout=true">Log out</a>
+            {{??}}
+            <a class="nav-link" href="/admin">Login</a>
+            {{?}}
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -84,9 +81,35 @@
     <p><a href="https://github.com/publicarray/Real-time-CRUD">Source Code available on GitHub</a></p>
   </div>
   </footer>
-  <script src="/lib/jquery.min.js"></script>
+  <script src="/lib/jquery.slim.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/lib/bootstrap.min.js" async></script>
+  <script type="text/javascript">
+    var eventAttached = false;
+    function fadeIn(selector) {
+      var el = document.querySelector(selector);
+      el.classList.remove('hide');
+      el.style.top = null;
+      el.classList.add('show');
+    }
+    function fadeOut(selector) {
+      this.attached = false;
+      self = this;
+      return function fadeOutInner() {
+        var el = document.querySelector(selector);
+        el.classList.remove('show');
+        el.classList.add('hide');
+        if (!self.attached) {
+          self.attached = true;
+          el.addEventListener("transitionend", function(e) {
+            if (e.target.classList.contains('hide')) {
+              e.target.style.top = '-99999px';
+            }
+          }, false);
+        }
+      }()
+    }
+  </script>
   {{#def.script || ""}}
 </body>
 </html>

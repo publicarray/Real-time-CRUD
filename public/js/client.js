@@ -9,7 +9,7 @@ function display(data) {
     if (data.hasOwnProperty(prop)) {
       if (typeof data[prop] === 'boolean') {
         if (data[prop]) {
-          firstLine = '<tr id=' + data.id + ' class="success">';
+          firstLine = '<tr id=' + data.id + ' class="bg-success text-white">';
           data[prop] = 'Yes';
         } else {
           data[prop] = 'No';
@@ -22,4 +22,3 @@ function display(data) {
   }
   return firstLine + htmlStr + '</tr>';
 }
-

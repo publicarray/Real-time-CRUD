@@ -9,7 +9,7 @@ function display(data) {
     if (data.hasOwnProperty(prop)) {
       if (typeof data[prop] === 'boolean') {
         if (data[prop]) {
-          firstLine = '<tr id=' + data.id + ' class="success">';
+          firstLine = '<tr id=' + data.id + ' class="bg-success text-white">';
           data[prop] = '<input type="checkbox" checked>';
         } else {
           data[prop] = '<input type="checkbox">';
@@ -134,9 +134,9 @@ $(document).ready(function () {
     doc.getElementById(id).remove();
   });
   socket.on('disconnect', function disconnect() {
-    $('#alert').fadeIn(1000);
+    fadeIn('#alert')
   });
   socket.on('connect', function connect() {
-    $('#alert').fadeOut(1000);
+    fadeOut('#alert')
   });
 });
