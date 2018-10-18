@@ -11,7 +11,7 @@
     "@bower_components/tablesort": "tristen/tablesort#^4.1.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
-    "bootstrap": "twbs/bootstrap#^4.1.1",
+    "bootstrap": "4.1.2",
     "cookie-session": "^2.0.0-beta.3",
     "dot-emc": "^0.1.2",
     "express": "^4.16.3",
